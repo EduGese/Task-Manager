@@ -2,7 +2,7 @@ import { SQLiteDBConnection } from '@capacitor-community/sqlite';
      import { Injectable} from '@angular/core';
      import { SQLiteService } from './sqlite.service';
      import { DbnameVersionService } from './dbname-version.service';
-     import { UserUpgradeStatements } from '../upgrades/user.upgrade.statements';
+     import { TaskUpgradeStatements } from '../upgrades/task.upgrade.statements';
      import { Task } from '../models/task';
      import { BehaviorSubject, Observable } from 'rxjs';
 
@@ -10,7 +10,7 @@ import { SQLiteDBConnection } from '@capacitor-community/sqlite';
      export class StorageService {
        public taskList: BehaviorSubject<Task[]> = new BehaviorSubject<Task[]>([]);
        private databaseName: string = '';
-       private uUpdStmts: UserUpgradeStatements = new UserUpgradeStatements();
+       private tUpdStmts: TaskUpgradeStatements = new TaskUpgradeStatements();
        private versionUpgrades;
        private loadToVersion;
        private db!: SQLiteDBConnection;
@@ -22,7 +22,7 @@ import { SQLiteDBConnection } from '@capacitor-community/sqlite';
          private sqliteService: SQLiteService,
          private dbVerService: DbnameVersionService
        ) {
-         this.versionUpgrades = this.uUpdStmts.userUpgrades;
+         this.versionUpgrades = this.tUpdStmts.taskUpgrades;
          this.loadToVersion =
            this.versionUpgrades[this.versionUpgrades.length - 1].toVersion;
        }
