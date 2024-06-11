@@ -1,5 +1,5 @@
-export class UserUpgradeStatements {
-    userUpgrades = [
+export class TaskUpgradeStatements {
+    taskUpgrades = [
         {
         toVersion: 1,
         statements: [
