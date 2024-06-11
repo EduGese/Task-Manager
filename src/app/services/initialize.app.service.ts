@@ -24,7 +24,7 @@ import { Injectable } from '@angular/core';
                      await this.sqliteService.initWebStore();
                  }
                  // Initialize the myuserdb database
-                 const DB_USERS = 'myuserdb'
+                 const DB_USERS = 'mytaskdb'
                  await this.storageService.initializeDatabase(DB_USERS);
                  // Here Initialize MOCK_DATA if required
 
