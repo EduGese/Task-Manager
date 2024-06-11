@@ -11,13 +11,20 @@ export class UserUpgradeStatements {
         ]
         },
         /* add new statements below for next database version when required*/
-        /*
+        
         {
         toVersion: 2,
         statements: [
-            `ALTER TABLE users ADD COLUMN email TEXT;`,
+            `CREATE TABLE IF NOT EXISTS tasks(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            description TEXT,
+            priority TEXT NOT NULL,
+            tag TEXT NOT NULL,
+            done INTEGER DEFAULT 0
+            );`,
         ]
         },
-        */
+        
     ]
 }    
