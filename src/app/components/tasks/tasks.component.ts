@@ -19,10 +19,6 @@ export class TasksComponent  {
   constructor() {}
 
   deleteTask(id: number) {
-    // if(task.id == undefined) {
-    //   console.error("Task ID is undefined. Cannot delete.");
-    //   return;
-    // };
       this.taskIdEmitted.emit(id);
   }
 }

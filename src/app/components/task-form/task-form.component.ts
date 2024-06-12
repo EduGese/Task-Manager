@@ -1,56 +1,47 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
  import { IonicModule } from '@ionic/angular';
- import { FormsModule} from '@angular/forms';
+ import { FormBuilder, FormControl, FormsModule, Validators, FormGroup, ReactiveFormsModule} from '@angular/forms';
  import { Task } from '../../models/task';	
+
+ 
 
 @Component({
   selector: 'app-task-form',
   templateUrl: './task-form.component.html',
   styleUrls: ['./task-form.component.scss'],
-  imports: [CommonModule, IonicModule, FormsModule],
+  imports: [CommonModule, IonicModule, FormsModule, ReactiveFormsModule],
   standalone: true,
 })
-export class TaskFormComponent  {
-
-  newTaskName: string = '';
-  newTaskDescription: string = '';
-  newTaskPriority: string = '';
-  newTaskTag: string = '';
+export class TaskFormComponent  implements OnInit{
+  createTaskForm!: FormGroup;
   @Output() taskEmitted = new EventEmitter<Task>();
   
-  constructor() { }
-  createTask() {
-    const newTask = {
+  constructor(public formBuilder: FormBuilder) { 
+    
+  }
+  ngOnInit(): void {
+    this.createTaskForm = this.formBuilder.group({
       id:0,
-      name: this.newTaskName,
-      description: this.newTaskDescription,
-      priority: this.newTaskPriority,
-      tag: this.newTaskTag,
+      name: new FormControl('', [Validators.required]),
+      description: new FormControl(''),
+      priority: new FormControl('Medium'),
+      tag: new FormControl('Work'),
       done:false
-    };
-    this.taskEmitted.emit(newTask);
-    this.clearForm();
+    });
+  }
+  createTask() {
+    if(this.createTaskForm.valid){
+    this.taskEmitted.emit(this.createTaskForm.value);
+    }else{
+      alert('Name field is mandatory');
+    }
+    
+
   }
 
-  updateTask(task: Task) {
-    // if (task.id) {
-    //   const id = task.id?.toString();
-    //   this.storage.updateTaskById(
-    //     id,
-    //     task.name,
-    //     task.description,
-    //     task.priority,
-    //     task.tag
-    //   );
-    // }
-  }
-  clearForm() {
-    this.newTaskName = '';
-    this.newTaskDescription = '';
-    this.newTaskPriority = '';
-    this.newTaskTag = '';
-  }
+
+
 
 
 }
