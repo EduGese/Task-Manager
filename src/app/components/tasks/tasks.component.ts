@@ -21,4 +21,33 @@ export class TasksComponent  {
   deleteTask(id: number) {
       this.taskIdEmitted.emit(id);
   }
+  priorityColor(priority: string): string{
+    if(priority === 'High'){
+      return 'danger';
+    }else if(priority === 'Medium'){
+      return 'warning';
+    }else{
+      return 'success';
+    } 
+  }
+  tagIcon(tag:string):string{
+    switch(tag){
+      case 'Work':
+        return 'hammer-outline';
+      case 'Personal':
+        return 'person-outline';
+      case 'Study':
+        return 'book-outline';
+      case 'Home':
+        return 'home-outline';
+      case 'Finance':
+        return 'cash-outline';
+      case 'Health':
+        return 'medkit-outline';
+      case 'Leisure':
+        return 'beer-outline';
+      default:
+        return 'help-circle-outline';
+    }
+  }
 }

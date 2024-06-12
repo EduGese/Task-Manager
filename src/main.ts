@@ -13,6 +13,11 @@ import { enableProdMode, importProvidersFrom, APP_INITIALIZER } from '@angular/c
      import { SQLiteService } from './app/services/sqlite.service';
      import { StorageService } from './app/services/storage.service';
      import { DbnameVersionService } from './app/services/dbname-version.service';
+     import { addIcons } from 'ionicons';
+     import { arrowUndoOutline, closeCircle, trash, close, settings, 
+        settingsOutline, hammerOutline, personOutline, bookOutline,
+        homeOutline, cashOutline, medkitOutline, beerOutline, 
+        helpCircleOutline} from 'ionicons/icons'; 
    
      if (environment.production) {
          enableProdMode();
@@ -41,6 +46,23 @@ import { enableProdMode, importProvidersFrom, APP_INITIALIZER } from '@angular/c
      export function initializeFactory(init: InitializeAppService) {
          return () => init.initializeApp();
      }
+     addIcons({
+        'close-circle': closeCircle,
+        'trash': trash,
+        'arrow-undo-outline': arrowUndoOutline,
+        'close': close,
+        'settings': settings,
+        'settings-outline': settingsOutline,
+        'hammer-outline': hammerOutline,
+        'person-outline': personOutline,
+        'book-outline': bookOutline,
+        'home-outline': homeOutline,
+        'cash-outline': cashOutline,
+        'medkit-outline': medkitOutline,
+        'beer-outline': beerOutline,
+        'help-circle-outline': helpCircleOutline
+      
+      });
 
      bootstrapApplication(AppComponent, {
          providers: [SQLiteService,
