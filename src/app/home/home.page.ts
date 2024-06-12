@@ -1,14 +1,54 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { TasksComponent } from '../components/tasks/tasks.component';
+import { StorageService } from '../services/storage.service';
+import { Task } from '../models/task';
+import { TaskFormComponent } from '../components/task-form/task-form.component';
+import { of, switchMap } from 'rxjs';
 
 @Component({
 selector: 'app-home',
 templateUrl: 'home.page.html',
 styleUrls: ['home.page.scss'],
 standalone: true,
-imports: [IonicModule, TasksComponent],
+imports: [IonicModule, TasksComponent, TaskFormComponent],
 })
-export class HomePage {
-constructor() {}
+export class HomePage implements OnInit{
+  taskList: Task[] = [];
+
+constructor(private storage: StorageService) {}
+  ngOnInit(): void {
+    try {
+      this.storage
+        .taskState()
+        .pipe(
+          switchMap((res) => {
+            if (res) {
+              return this.storage.fetchTasks();
+            } else {
+              return of([]); // Return an empty array when res is false
+            }
+          })
+        )
+        .subscribe((data) => {
+          this.taskList = data; // Update the task list when the data changes
+        });
+    } catch (err) {
+      throw new Error(`Error: ${err}`);
+    }
+  }
+
+createTask(task: Task) {
+    this.storage.addTask(
+      task.name,
+      task.description,
+      task.priority,
+      task.tag
+    );
+  }
+  deleteTask(id: number) {
+    if (id) {
+      this.storage.deleteTaskById(id.toString());
+    }
+  }
 }

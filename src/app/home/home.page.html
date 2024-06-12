@@ -8,8 +8,9 @@
   </ion-header>
   <!-- Content -->
   <ion-content [fullscreen]="true">
-
-  <app-tasks></app-tasks>
+  <app-task-form (taskEmitted)="createTask($event)"></app-task-form>
+  <h4>TaskList</h4>
+  <app-tasks  (taskIdEmitted)="deleteTask($event)" [taskList]="taskList"></app-tasks>
 
 
   

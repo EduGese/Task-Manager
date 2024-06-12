@@ -1,39 +1,3 @@
- <!-- FORM -->
-
- <ion-item>
-  <ion-input label="Task name" placeholder="Task name" maxlength=15 type="ios" clear-input="true" autocapitalize="sentences" required [(ngModel)]="newTaskName"></ion-input>
-</ion-item>
-<ion-item>
-  <ion-textarea label="Description" type="ios" [(ngModel)]="newTaskDescription"></ion-textarea>
-</ion-item>
-<ion-item>
-  <ion-select label="Priority" [(ngModel)]="newTaskPriority">
-    <ion-select-option color="danger" value="High">High</ion-select-option>
-    <ion-select-option value="Medium">Medium</ion-select-option>
-    <ion-select-option value="Low">Low</ion-select-option>
-  </ion-select>
-</ion-item>
-<ion-item>
-  <ion-select label="Tag" [(ngModel)]="newTaskTag">
-    <ion-select-option value="Work">Work</ion-select-option>
-    <ion-select-option value="Personal">Personal</ion-select-option>
-    <ion-select-option value="Study">Study</ion-select-option>
-    <ion-select-option value="Home">Home</ion-select-option>
-    <ion-select-option value="Finance">Finance</ion-select-option>
-    <ion-select-option value="Health">Health</ion-select-option>
-    <ion-select-option value="Leisure">Leisure</ion-select-option>
-    <ion-select-option value="Other">Other</ion-select-option> 
-  </ion-select>
-</ion-item>
-
-<div class="button-container">
-  <ion-button (click)="createTask()">Save</ion-button>
-  <ion-button (click)="clearForm()">Clear</ion-button>
-</div>
-
-<!-- TASK LIST -->
-<h3>TASK LIST</h3>
-
 <ion-accordion-group expand="inset">
   @for (task of taskList; track $index) {
   <ion-accordion>
@@ -43,7 +7,7 @@
       <ion-label>{{ task.priority }}</ion-label>
     
       <ion-label>{{ task.tag }}</ion-label>
-      <ion-button (click)="deleteTask(task)">delete</ion-button>
+      <ion-button (click)="deleteTask(task.id)">delete</ion-button>
     </ion-item>
     <div class="ion-padding" slot="content">
       <p>{{ task.description }}</p>
