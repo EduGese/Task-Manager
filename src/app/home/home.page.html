@@ -1,5 +1,6 @@
-<!-- Header -->
-<ion-header [translucent]="true">
+<div class="ion-page">
+  <!-- Header -->
+  <ion-header [translucent]="true">
     <ion-toolbar>
       <ion-title>
         Tasks
@@ -8,10 +9,30 @@
   </ion-header>
   <!-- Content -->
   <ion-content [fullscreen]="true">
-  <app-task-form (taskEmitted)="createTask($event)"></app-task-form>
-  <h4>TaskList</h4>
-  <app-tasks  (taskIdEmitted)="deleteTask($event)" [taskList]="taskList"></app-tasks>
+
+    
+    <ion-modal #modal trigger="open-modal" >
+      <ng-template>
+        <ion-header >
+          <ion-toolbar color="primary">
+            <ion-title>New task</ion-title>
+            <ion-buttons slot="end" >
+              <ion-icon size="large" name="close-circle-outline" (click)="closeModal()"></ion-icon>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content [fullscreen]="true">
+          <app-task-form (taskEmitted)="createTask($event)"></app-task-form>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+
+    
+    <h4>TaskList</h4>
+    <app-tasks (taskIdEmitted)="deleteTask($event)" [taskList]="taskList"></app-tasks>
 
 
-  
- </ion-content>
+    
+  </ion-content>
+  <ion-footer ><ion-button id="open-modal" class="ion-float-right ion-margin"><ion-icon name="add-sharp"></ion-icon></ion-button></ion-footer>
+</div>

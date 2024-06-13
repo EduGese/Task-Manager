@@ -1,10 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { TasksComponent } from '../components/tasks/tasks.component';
 import { StorageService } from '../services/storage.service';
 import { Task } from '../models/task';
 import { TaskFormComponent } from '../components/task-form/task-form.component';
 import { of, switchMap } from 'rxjs';
+import { IonModal } from '@ionic/angular';
 
 @Component({
 selector: 'app-home',
@@ -15,9 +16,11 @@ imports: [IonicModule, TasksComponent, TaskFormComponent],
 })
 export class HomePage implements OnInit{
   taskList: Task[] = [];
+  @ViewChild(IonModal) modal: IonModal | undefined;
 
 constructor(private storage: StorageService) {}
   ngOnInit(): void {
+    
     try {
       this.storage
         .taskState()
@@ -36,6 +39,7 @@ constructor(private storage: StorageService) {}
     } catch (err) {
       throw new Error(`Error: ${err}`);
     }
+    
   }
 
 createTask(task: Task) {
@@ -45,10 +49,17 @@ createTask(task: Task) {
       task.priority,
       task.tag
     );
+    this.closeModal();
+    
   }
   deleteTask(id: number) {
     if (id) {
       this.storage.deleteTaskById(id.toString());
     }
+  }
+
+  //Modal functions
+  closeModal() {
+    this.modal?.dismiss();
   }
 }

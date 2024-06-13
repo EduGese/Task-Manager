@@ -18,7 +18,8 @@ import { enableProdMode, importProvidersFrom, APP_INITIALIZER } from '@angular/c
         settingsOutline, hammerOutline, personOutline, bookOutline,
         homeOutline, cashOutline, medkitOutline, beerOutline, 
         helpCircleOutline,
-        addSharp} from 'ionicons/icons'; 
+        addSharp,
+        closeCircleOutline} from 'ionicons/icons'; 
    
      if (environment.production) {
          enableProdMode();
@@ -52,6 +53,7 @@ import { enableProdMode, importProvidersFrom, APP_INITIALIZER } from '@angular/c
         'trash': trash,
         'arrow-undo-outline': arrowUndoOutline,
         'close': close,
+        'close-circle-outline': closeCircleOutline,
         'settings': settings,
         'settings-outline': settingsOutline,
         'hammer-outline': hammerOutline,
