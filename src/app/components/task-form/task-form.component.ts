@@ -17,7 +17,7 @@ export class TaskFormComponent  implements OnInit{
   createTaskForm!: FormGroup;
   @Output() taskEmitted = new EventEmitter<Task>();
   
-  constructor(public formBuilder: FormBuilder) { 
+  constructor(private formBuilder: FormBuilder) { 
     
   }
   ngOnInit(): void {
@@ -36,12 +36,5 @@ export class TaskFormComponent  implements OnInit{
     }else{
       alert('Name field is mandatory');
     }
-    
-
   }
-
-
-
-
-
 }

@@ -1,66 +1,36 @@
-<!-- <ion-item>
-  <ion-input label="Task name" placeholder="Task name" maxlength=15 type="ios" clear-input="true"  [formControl]="newTaskName"></ion-input>
-</ion-item>
-<ion-item>
-  <ion-textarea label="Description" type="ios" [(ngModel)]="newTaskDescription"></ion-textarea>
-</ion-item>
-<ion-item>
-  <ion-select label="Priority" [(ngModel)]="newTaskPriority">
-    <ion-select-option color="danger" value="High">High</ion-select-option>
-    <ion-select-option value="Medium">Medium</ion-select-option>
-    <ion-select-option value="Low">Low</ion-select-option>
-  </ion-select>
-</ion-item>
-<ion-item>
-  <ion-select label="Tag" [(ngModel)]="newTaskTag">
-    <ion-select-option value="Work">Work</ion-select-option>
-    <ion-select-option value="Personal">Personal</ion-select-option>
-    <ion-select-option value="Study">Study</ion-select-option>
-    <ion-select-option value="Home">Home</ion-select-option>
-    <ion-select-option value="Finance">Finance</ion-select-option>
-    <ion-select-option value="Health">Health</ion-select-option>
-    <ion-select-option value="Leisure">Leisure</ion-select-option>
-    <ion-select-option value="Other">Other</ion-select-option> 
-  </ion-select>
-</ion-item>
+<form [formGroup]="createTaskForm" (submit)="createTask()">
+  <ion-item>
+    <ion-label position="stacked" color="primary">Name</ion-label>
+    <ion-input formControlName="name" type="text" placeholder="Write a name for task" clear-input="true"
+     errorText="Name is mandatory" helper-text="Name is mandatory" autocapitalize="on" maxlength="15" counter="true"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked" color="primary">Description</ion-label>
+    <ion-textarea formControlName="description" type="text" placeholder="Write a description for task" clear-input="true" maxlength="100"
+      counter="true"></ion-textarea>
+  </ion-item>
+  <ion-item>
+    <ion-select formControlName="priority" color="primary" interface="popover" label-placement="stacked" justify="end"
+      type="ios">
+      <div slot="label"><ion-text color="primary">Favorite</ion-text></div>
+      <ion-select-option value="High">High</ion-select-option>
+      <ion-select-option value="Medium">Medium</ion-select-option>
+      <ion-select-option value="Low">Low</ion-select-option>
+    </ion-select>
+    <ion-select formControlName="tag" color="primary" interface="popover" label-placement="stacked">
+      <div slot="label"><ion-text color="primary">Tag</ion-text></div>
+      <ion-select-option value="Work">Work</ion-select-option>
+      <ion-select-option value="Personal">Personal</ion-select-option>
+      <ion-select-option value="Study">Study</ion-select-option>
+      <ion-select-option value="Home">Home</ion-select-option>
+      <ion-select-option value="Finance">Finance</ion-select-option>
+      <ion-select-option value="Health">Health</ion-select-option>
+      <ion-select-option value="Leisure">Leisure</ion-select-option>
+      <ion-select-option value="Other">Other</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <div class="button-container">
+    <ion-button type="submit" [disabled]="!createTaskForm.valid">Save</ion-button>
+  </div>
 
-<div class="button-container">
-  <ion-button (click)="createTask()">Save</ion-button>
-  <ion-button (click)="clearForm()">Clear</ion-button>
-</div> -->
-  <form [formGroup]="createTaskForm" (submit)="createTask()">
-    <ion-item >
-      <ion-label position="stacked" color="primary">Name</ion-label>
-      <ion-input formControlName="name" type="text" placeholder="Write a name for task" errorText="Name is mandatory" maxlength="15" counter="true"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="stacked" color="primary">Description</ion-label>
-      <ion-textarea formControlName="description" type="text" placeholder="Write a description for task" maxlength="100" counter="true"></ion-textarea>
-    </ion-item>
-    <ion-item>
-      <ion-select formControlName="priority" color="primary" interface="popover" label-placement="stacked" justify="end" type="ios">
-        <div slot="label"><ion-text color="primary">Favorite</ion-text></div>
-        <ion-select-option value="High">High</ion-select-option>
-        <ion-select-option value="Medium">Medium</ion-select-option>
-        <ion-select-option value="Low">Low</ion-select-option>
-      </ion-select>
-    <!-- </ion-item>
-    <ion-item> -->
-      <ion-select  formControlName="tag" color="primary" interface="popover" label-placement="stacked">
-        <div slot="label"><ion-text color="primary">Tag</ion-text></div>
-        <ion-select-option value="Work">Work</ion-select-option>
-        <ion-select-option value="Personal">Personal</ion-select-option>
-        <ion-select-option value="Study">Study</ion-select-option>
-        <ion-select-option value="Home">Home</ion-select-option>
-        <ion-select-option value="Finance">Finance</ion-select-option>
-        <ion-select-option value="Health">Health</ion-select-option>
-        <ion-select-option value="Leisure">Leisure</ion-select-option>
-        <ion-select-option value="Other">Other</ion-select-option> 
-      </ion-select>
-    </ion-item>
-    <div class="button-container">
-      <ion-button type="submit">Save</ion-button>
-      <ion-button type="reset">Clear</ion-button>
-    </div>
-    
-  </form>
+</form>
