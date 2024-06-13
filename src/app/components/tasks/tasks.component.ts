@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule} from '@angular/forms';
 import { Task } from '../../models/task';
+import {  ActionSheetController } from '@ionic/angular/standalone';
 
 
 @Component({
@@ -16,7 +17,7 @@ export class TasksComponent  {
   @Input () taskList: Task[] = [];
   @Output() taskIdEmitted = new EventEmitter<number>();
 
-  constructor() {}
+  constructor(private actionSheetCtrl: ActionSheetController) {}
 
   deleteTask(id: number) {
       this.taskIdEmitted.emit(id);
@@ -50,4 +51,30 @@ export class TasksComponent  {
         return 'help-circle-outline';
     }
   }
+  async openActionSheet(task: Task, $event:Event) {
+    $event.stopPropagation();
+    const actionSheet = await this.actionSheetCtrl.create({
+      header: `${task.name} `,
+      buttons:[{
+        text: 'Delete',
+        role: 'destructive',
+        icon: 'trash',
+        handler:()=>{
+          this.deleteTask(task.id);
+        }
+      },{
+        text: 'Cancel',
+        role: 'cancel',
+        icon: 'close',
+      }],
+      cssClass: 'custom-css',
+      animated: true,
+      backdropDismiss: true,
+      mode: 'ios'
+
+    });
+
+    actionSheet.present();
+
+    }
 }

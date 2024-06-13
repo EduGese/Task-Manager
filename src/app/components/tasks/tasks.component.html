@@ -1,23 +1,22 @@
-<ion-accordion-group expand="inset">
-  @for (task of taskList; track $index) {
-  <ion-accordion>
-    <ion-item slot="header" color="light">
+<ion-accordion-group expand="inset"> 
+    @for (task of taskList; track $index) {
+        <ion-accordion >
+          <ion-item slot="header" color="light" >
+            <ion-icon name="settings-outline" (click)="openActionSheet(task, $event)"
+            color="primary" size="small" class="ion-margin-end"></ion-icon>
+            <ion-label position="fixed">{{task.name}}16/06/24</ion-label>
+            
+            <ion-chip [color]="priorityColor(task.priority)">
+              <ion-label>{{ task.priority }}</ion-label>
+            </ion-chip>
+            <ion-icon [name]="tagIcon(task.tag)"></ion-icon>
+          </ion-item>
 
-      <ion-label>{{task.name}}</ion-label>
-      <!-- <ion-button (click)="deleteTask(task.id)">delete</ion-button> -->
-
-      <ion-chip [color]="priorityColor(task.priority)">
-        <ion-label>{{ task.priority }}</ion-label>
-      </ion-chip>
-
-      <ion-icon [name]="tagIcon(task.tag)"></ion-icon>
-
-    </ion-item>
-    <div class="ion-padding" slot="content">
-      <p>{{ task.description }}</p>
-    </div>
-  </ion-accordion>
-  }
+          <div class="ion-padding" slot="content">
+            <p>{{ task.description }}</p>
+          </div>
+        </ion-accordion>
+    }
 </ion-accordion-group>
 
 
