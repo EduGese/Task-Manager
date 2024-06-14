@@ -29,7 +29,7 @@
 
     
 
-    <app-tasks (taskIdEmitted)="deleteTask($event)" [taskList]="taskList"></app-tasks>
+    <app-tasks (taskIdDeleteEmitted)="deleteTask($event)" (taskIdCompleteEmitted)="completeTask($event)" [taskList]="taskList"></app-tasks>
 
 
     

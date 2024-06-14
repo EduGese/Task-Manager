@@ -4,5 +4,5 @@ export interface Task {
     description: string,
     priority: string,
     tag: string,
-    done: boolean
+    done: number
 }

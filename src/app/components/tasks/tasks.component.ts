@@ -15,12 +15,17 @@ import {  ActionSheetController } from '@ionic/angular/standalone';
 })
 export class TasksComponent  {
   @Input () taskList: Task[] = [];
-  @Output() taskIdEmitted = new EventEmitter<number>();
+  @Output() taskIdDeleteEmitted = new EventEmitter<number>();
+  @Output() taskIdCompleteEmitted = new EventEmitter<number>();
+
 
   constructor(private actionSheetCtrl: ActionSheetController) {}
 
   deleteTask(id: number) {
-      this.taskIdEmitted.emit(id);
+      this.taskIdDeleteEmitted.emit(id);
+  }
+  completeTask(id: number) {
+    this.taskIdCompleteEmitted.emit(id);
   }
   priorityColor(priority: string): string{
     if(priority === 'H'){
@@ -71,8 +76,7 @@ export class TasksComponent  {
         return 'medium';
     }
   }
-  async openActionSheet(task: Task, $event:Event) {
-    $event.stopPropagation();
+  async openActionSheet(task: Task) {
     const actionSheet = await this.actionSheetCtrl.create({
       header: `${task.name} `,
       buttons:[{

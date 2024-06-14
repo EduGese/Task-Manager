@@ -34,7 +34,9 @@ constructor(private storage: StorageService) {}
           })
         )
         .subscribe((data) => {
-          this.taskList = data; // Update the task list when the data changes
+          this.taskList = data.filter((task: Task) => task.done !== 1)
+          //this.taskList = data; // Update the task list when the data changes
+
         });
     } catch (err) {
       throw new Error(`Error: ${err}`);
@@ -55,6 +57,11 @@ createTask(task: Task) {
   deleteTask(id: number) {
     if (id) {
       this.storage.deleteTaskById(id.toString());
+    }
+  }
+  completeTask(id: number) {
+    if (id) {
+      this.storage.updateTaskStatusById(id.toString());
     }
   }
 
