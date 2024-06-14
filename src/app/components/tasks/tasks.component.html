@@ -75,13 +75,15 @@
 <ion-list>
   @for (task of taskList; track $index) {
     <ion-item-sliding>
-      <ion-item>
+      <ion-item (click)="presentPopover($event, task)" lines="none">
         <ion-grid>
           <ion-row>
             <ion-col>
-              <span class="task-name">{{task.name}}</span>
+              <div class="ion-text-start">
+                <ion-text color="primary">{{task.name}}</ion-text>
+              </div>
+              
             </ion-col>
-        
             <ion-col>
               <span class="data"><span class="week-day">Wed</span>, 16 jun <span>14:00</span></span>
             </ion-col>  
@@ -94,10 +96,8 @@
                     </ion-chip>
                   </ion-col>
                   <ion-col>
-                    <!-- <ion-chip [outline]="true" class="ion-padding-horizontal"> -->
                       <ion-icon size="medium" [name]="tagIcon(task.tag)" class="ion-no-margin"
                         [color]="tagIconColor(task.tag)"></ion-icon>
-                    <!-- </ion-chip> -->
                   </ion-col>
                 </ion-row>
               </ion-grid>
@@ -110,10 +110,17 @@
         <ion-item-option color="danger" (click)="deleteTask(task.id)">Delete</ion-item-option>
       </ion-item-options>
       <ion-item-options side="start">
-        <ion-item-option color="success" (click)="completeTask(task.id)">Completed</ion-item-option>
+        <ion-item-option color="success" (click)="completeTask(task.id)">Complete</ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
+
+    
     
   }
+  <ion-popover #popover [isOpen]="isOpen" (didDismiss)="isOpen = false" size="auto">
+    <ng-template>
+      <ion-content class="ion-padding">{{ task.description}}</ion-content>
+    </ng-template>
+  </ion-popover>
  
 </ion-list>

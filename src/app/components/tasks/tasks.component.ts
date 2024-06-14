@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule} from '@angular/forms';
@@ -17,7 +17,9 @@ export class TasksComponent  {
   @Input () taskList: Task[] = [];
   @Output() taskIdDeleteEmitted = new EventEmitter<number>();
   @Output() taskIdCompleteEmitted = new EventEmitter<number>();
-
+  @ViewChild('popover') popover!: any;
+  isOpen = false;
+  task: Task = {} as Task;
 
   constructor(private actionSheetCtrl: ActionSheetController) {}
 
@@ -101,4 +103,10 @@ export class TasksComponent  {
     actionSheet.present();
 
     }
+
+  presentPopover(e: Event, task: Task) {
+    this.popover.event = e;
+    this.isOpen = true;
+    this.task = task;
+  }
 }
