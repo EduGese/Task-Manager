@@ -1,3 +1,12 @@
+                                      <!-- ACCORDION -->
+
+<!-- <ion-header [translucent]="true">
+  <ion-toolbar color="light">
+    <ion-title>
+      Tasks List
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
 <ion-accordion-group expand="inset"> 
     @for (task of taskList; track $index) {
         <ion-accordion >
@@ -20,4 +29,88 @@
 </ion-accordion-group>
 
 
-<p *ngIf="taskList.length === 0">No tasks saved yet.</p>
+<p *ngIf="taskList.length === 0">No tasks saved yet.</p> -->
+
+                                      <!-- CARD -->
+
+<!-- @for (task of taskList; track $index) {
+<ion-item-sliding>
+  <ion-item>
+    <ion-card color="light">
+      <ion-card-header>
+        <ion-card-subtitle class="ion-align-items-center">
+          Wed, 16/06/24 14:00
+
+        </ion-card-subtitle>
+        <ion-card-title color="primary" class="ion-text-capitalize"><span
+            class="task-name">{{task.name}}</span><ion-chip [color]="priorityColor(task.priority)">
+            <ion-label>{{ task.priority }}</ion-label>
+          </ion-chip>
+          <ion-chip [outline]="true" class="ion-padding-horizontal">
+            <ion-icon size="small" [name]="tagIcon(task.tag)" class="ion-no-margin"
+              [color]="tagIconColor(task.tag)"></ion-icon>
+          </ion-chip></ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content class="ion-text-wrap">
+        
+        
+      </ion-card-content>
+      <ion-icon name="settings-outline" (click)="openActionSheet(task, $event)" color="primary" size="small" class="ion-margin-end"></ion-icon>
+        
+    </ion-card>
+  </ion-item>
+</ion-item-sliding>
+<ion-item-options>
+  <ion-item-option>Favorite</ion-item-option>
+  <ion-item-option color="danger">Delete</ion-item-option>
+</ion-item-options>
+
+
+}
+<p *ngIf="taskList.length === 0">No tasks saved yet.</p> -->
+
+                                      <!-- LIST -->
+
+<ion-list>
+  @for (task of taskList; track $index) {
+    <ion-item-sliding>
+      <ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <span class="task-name">{{task.name}}</span>
+            </ion-col>
+        
+            <ion-col>
+              <span class="data"><span class="week-day">Wed</span>, 16 jun <span>14:00</span></span>
+            </ion-col>  
+            <ion-col>
+              <ion-grid>
+                <ion-row>
+                  <ion-col>
+                    <ion-chip [color]="priorityColor(task.priority)">
+                      <ion-label>{{ task.priority }}</ion-label>
+                    </ion-chip>
+                  </ion-col>
+                  <ion-col>
+                    <!-- <ion-chip [outline]="true" class="ion-padding-horizontal"> -->
+                      <ion-icon size="medium" [name]="tagIcon(task.tag)" class="ion-no-margin"
+                        [color]="tagIconColor(task.tag)"></ion-icon>
+                    <!-- </ion-chip> -->
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-item-options>
+        <ion-item-option>Favorite</ion-item-option>
+        <ion-item-option color="danger">Delete</ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+    
+  }
+ 
+</ion-list>

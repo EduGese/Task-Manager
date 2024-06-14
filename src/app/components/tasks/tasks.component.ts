@@ -23,9 +23,9 @@ export class TasksComponent  {
       this.taskIdEmitted.emit(id);
   }
   priorityColor(priority: string): string{
-    if(priority === 'High'){
+    if(priority === 'H'){
       return 'danger';
-    }else if(priority === 'Medium'){
+    }else if(priority === 'M'){
       return 'warning';
     }else{
       return 'success';
@@ -49,6 +49,26 @@ export class TasksComponent  {
         return 'beer-outline';
       default:
         return 'help-circle-outline';
+    }
+  }
+  tagIconColor(tag:string):string{
+    switch(tag){
+      case 'Work':
+        return 'primary';
+      case 'Personal':
+        return 'secondary';
+      case 'Study':
+        return 'terciary';
+      case 'Home':
+        return 'warning';
+      case 'Finance':
+        return 'success';
+      case 'Health':
+        return 'danger';
+      case 'Leisure':
+        return 'dark';
+      default:
+        return 'medium';
     }
   }
   async openActionSheet(task: Task, $event:Event) {

@@ -25,7 +25,7 @@ export class TaskFormComponent  implements OnInit{
       id:0,
       name: new FormControl('', [Validators.required]),
       description: new FormControl(''),
-      priority: new FormControl('Medium'),
+      priority: new FormControl('M'),
       tag: new FormControl('Work'),
       done:false
     });

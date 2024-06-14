@@ -1,7 +1,7 @@
 <div class="ion-page">
   <!-- Header -->
   <ion-header [translucent]="true">
-    <ion-toolbar>
+    <ion-toolbar color="primary">
       <ion-title>
         Tasks
       </ion-title>
@@ -28,7 +28,7 @@
     </ion-modal>
 
     
-    <h4>TaskList</h4>
+
     <app-tasks (taskIdEmitted)="deleteTask($event)" [taskList]="taskList"></app-tasks>
 
 
