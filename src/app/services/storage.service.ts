@@ -65,9 +65,9 @@ import { SQLiteDBConnection } from '@capacitor-community/sqlite';
          this.isTaskReady.next(true);
        }
  
-        async addTask(name: string, description: string, priority: string, tag: string) {
-            const sql = `INSERT INTO tasks (name, description, priority, tag) VALUES (?, ?, ?, ?);`;
-            await this.db.run(sql, [name, description, priority, tag]);
+        async addTask(name: string, description: string, priority: string, tag: string, creation_date:string, due_date: string) {
+            const sql = `INSERT INTO tasks (name, description, priority, tag, creation_date, due_date) VALUES (?, ?, ?, ?, ?, ?);`;
+            await this.db.run(sql, [name, description, priority, tag, creation_date, due_date]);
             await this.getTasks();
         }
 
