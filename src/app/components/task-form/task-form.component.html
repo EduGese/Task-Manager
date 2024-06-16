@@ -29,6 +29,13 @@
       <ion-select-option value="Other">Other</ion-select-option>
     </ion-select>
   </ion-item>
+   <ion-item>
+    <ion-label color="primary">Date</ion-label>
+    <ion-toggle (click)="addDate()"></ion-toggle>
+   </ion-item>
+   <ion-item *ngIf="this.dateButtonPressed">
+    <ion-datetime formControlName="due_date" presentation="date-time" [min]="dateNow"></ion-datetime>
+  </ion-item> 
   <div class="button-container">
     <ion-button type="submit" [disabled]="!createTaskForm.valid">Save</ion-button>
   </div>

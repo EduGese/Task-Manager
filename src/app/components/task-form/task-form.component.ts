@@ -16,6 +16,8 @@ import { CommonModule } from '@angular/common';
 export class TaskFormComponent  implements OnInit{
   createTaskForm!: FormGroup;
   @Output() taskEmitted = new EventEmitter<Task>();
+  dateNow: string = new Date().toISOString();
+  dateButtonPressed:boolean = false;
   
   constructor(private formBuilder: FormBuilder) { 
     
@@ -27,7 +29,9 @@ export class TaskFormComponent  implements OnInit{
       description: new FormControl(''),
       priority: new FormControl('M'),
       tag: new FormControl('Work'),
-      done:false
+      done:false,
+      creation_date: this.dateNow,
+      due_date: new FormControl('')
     });
   }
   createTask() {
@@ -36,5 +40,15 @@ export class TaskFormComponent  implements OnInit{
     }else{
       alert('Name field is mandatory');
     }
+  }
+  addDate(){
+    if(this.dateButtonPressed){
+      this.dateButtonPressed = false;
+      this.createTaskForm.patchValue({due_date: ''});
+    }else{
+      this.dateButtonPressed = true;
+      this.createTaskForm.patchValue({due_date: this.dateNow});
+    }
+    
   }
 }
