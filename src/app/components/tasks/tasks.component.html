@@ -85,7 +85,9 @@
               
             </ion-col>
             <ion-col>
-              <span class="data"><span class="week-day">Wed</span>, 16 jun <span>14:00</span></span>
+              <div class="date">
+                <span>{{ task.due_date | date:'	E'}} </span> , <span>{{ task.due_date | date:'d'}}</span> of <span>{{task.due_date | date:"LLL"}}</span>
+              </div>
             </ion-col>  
             <ion-col>
               <ion-grid>
