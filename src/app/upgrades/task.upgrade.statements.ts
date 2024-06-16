@@ -25,6 +25,13 @@ export class TaskUpgradeStatements {
             );`,
         ]
         },
+        {
+        toVersion: 3,
+        statements: [
+            `ALTER TABLE tasks ADD COLUMN creation_date TEXT;`,
+            `ALTER TABLE tasks ADD COLUMN due_date TEXT;`
+        ]
+        },
         
     ]
 }    
