@@ -34,9 +34,25 @@ constructor(private storage: StorageService) {}
           })
         )
         .subscribe((data) => {
-          this.taskList = data.filter((task: Task) => task.done !== 1)
-          //this.taskList = data; // Update the task list when the data changes
+          // this.taskList = data.filter((task: Task) => task.done !== 1);
 
+          
+          //this.taskList = data; // Update the task list when the data changes
+          this.taskList = data
+            .filter((task: Task) => task.done !== 1)
+            .map((task: Task) => ({
+              ...task,
+              due_date: new Date(task.due_date),
+            }))
+            .sort(
+              (a: any, b: any) => a.due_date.getTime() - b.due_date.getTime()
+            )
+            .map((task: any) => ({
+              ...task,
+              due_date: task.due_date.toString(),
+            }));
+
+            console.log(this.taskList)
         });
     } catch (err) {
       throw new Error(`Error: ${err}`);
@@ -49,7 +65,9 @@ createTask(task: Task) {
       task.name,
       task.description,
       task.priority,
-      task.tag
+      task.tag,
+      task.creation_date,
+      task.due_date
     );
     this.closeModal();
     
