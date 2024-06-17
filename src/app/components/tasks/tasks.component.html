@@ -84,6 +84,22 @@
               </div>
               
             </ion-col>
+            
+            <ion-col>
+              <ion-grid>
+                <ion-row>
+                  <ion-col>
+                    <ion-chip [color]="priorityColor(task.priority)">
+                      <ion-label>{{ task.priority }}</ion-label>
+                    </ion-chip>
+                  </ion-col>
+                  <ion-col>
+                      <ion-icon size="medium" [name]="tagIcon(task.tag)" class="ion-no-margin"
+                        [color]="tagIconColor(task.tag)"></ion-icon>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-col>
             <ion-col>
               @if(task.due_date !== 'Invalid Date'){
               <div class="date">
@@ -100,21 +116,7 @@
 
               </div>
             </ion-col>  
-            <ion-col>
-              <ion-grid>
-                <ion-row>
-                  <ion-col>
-                    <ion-chip [color]="priorityColor(task.priority)">
-                      <ion-label>{{ task.priority }}</ion-label>
-                    </ion-chip>
-                  </ion-col>
-                  <ion-col>
-                      <ion-icon size="medium" [name]="tagIcon(task.tag)" class="ion-no-margin"
-                        [color]="tagIconColor(task.tag)"></ion-icon>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
-            </ion-col>
+
           </ion-row>
         </ion-grid>
       </ion-item>

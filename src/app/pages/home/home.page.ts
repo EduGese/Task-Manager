@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit} from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { TasksComponent } from '../components/tasks/tasks.component';
-import { StorageService } from '../services/storage.service';
-import { Task } from '../models/task';
-import { TaskFormComponent } from '../components/task-form/task-form.component';
+import { TasksComponent } from '../../components/tasks/tasks.component';
+import { StorageService } from '../../services/storage.service';
+import { Task } from '../../models/task';
+import { TaskFormComponent } from '../../components/task-form/task-form.component';
 import { Subscription, of, switchMap } from 'rxjs';
-import { ModalService } from '../services/modal/modal.service';
+import { ModalService } from '../../services/modal/modal.service';
 
 @Component({
   selector: 'app-home',
