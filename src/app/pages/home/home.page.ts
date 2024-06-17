@@ -65,17 +65,17 @@ export class HomePage implements OnInit, OnDestroy {
     }
   }
 
-  createTask(task: Task) {
-    this.storage.addTask(
-      task.name,
-      task.description,
-      task.priority,
-      task.tag,
-      task.creation_date,
-      task.due_date
-    );
-    this.closeModal();
-  }
+  // createTask(task: Task) {
+  //   this.storage.addTask(
+  //     task.name,
+  //     task.description,
+  //     task.priority,
+  //     task.tag,
+  //     task.creation_date,
+  //     task.due_date
+  //   );
+  //   this.closeModal();
+  // }
   deleteTask(id: number) {
     if (id) {
       this.storage.deleteTaskById(id.toString());
@@ -88,15 +88,12 @@ export class HomePage implements OnInit, OnDestroy {
     }else{
       this.storage.updateTaskStatusById(task.id.toString(), false);
     }
-    // if (id) {
-    //   this.storage.updateTaskStatusById(id.toString());
-    // }
   }
 
 
   //Modal functions
-  closeModal() {
-    this.modalService.changeModalTrigger(false);
-  }
+  // closeModal() {
+  //   this.modalService.changeModalTrigger(false);
+  // }
 
 }

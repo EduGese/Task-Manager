@@ -3,8 +3,9 @@ import { Component, EnvironmentInjector, inject } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { TaskFormComponent } from './components/task-form/task-form.component';
-import { ModalService } from './services/modal/modal.service';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { StorageService } from './services/storage.service';
+import { Task } from './models/task'
 
 
 @Component({
@@ -17,10 +18,27 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
   public environmentInjector = inject(EnvironmentInjector);
+  modalTrigger: boolean = false;
 
-  constructor(private modalService: ModalService) {}
+
+  constructor(private storage: StorageService) {}
 
   isModalOpen() {
-    this.modalService.changeModalTrigger(true);
+   this.modalTrigger = true;
   }
+  closeModal(){
+    this.modalTrigger = false;
+  }
+  createTask(task: Task) {
+    this.storage.addTask(
+      task.name,
+      task.description,
+      task.priority,
+      task.tag,
+      task.creation_date,
+      task.due_date
+    );
+    this.closeModal();
+  }
+  
 }
