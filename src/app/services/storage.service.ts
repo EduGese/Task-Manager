@@ -84,8 +84,14 @@ import { SQLiteDBConnection } from '@capacitor-community/sqlite';
             await this.getTasks();
             }
         
-        async updateTaskStatusById(id: string) {
-            const sql = `UPDATE tasks SET done=${1} WHERE id=${id}`;
+        async updateTaskStatusById(id: string, done: boolean) {
+          let status;
+          if(done) {
+            status = 1;
+          } else {
+            status = 0;
+          }
+            const sql = `UPDATE tasks SET done=${status} WHERE id=${id}`;
             await this.db.run(sql);
             await this.getTasks();
         }

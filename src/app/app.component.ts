@@ -4,6 +4,7 @@ import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { TaskFormComponent } from './components/task-form/task-form.component';
 import { ModalService } from './services/modal/modal.service';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 
 @Component({
@@ -11,7 +12,7 @@ import { ModalService } from './services/modal/modal.service';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, TaskFormComponent],
+  imports: [IonicModule, CommonModule, TaskFormComponent, RouterOutlet, RouterLink, RouterLinkActive ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppComponent {

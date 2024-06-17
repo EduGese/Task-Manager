@@ -16,7 +16,7 @@ import {  ActionSheetController } from '@ionic/angular/standalone';
 export class TasksComponent  {
   @Input () taskList: Task[] = [];
   @Output() taskIdDeleteEmitted = new EventEmitter<number>();
-  @Output() taskIdCompleteEmitted = new EventEmitter<number>();
+  @Output() taskCompleteEmitted = new EventEmitter<Task>();
   @ViewChild('popover') popover!: any;
   isOpen = false;
   task: Task = {} as Task;
@@ -26,8 +26,8 @@ export class TasksComponent  {
   deleteTask(id: number) {
       this.taskIdDeleteEmitted.emit(id);
   }
-  completeTask(id: number) {
-    this.taskIdCompleteEmitted.emit(id);
+  completeTask(task: Task) {
+    this.taskCompleteEmitted.emit(task);
   }
   priorityColor(priority: string): string{
     if(priority === 'H'){

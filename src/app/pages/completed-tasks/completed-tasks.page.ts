@@ -1,33 +1,22 @@
-import { Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { TasksComponent } from '../../components/tasks/tasks.component';
 import { StorageService } from '../../services/storage.service';
 import { Task } from '../../models/task';
-import { TaskFormComponent } from '../../components/task-form/task-form.component';
-import { Subscription, of, switchMap } from 'rxjs';
-import { ModalService } from '../../services/modal/modal.service';
+import { of, switchMap } from 'rxjs';
+
 
 @Component({
-  selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  selector: 'app-completed-tasks',
+  templateUrl: './completed-tasks.page.html',
+  styleUrls: ['./completed-tasks.page.scss'],
   standalone: true,
-  imports: [IonicModule, TasksComponent, TaskFormComponent],
+  imports: [IonicModule, TasksComponent]
 })
-export class HomePage implements OnInit, OnDestroy {
+export class CompletedTasksPage implements OnInit {
   taskList: Task[] = [];
-  modalTrigger: boolean = false;
-  modalsubscription!: Subscription;
+  constructor( private storage: StorageService) { }
 
-
-  constructor(
-    private storage: StorageService,
-    private modalService: ModalService
- 
-  ) {}
-  ngOnDestroy(): void {
-    this.modalsubscription.unsubscribe();
-  }
   ngOnInit(): void {
     try {
       this.storage
@@ -43,7 +32,7 @@ export class HomePage implements OnInit, OnDestroy {
         )
         .subscribe((data) => {
           this.taskList = data
-            .filter((task: Task) => task.done !== 1)
+            .filter((task: Task) => task.done !== 0)
             .map((task: Task) => ({
               ...task,
               due_date: new Date(task.due_date),
@@ -55,26 +44,10 @@ export class HomePage implements OnInit, OnDestroy {
               ...task,
               due_date: task.due_date.toString(),
             }));
-
-          this.modalsubscription = this.modalService.currentModalTrigger.subscribe(
-            trigger => this.modalTrigger = trigger
-          );
         });
     } catch (err) {
       throw new Error(`Error: ${err}`);
     }
-  }
-
-  createTask(task: Task) {
-    this.storage.addTask(
-      task.name,
-      task.description,
-      task.priority,
-      task.tag,
-      task.creation_date,
-      task.due_date
-    );
-    this.closeModal();
   }
   deleteTask(id: number) {
     if (id) {
@@ -91,12 +64,6 @@ export class HomePage implements OnInit, OnDestroy {
     // if (id) {
     //   this.storage.updateTaskStatusById(id.toString());
     // }
-  }
-
-
-  //Modal functions
-  closeModal() {
-    this.modalService.changeModalTrigger(false);
   }
 
 }

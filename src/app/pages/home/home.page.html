@@ -1,7 +1,13 @@
 <div class="ion-page">
-
   <ion-content [fullscreen]="true">
-
+    <div class="ion-text-center">
+      <ion-text color="secondary">
+        <h2>
+          Pending
+        </h2>
+      </ion-text>
+    
+    </div>
     
     <ion-modal [isOpen]="modalTrigger" >
       <ng-template>
@@ -18,9 +24,7 @@
         </ion-content>
       </ng-template>
     </ion-modal>
-
-    
-    <app-tasks (taskIdDeleteEmitted)="deleteTask($event)" (taskIdCompleteEmitted)="completeTask($event)" [taskList]="taskList"></app-tasks>
+    <app-tasks (taskIdDeleteEmitted)="deleteTask($event)" (taskCompleteEmitted)="completeTask($event)" [taskList]="taskList"></app-tasks>
   </ion-content>
   
 </div>
