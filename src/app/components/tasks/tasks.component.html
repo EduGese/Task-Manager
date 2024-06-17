@@ -75,18 +75,29 @@
 <ion-list>
   @for (task of taskList; track $index) {
     <ion-item-sliding>
-      <ion-item (click)="presentPopover($event, task)" lines="none">
+      <ion-item  lines="none">
         <ion-grid>
           <ion-row>
             <ion-col>
-              <div class="ion-text-start">
+              <div class="ion-text-start" (click)="presentPopover($event, task)">
                 <ion-text color="primary">{{task.name}}</ion-text>
               </div>
               
             </ion-col>
             <ion-col>
+              @if(task.due_date !== 'Invalid Date'){
               <div class="date">
-                <span>{{ task.due_date | date:'	E'}} </span> , <span>{{ task.due_date | date:'d'}}</span> of <span>{{task.due_date | date:"LLL"}}</span>
+                <span>{{ task.due_date | date:' E'}} </span> , <span>{{ task.due_date | date:'d'}}</span> of <span>{{task.due_date |
+                  date:"LLL"}}</span>
+              </div>
+              } @else {
+                <div>
+                  <span> <ion-icon name="help-circle-outline" size="large" color="medium"></ion-icon></span>
+                </div>
+              }
+              
+              <div>
+
               </div>
             </ion-col>  
             <ion-col>
@@ -121,7 +132,21 @@
   }
   <ion-popover #popover [isOpen]="isOpen" (didDismiss)="isOpen = false" size="auto">
     <ng-template>
-      <ion-content class="ion-padding">{{ task.description}}</ion-content>
+      <ion-content class="ion-padding">
+        <ion-grid>
+          @if(task.description !== ''){
+          <ion-row>
+            Description: {{ task.description}}
+          </ion-row>
+          }
+          <ion-row>
+            Date creation: <span>{{ task.creation_date | date:' E'}} </span> , <span>{{ task.creation_date | date:'d'}}</span> of <span>{{task.creation_date |
+                  date:"LLL"}}</span>
+          </ion-row>
+        </ion-grid>
+        
+        
+      </ion-content>
     </ng-template>
   </ion-popover>
  

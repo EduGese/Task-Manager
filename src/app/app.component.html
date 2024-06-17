@@ -1,3 +1,19 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+
+  <ion-header [translucent]="true">
+    <ion-toolbar color="primary">
+      <ion-title>
+        Tasks
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-router-outlet></ion-router-outlet>
+  </ion-content>
+  
+  <ion-footer [translucent]="true">
+    <ion-button class="ion-float-right ion-margin" (click)="isModalOpen()"><ion-icon name="add-sharp"></ion-icon></ion-button>
+  </ion-footer>
+
 </ion-app>
