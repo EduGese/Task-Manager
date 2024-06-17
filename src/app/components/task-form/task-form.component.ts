@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
  import { IonicModule } from '@ionic/angular';
  import { FormBuilder, FormControl, FormsModule, Validators, FormGroup, ReactiveFormsModule} from '@angular/forms';
@@ -18,6 +18,7 @@ export class TaskFormComponent  implements OnInit{
   @Output() taskEmitted = new EventEmitter<Task>();
   dateNow: string = new Date().toISOString();
   dateButtonPressed:boolean = false;
+  @Input() task!: Task;
   
   constructor(private formBuilder: FormBuilder) { 
     
@@ -37,6 +38,9 @@ export class TaskFormComponent  implements OnInit{
   createTask() {
     if(this.createTaskForm.valid){
     this.taskEmitted.emit(this.createTaskForm.value);
+    this.task = this.createTaskForm.value;
+    console.log(this.createTaskForm.value);
+
     }else{
       alert('Name field is mandatory');
     }

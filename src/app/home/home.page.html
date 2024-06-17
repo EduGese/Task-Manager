@@ -1,17 +1,9 @@
 <div class="ion-page">
-  <!-- Header -->
-  <ion-header [translucent]="true">
-    <ion-toolbar color="primary">
-      <ion-title>
-        Tasks
-      </ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <!-- Content -->
+
   <ion-content [fullscreen]="true">
 
     
-    <ion-modal #modal trigger="open-modal" >
+    <ion-modal [isOpen]="modalTrigger" >
       <ng-template>
         <ion-header >
           <ion-toolbar color="primary">
@@ -28,11 +20,7 @@
     </ion-modal>
 
     
-
     <app-tasks (taskIdDeleteEmitted)="deleteTask($event)" (taskIdCompleteEmitted)="completeTask($event)" [taskList]="taskList"></app-tasks>
-
-
-    
   </ion-content>
-  <ion-footer [translucent]="true"><ion-button id="open-modal" class="ion-float-right ion-margin"><ion-icon name="add-sharp"></ion-icon></ion-button></ion-footer>
+  
 </div>

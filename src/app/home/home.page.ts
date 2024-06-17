@@ -1,26 +1,34 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit} from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { TasksComponent } from '../components/tasks/tasks.component';
 import { StorageService } from '../services/storage.service';
 import { Task } from '../models/task';
 import { TaskFormComponent } from '../components/task-form/task-form.component';
-import { of, switchMap } from 'rxjs';
-import { IonModal } from '@ionic/angular';
+import { Subscription, of, switchMap } from 'rxjs';
+import { ModalService } from '../services/modal/modal.service';
 
 @Component({
-selector: 'app-home',
-templateUrl: 'home.page.html',
-styleUrls: ['home.page.scss'],
-standalone: true,
-imports: [IonicModule, TasksComponent, TaskFormComponent],
+  selector: 'app-home',
+  templateUrl: 'home.page.html',
+  styleUrls: ['home.page.scss'],
+  standalone: true,
+  imports: [IonicModule, TasksComponent, TaskFormComponent],
 })
-export class HomePage implements OnInit{
+export class HomePage implements OnInit, OnDestroy {
   taskList: Task[] = [];
-  @ViewChild(IonModal) modal: IonModal | undefined;
+  modalTrigger: boolean = false;
+  modalsubscription!: Subscription;
 
-constructor(private storage: StorageService) {}
+
+  constructor(
+    private storage: StorageService,
+    private modalService: ModalService
+ 
+  ) {}
+  ngOnDestroy(): void {
+    this.modalsubscription.unsubscribe();
+  }
   ngOnInit(): void {
-    
     try {
       this.storage
         .taskState()
@@ -34,10 +42,6 @@ constructor(private storage: StorageService) {}
           })
         )
         .subscribe((data) => {
-          // this.taskList = data.filter((task: Task) => task.done !== 1);
-
-          
-          //this.taskList = data; // Update the task list when the data changes
           this.taskList = data
             .filter((task: Task) => task.done !== 1)
             .map((task: Task) => ({
@@ -52,15 +56,16 @@ constructor(private storage: StorageService) {}
               due_date: task.due_date.toString(),
             }));
 
-            console.log(this.taskList)
+          this.modalsubscription = this.modalService.currentModalTrigger.subscribe(
+            trigger => this.modalTrigger = trigger
+          );
         });
     } catch (err) {
       throw new Error(`Error: ${err}`);
     }
-    
   }
 
-createTask(task: Task) {
+  createTask(task: Task) {
     this.storage.addTask(
       task.name,
       task.description,
@@ -70,7 +75,6 @@ createTask(task: Task) {
       task.due_date
     );
     this.closeModal();
-    
   }
   deleteTask(id: number) {
     if (id) {
@@ -83,8 +87,10 @@ createTask(task: Task) {
     }
   }
 
+
   //Modal functions
   closeModal() {
-    this.modal?.dismiss();
+    this.modalService.changeModalTrigger(false);
   }
+
 }
