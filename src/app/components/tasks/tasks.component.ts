@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, IonModal } from '@ionic/angular';
 import { FormsModule} from '@angular/forms';
 import { Task } from '../../models/task';
 import {  ActionSheetController } from '@ionic/angular/standalone';
@@ -17,9 +17,11 @@ export class TasksComponent  {
   @Input () taskList: Task[] = [];
   @Output() taskIdDeleteEmitted = new EventEmitter<number>();
   @Output() taskCompleteEmitted = new EventEmitter<Task>();
-  @ViewChild('popover') popover!: any;
+  @ViewChild('modal') modal!: IonModal;
   isOpen = false;
   task: Task = {} as Task;
+  modalDetailsTrigger: boolean = false;
+  @ViewChild(IonModal) detailsModal!: IonModal;
 
   constructor(private actionSheetCtrl: ActionSheetController) {}
 
@@ -104,9 +106,13 @@ export class TasksComponent  {
 
     }
 
-  presentPopover(e: Event, task: Task) {
-    this.popover.event = e;
-    this.isOpen = true;
+  openModal(task: Task) {
+    this.modalDetailsTrigger = true;
     this.task = task;
+  }
+  
+  closeModal() {
+    this.modalDetailsTrigger = false;
+    this.detailsModal.dismiss(this.task,'cancel')
   }
 }

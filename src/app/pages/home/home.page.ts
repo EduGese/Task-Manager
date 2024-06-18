@@ -1,11 +1,11 @@
-import { Component, OnDestroy, OnInit} from '@angular/core';
+import { Component,  OnInit} from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { TasksComponent } from '../../components/tasks/tasks.component';
 import { StorageService } from '../../services/storage.service';
 import { Task } from '../../models/task';
 import { TaskFormComponent } from '../../components/task-form/task-form.component';
-import { Subscription, of, switchMap } from 'rxjs';
-import { ModalService } from '../../services/modal/modal.service';
+import {  of, switchMap } from 'rxjs';
+
 
 @Component({
   selector: 'app-home',
@@ -14,20 +14,15 @@ import { ModalService } from '../../services/modal/modal.service';
   standalone: true,
   imports: [IonicModule, TasksComponent, TaskFormComponent],
 })
-export class HomePage implements OnInit, OnDestroy {
+export class HomePage implements OnInit {
   taskList: Task[] = [];
-  modalTrigger: boolean = false;
-  modalsubscription!: Subscription;
+  modalTasTrigger: boolean = false;
+
 
 
   constructor(
-    private storage: StorageService,
-    private modalService: ModalService
- 
-  ) {}
-  ngOnDestroy(): void {
-    this.modalsubscription.unsubscribe();
-  }
+    private storage: StorageService ) {}
+
   ngOnInit(): void {
     try {
       this.storage
@@ -55,27 +50,12 @@ export class HomePage implements OnInit, OnDestroy {
               ...task,
               due_date: task.due_date.toString(),
             }));
-
-          this.modalsubscription = this.modalService.currentModalTrigger.subscribe(
-            trigger => this.modalTrigger = trigger
-          );
         });
     } catch (err) {
       throw new Error(`Error: ${err}`);
     }
   }
 
-  // createTask(task: Task) {
-  //   this.storage.addTask(
-  //     task.name,
-  //     task.description,
-  //     task.priority,
-  //     task.tag,
-  //     task.creation_date,
-  //     task.due_date
-  //   );
-  //   this.closeModal();
-  // }
   deleteTask(id: number) {
     if (id) {
       this.storage.deleteTaskById(id.toString());
@@ -90,10 +70,5 @@ export class HomePage implements OnInit, OnDestroy {
     }
   }
 
-
-  //Modal functions
-  // closeModal() {
-  //   this.modalService.changeModalTrigger(false);
-  // }
 
 }

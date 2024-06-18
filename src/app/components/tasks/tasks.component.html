@@ -1,155 +1,122 @@
-                                      <!-- ACCORDION -->
-
-<!-- <ion-header [translucent]="true">
-  <ion-toolbar color="light">
-    <ion-title>
-      Tasks List
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-<ion-accordion-group expand="inset"> 
-    @for (task of taskList; track $index) {
-        <ion-accordion >
-          <ion-item slot="header" color="light" >
-            <ion-icon name="settings-outline" (click)="openActionSheet(task, $event)"
-            color="primary" size="small" class="ion-margin-end"></ion-icon>
-            <ion-label position="fixed">{{task.name}}16/06/24</ion-label>
-            
-            <ion-chip [color]="priorityColor(task.priority)">
-              <ion-label>{{ task.priority }}</ion-label>
-            </ion-chip>
-            <ion-icon [name]="tagIcon(task.tag)"></ion-icon>
-          </ion-item>
-
-          <div class="ion-padding" slot="content">
-            <p>{{ task.description }}</p>
-          </div>
-        </ion-accordion>
-    }
-</ion-accordion-group>
-
-
-<p *ngIf="taskList.length === 0">No tasks saved yet.</p> -->
-
-                                      <!-- CARD -->
-
-<!-- @for (task of taskList; track $index) {
-<ion-item-sliding>
-  <ion-item>
-    <ion-card color="light">
-      <ion-card-header>
-        <ion-card-subtitle class="ion-align-items-center">
-          Wed, 16/06/24 14:00
-
-        </ion-card-subtitle>
-        <ion-card-title color="primary" class="ion-text-capitalize"><span
-            class="task-name">{{task.name}}</span><ion-chip [color]="priorityColor(task.priority)">
-            <ion-label>{{ task.priority }}</ion-label>
-          </ion-chip>
-          <ion-chip [outline]="true" class="ion-padding-horizontal">
-            <ion-icon size="small" [name]="tagIcon(task.tag)" class="ion-no-margin"
-              [color]="tagIconColor(task.tag)"></ion-icon>
-          </ion-chip></ion-card-title>
-      </ion-card-header>
-
-      <ion-card-content class="ion-text-wrap">
-        
-        
-      </ion-card-content>
-      <ion-icon name="settings-outline" (click)="openActionSheet(task, $event)" color="primary" size="small" class="ion-margin-end"></ion-icon>
-        
-    </ion-card>
-  </ion-item>
-</ion-item-sliding>
-<ion-item-options>
-  <ion-item-option>Favorite</ion-item-option>
-  <ion-item-option color="danger">Delete</ion-item-option>
-</ion-item-options>
-
-
-}
-<p *ngIf="taskList.length === 0">No tasks saved yet.</p> -->
-
                                       <!-- LIST -->
 
 <ion-list>
   @for (task of taskList; track $index) {
-    <ion-item-sliding>
-      <ion-item  lines="none">
-        <ion-grid>
-          <ion-row>
-            <ion-col>
-              <div class="ion-text-start" (click)="presentPopover($event, task)">
-                <ion-text color="primary">{{task.name}}</ion-text>
-              </div>
-              
-            </ion-col>
-            
-            <ion-col>
-              <ion-grid>
-                <ion-row>
-                  <ion-col>
-                    <ion-chip [color]="priorityColor(task.priority)">
-                      <ion-label>{{ task.priority }}</ion-label>
-                    </ion-chip>
-                  </ion-col>
-                  <ion-col>
-                      <ion-icon size="medium" [name]="tagIcon(task.tag)" class="ion-no-margin"
-                        [color]="tagIconColor(task.tag)"></ion-icon>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
-            </ion-col>
-            <ion-col>
-              @if(task.due_date !== 'Invalid Date'){
-              <div class="date">
-                <span>{{ task.due_date | date:' E'}} </span> , <span>{{ task.due_date | date:'d'}}</span> of <span>{{task.due_date |
-                  date:"LLL"}}</span>
-              </div>
-              } @else {
-                <div>
-                  <span> <ion-icon name="help-circle-outline" size="large" color="medium"></ion-icon></span>
-                </div>
-              }
-              
-              <div>
-
-              </div>
-            </ion-col>  
-
-          </ion-row>
-        </ion-grid>
-      </ion-item>
-      <ion-item-options side="end">
-        <ion-item-option (click)="openActionSheet(task)">Options</ion-item-option>
-        <ion-item-option color="danger" (click)="deleteTask(task.id)">Delete</ion-item-option>
-      </ion-item-options>
-      <ion-item-options side="start">
-        <ion-item-option [color]="task.done === 0 ? 'success' : 'warning'  " (click)="completeTask(task)">Complete</ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
-
-    
-    
+  <ion-item-sliding>
+    <ion-item lines="none">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <div class="ion-text-start" (click)="openModal(task)">
+              <ion-text color="primary" [ngClass]="task.done === 1 ? 'task-done':''">{{task.name}}</ion-text>
+            </div>
+          </ion-col>
+          <ion-col>
+            <ion-grid>
+              <ion-row>
+                <ion-col>
+                  <ion-chip [color]="priorityColor(task.priority)">
+                    <ion-label>{{ task.priority }}</ion-label>
+                  </ion-chip>
+                </ion-col>
+                <ion-col>
+                  <ion-icon size="medium" [name]="tagIcon(task.tag)" class="ion-no-margin"
+                    [color]="tagIconColor(task.tag)"></ion-icon>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-col>
+          <ion-col>
+            @if(task.due_date !== 'Invalid Date'){
+            <div class="date">
+              <span class="week-day">{{ task.due_date | date:' E'}} </span> <span class="month-date">{{ task.due_date | date:'d'}}</span> <span class="of"> of </span>
+              <span>{{task.due_date |
+                date:"LLL"}}</span>
+            </div>
+            } @else {
+            <div>
+              <span> <ion-icon name="help-circle-outline" size="large" color="medium"></ion-icon></span>
+            </div>
+            }
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+    <ion-item-options side="end">
+      <ion-item-option (click)="openActionSheet(task)">Options</ion-item-option>
+      <ion-item-option color="danger" (click)="deleteTask(task.id)">Delete</ion-item-option>
+    </ion-item-options>
+    <ion-item-options side="start">
+      <ion-item-option [color]="task.done === 0 ? 'success' : 'warning'  " (click)="completeTask(task)">
+        @if (task.done === 0) {
+          Mark as complete
+        }@else {
+          Mask as uncomplete
+        }
+      </ion-item-option>
+    </ion-item-options>
+  </ion-item-sliding>
   }
-  <ion-popover #popover [isOpen]="isOpen" (didDismiss)="isOpen = false" size="auto">
-    <ng-template>
-      <ion-content class="ion-padding">
-        <ion-grid>
-          @if(task.description !== ''){
-          <ion-row>
-            Description: {{ task.description}}
-          </ion-row>
-          }
-          <ion-row>
-            Date creation: <span>{{ task.creation_date | date:' E'}} </span> , <span>{{ task.creation_date | date:'d'}}</span> of <span>{{task.creation_date |
-                  date:"LLL"}}</span>
-          </ion-row>
-        </ion-grid>
-        
-        
-      </ion-content>
-    </ng-template>
-  </ion-popover>
- 
 </ion-list>
+
+                                                <!-- Modal -->
+<ion-modal [isOpen]="modalDetailsTrigger">
+  <ng-template>
+   <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>{{task.name}}</ion-title>
+    </ion-toolbar>
+   </ion-header>
+   <ion-content>
+    @if (task.description !== '') {
+      <ion-item>{{task.description}}</ion-item>
+    }@else {
+      <ion-item ><ion-text color="medium">No description</ion-text>
+        </ion-item>
+    }
+    
+    <ion-item>
+      <ion-label color="primary">Date creation</ion-label>
+      <div class="date">
+        <span>{{ task.creation_date | date:' E'}} </span> , <span>{{ task.creation_date | date:'d'}}</span> of <span>{{task.creation_date |
+          date:"LLL"}} </span> of <span> {{ task.creation_date | date:'YYYY' }}</span>
+      </div>
+
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary">Date end</ion-label>
+      @if (task.due_date !== 'Invalid Date') {
+        <div class="date">
+          <span>{{ task.due_date | date:' E'}} </span> , <span>{{ task.due_date | date:'d'}}</span> of <span>{{task.due_date |
+            date:"LLL"}} </span> of <span> {{ task.due_date | date:'YYYY' }}</span>
+        </div>
+      }@else {
+        <ion-item ><ion-text color="medium">No date has been set</ion-text>
+        </ion-item>
+      }
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary">Priority</ion-label>
+      <ion-chip [color]="priorityColor(task.priority)">
+        <ion-label>{{ task.priority }}</ion-label>
+      </ion-chip>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary">Tag</ion-label>
+      <ion-text [color]="tagIconColor(task.tag)" class="ion-margin-end">{{ task.tag }}</ion-text>
+      <ion-icon size="medium" [name]="tagIcon(task.tag)" class="ion-no-margin"
+      [color]="tagIconColor(task.tag)"></ion-icon>
+    </ion-item>
+    
+   </ion-content>
+   <ion-footer >
+   <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-icon size="large" name="close-circle" color="primary" (click)="closeModal()"></ion-icon>
+    </ion-row>
+   </ion-grid>
+      
+    
+  </ion-footer>
+  </ng-template>
+</ion-modal>
