@@ -59,65 +59,28 @@
   }
 </ion-list>
 
-                                      <!-- Modal Details-->
+                                      <!-- Modal Details -->
+
+
 <ion-modal [isOpen]="modalDetailsTrigger">
   <ng-template>
-   <ion-header>
-    <ion-toolbar color="primary">
-      <ion-title>{{task.name}}</ion-title>
-    </ion-toolbar>
-   </ion-header>
-   <ion-content>
-    @if (task.description !== '') {
-      <ion-item>{{task.description}}</ion-item>
-    }@else {
-      <ion-item ><ion-text color="medium">No description</ion-text>
-        </ion-item>
-    }
-    
-    <ion-item>
-      <ion-label color="primary">Date creation</ion-label>
-      <div class="date">
-        <span>{{ task.creation_date | date:' E'}} </span> , <span>{{ task.creation_date | date:'d'}}</span> of <span>{{task.creation_date |
-          date:"LLL"}} </span> of <span> {{ task.creation_date | date:'YYYY' }}</span>
-      </div>
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-title>{{task.name}}</ion-title>
+      </ion-toolbar>
+    </ion-header>
 
-    </ion-item>
-    <ion-item>
-      <ion-label color="primary">Date end</ion-label>
-      @if (task.due_date !== '') {
-        <div class="date">
-          <span>{{ task.due_date | date:' E'}} </span> , <span>{{ task.due_date | date:'d'}}</span> of <span>{{task.due_date |
-            date:"LLL"}} </span> of <span> {{ task.due_date | date:'YYYY' }}</span>
-        </div>
-      }@else {
-        <ion-item ><ion-text color="medium">No date has been set</ion-text>
-        </ion-item>
-      }
-    </ion-item>
-    <ion-item>
-      <ion-label color="primary">Priority</ion-label>
-      <ion-chip [color]="priorityColor(task.priority)">
-        <ion-label>{{ task.priority }}</ion-label>
-      </ion-chip>
-    </ion-item>
-    <ion-item>
-      <ion-label color="primary">Tag</ion-label>
-      <ion-text [color]="tagIconColor(task.tag)" class="ion-margin-end">{{ task.tag }}</ion-text>
-      <ion-icon size="medium" [name]="tagIcon(task.tag)" class="ion-no-margin"
-      [color]="tagIconColor(task.tag)"></ion-icon>
-    </ion-item>
-    
-   </ion-content>
-   <ion-footer >
-   <ion-grid>
-    <ion-row class="ion-justify-content-center">
-      <ion-icon size="large" name="close-circle" color="primary" (click)="closeModalDetails()"></ion-icon>
-    </ion-row>
-   </ion-grid>
-      
-    
-  </ion-footer>
+    <ion-content>
+      <app-task-details [task]="task"></app-task-details>  <!-- TASK DETAILS COMPONENT -->
+    </ion-content>
+
+    <ion-footer>
+      <ion-grid>
+        <ion-row class="ion-justify-content-center">
+          <ion-icon size="large" name="close-circle" color="primary" (click)="closeModalDetails()"></ion-icon>
+        </ion-row>
+      </ion-grid>
+    </ion-footer>
   </ng-template>
 </ion-modal>
 
@@ -134,7 +97,7 @@
       </ion-toolbar>
     </ion-header>
     <ion-content [fullscreen]="true">
-      <app-task-form [isEditForm]="isEditForm" [task]="task" (taskEmitted)="editTask($event)"></app-task-form>
+      <app-task-form [isEditForm]="isEditForm" [task]="task" (taskEmitted)="editTask($event)"></app-task-form> <!-- TASK FROM COMPONENT -->
     </ion-content>
   </ng-template>
 </ion-modal>

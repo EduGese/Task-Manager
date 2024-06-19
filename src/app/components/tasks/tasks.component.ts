@@ -6,6 +6,7 @@ import { Task } from '../../models/task';
 import {  ActionSheetController } from '@ionic/angular/standalone';
 import { TaskFormComponent } from "../task-form/task-form.component";
 import { StorageService } from 'src/app/services/storage.service';
+import { TaskDetailsComponent } from '../task-details/task-details.component';
 
 
 @Component({
@@ -13,7 +14,7 @@ import { StorageService } from 'src/app/services/storage.service';
     templateUrl: './tasks.component.html',
     styleUrls: ['./tasks.component.scss'],
     standalone: true,
-    imports: [CommonModule, IonicModule, FormsModule, TaskFormComponent]
+    imports: [CommonModule, IonicModule, FormsModule, TaskFormComponent, TaskDetailsComponent]
 })
 export class TasksComponent  {
   @Input () taskList: Task[] = [];
