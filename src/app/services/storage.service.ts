@@ -72,10 +72,15 @@ import { SQLiteDBConnection } from '@capacitor-community/sqlite';
         }
 
 
-        async updateTaskById(id: string, name: string, description: string, priority: string, tag: string) {
-            const sql = `UPDATE tasks SET name=${name}, description=${description}, priority=${priority}, tag=${tag} WHERE id=${id}`;
-            await this.db.run(sql);
+        async updateTaskById(id: string, name: string, description: string, priority: string, tag: string, due_date: string) {
+          try {
+            const sql = `UPDATE tasks SET name = ?, description = ?, priority = ?, tag = ?, due_date = ? WHERE id = ?`;
+            const params = [name, description, priority, tag, due_date,  id];
+            await this.db.run(sql, params);
             await this.getTasks();
+          } catch (error) {
+            console.error('Error updating task:', error);
+          }
         }
 
         async deleteTaskById(id: string) {
