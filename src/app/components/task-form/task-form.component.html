@@ -1,4 +1,4 @@
-<form [formGroup]="createTaskForm" (submit)="sendTask()">
+<form [formGroup]="taskForm" (submit)="sendTask()">
   <ion-item>
     <ion-label position="stacked" color="primary">Name</ion-label>
     <ion-input formControlName="name" type="text" placeholder="Write a name for task" clear-input="true"
@@ -37,7 +37,7 @@
     <ion-datetime formControlName="due_date" presentation="date-time" [min]="dateNow"></ion-datetime>
   </ion-item> 
   <div class="button-container">
-    <ion-button type="submit" [disabled]="!createTaskForm.valid">Save</ion-button>
+    <ion-button type="submit" [disabled]="!taskForm.valid">Save</ion-button>
   </div>
 
 </form>

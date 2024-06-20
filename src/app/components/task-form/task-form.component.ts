@@ -17,7 +17,7 @@ export class TaskFormComponent implements OnInit {
   @Output() taskEmitted = new EventEmitter<Task>();
   @Input() task!: Task;
   @Input() isEditForm: boolean = false;
-  createTaskForm!: FormGroup;
+  taskForm!: FormGroup;
   dateNow: string = new Date().toISOString();
   dateButtonPressed: boolean = false;
   dateToogleChecked = false;
@@ -34,7 +34,7 @@ export class TaskFormComponent implements OnInit {
     }
   }
   createEditTAskForm() {
-    this.createTaskForm = this.formBuilder.group({
+    this.taskForm = this.formBuilder.group({
       id: this.task.id,
       name: new FormControl(this.task.name, [Validators.required]),
       description: new FormControl(this.task.description),
@@ -46,7 +46,7 @@ export class TaskFormComponent implements OnInit {
     });
   }
   createNewTaskForm() {
-    this.createTaskForm = this.formBuilder.group({
+    this.taskForm = this.formBuilder.group({
       id: 0,
       name: new FormControl('', [Validators.required]),
       description: new FormControl(''),
@@ -59,9 +59,9 @@ export class TaskFormComponent implements OnInit {
   }
 
   sendTask() {
-    if (this.createTaskForm.valid) {
-      this.taskEmitted.emit(this.createTaskForm.value);
-      this.task = this.createTaskForm.value;
+    if (this.taskForm.valid) {
+      this.taskEmitted.emit(this.taskForm.value);
+      this.task = this.taskForm.value;
     } else {
       alert('Name field is mandatory');
     }
@@ -70,10 +70,10 @@ export class TaskFormComponent implements OnInit {
   addDate() {
     if (this.dateButtonPressed) {
       this.dateButtonPressed = false;
-      this.createTaskForm.patchValue({ due_date: '' });
+      this.taskForm.patchValue({ due_date: '' });
     } else {
       this.dateButtonPressed = true;
-      this.createTaskForm.patchValue({ due_date: this.dateNow });
+      this.taskForm.patchValue({ due_date: this.dateNow });
     }
   }
   handleDueDateState() {
