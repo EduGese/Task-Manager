@@ -1,3 +1,4 @@
+import { TaskFilterService } from './services/task-filter/task-filter.service';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Component, EnvironmentInjector, inject } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
@@ -20,9 +21,14 @@ export class AppComponent {
   public environmentInjector = inject(EnvironmentInjector);
   modalTrigger: boolean = false;
 
+  constructor(private storage: StorageService, private TaskFilterService:TaskFilterService) {}
 
-  constructor(private storage: StorageService) {}
-
+  setPendingFilter() {
+    this.TaskFilterService.setFilterType('Pending')
+  }
+  setCompletedFilter() {
+    this.TaskFilterService.setFilterType('Completed')
+  }
   isModalOpen() {
    this.modalTrigger = true;
   }

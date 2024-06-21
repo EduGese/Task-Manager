@@ -1,10 +1,11 @@
-import { Component,  OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit,} from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { TasksComponent } from '../../components/tasks/tasks.component';
 import { StorageService } from '../../services/storage.service';
 import { Task } from '../../models/task';
 import { TaskFormComponent } from '../../components/task-form/task-form.component';
-import {  of, switchMap } from 'rxjs';
+import {  Subscription, of, switchMap } from 'rxjs';
+import { TaskFilterService } from 'src/app/services/task-filter/task-filter.service';
 
 
 @Component({
@@ -14,14 +15,39 @@ import {  of, switchMap } from 'rxjs';
   standalone: true,
   imports: [IonicModule, TasksComponent, TaskFormComponent],
 })
-export class HomePage implements OnInit {
+export class HomePage implements OnInit, OnDestroy {
   taskList: Task[] = [];
+  taskListAll:Task[] = [];
   modalTasTrigger: boolean = false;
+  filterType: string= '';
+  filterTypeSubscription!: Subscription;
 
-  constructor(private storage: StorageService) {}
+  constructor(private storage: StorageService, private taskFilterService: TaskFilterService) {}
+
+
+  ngOnDestroy(): void {
+    //this.filterTypeSubscription.unsubscribe();
+    console.log('se destruye')
+  }
 
   ngOnInit(): void {
+        
     try {
+      this.filterTypeSubscription = this.taskFilterService.filterType$.subscribe(//Get Filter type
+        (filterType) => {
+          console.log('filterType', filterType);
+          this.filterType = filterType;
+          if(this.filterType === 'Pending'){//Filter
+                  this.taskList =  this.getPendingTaskList(this.taskListAll);
+                  console.log('Pending', this.taskList )
+                }else if(this.filterType === 'Completed'){
+                  this.taskList =  this.getCompletedTaskList(this.taskListAll);
+                  console.log('Completed', this.taskList )
+                }
+               
+        }
+       
+      ); 
       this.storage
         .taskState()
         .pipe(
@@ -34,14 +60,18 @@ export class HomePage implements OnInit {
           })
         )
         .subscribe((data) => {
-          this.taskList =  this.sortTaskList(data);
+
+          console.log('se llama a la bbdd')
+          this.taskListAll =  data;
+          this.taskList = this.getPendingTaskList(data);
+
         });
       console.log('this.taskList en home.page', this.taskList);
     } catch (err) {
       throw new Error(`Error: ${err}`);
     }
   }
-  sortTaskList(data: Task[]): Task[] {
+  getPendingTaskList(data: Task[]): Task[] {
     const taskDateList = data
       .filter((task: Task) => task.done !== 1 && task.due_date !== '')
       .map((task: Task) => ({
@@ -59,18 +89,39 @@ export class HomePage implements OnInit {
     );
     return  [...taskDateList, ...taskNoDateList];
   }
+  getCompletedTaskList(data: Task[]): Task[]{
+    const taskDateList = data
+    .filter((task: Task) => task.done === 1 && task.due_date !== '')
+    .map((task: Task) => ({
+      ...task,
+      due_date: new Date(task.due_date),
+    }))
+    .sort((a: any, b: any) => a.due_date.getTime() - b.due_date.getTime())
+    .map((task: any) => ({
+      ...task,
+      due_date: task.due_date.toISOString(),
+    }));
 
+  const taskNoDateList = data.filter(
+    (task: Task) => task.done === 1 && task.due_date === ''
+  );
+  return  [...taskDateList, ...taskNoDateList];
+  }
   deleteTask(id: number) {
     if (id) {
       this.storage.deleteTaskById(id.toString());
     }
   }
-  completeTask(task: Task) {
-    console.log('Task completed:', task);
+  async completeTask(task: Task) {
     if (task.done === 0) {
-      this.storage.updateTaskStatusById(task.id.toString(), true);
+      await this.storage.updateTaskStatusById(task.id.toString(), true);
+      this.filterType = 'Pending';
+      //this.taskList =  this.getPendingTaskList(this.taskListAll);
+     
+
     } else {
-      this.storage.updateTaskStatusById(task.id.toString(), false);
+      await this.storage.updateTaskStatusById(task.id.toString(), false);
+      this.filterType = 'Completed';
     }
   }
 }

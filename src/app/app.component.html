@@ -28,10 +28,28 @@
   </ion-content>
   
   <ion-footer [translucent]="true">
-    <ion-button routerLink="/home" class="ion-float-left ion-margin">
+    <!-- <ion-button routerLink="/home" class="ion-float-left ion-margin">
       <ion-icon name="home-outline"></ion-icon>
     </ion-button>
-    <ion-button routerLink="/completed-tasks" class="ion-float-center ion-margin">completed</ion-button>
+    <ion-button routerLink="/completed-tasks" class="ion-float-center ion-margin">completed</ion-button> -->
+    <ion-segment value="default" color="primary" mode="ios" scrollable="true">
+      <ion-segment-button value="default" (click)="setPendingFilter()">
+        <ion-label>Pending</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="Completed" (click)="setCompletedFilter()">
+        <ion-label>Completed</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="Due">
+        <ion-label>Due</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="Calendar">
+        <ion-label>Calendar</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+    <!-- <ion-button routerLink="/home" class="ion-float-left ion-margin">
+      <ion-icon name="home-outline"></ion-icon>
+    </ion-button>
+    <ion-button routerLink="/completed-tasks" class="ion-float-center ion-margin">completed</ion-button> -->
     <ion-button class="ion-float-right ion-margin" (click)="isModalOpen()">
       <ion-icon name="add-sharp"></ion-icon>
     </ion-button>
