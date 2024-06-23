@@ -1,0 +1,14 @@
+ion-segment-button::part(indicator-background) {
+    background: #0054e9;
+  }
+  ion-segment-button.ios::part(native) {
+    color: #0054e9;
+  }
+  
+  .segment-button-checked.ios::part(native) {
+    color: #fff;
+  }
+  
+  ion-segment-button.ios::part(indicator-background) {
+    border-radius: 1px;
+  }
