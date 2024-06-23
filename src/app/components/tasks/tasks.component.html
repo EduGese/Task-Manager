@@ -27,16 +27,21 @@
             </ion-grid>
           </ion-col>
           <ion-col>
-            @if(task.due_date !== ''){
-            <div class="date">
+            @if(task.due_date === '' || task.due_date === 'Invalid Date'){
+            <!-- <div class="date">
               <span class="week-day">{{ task.due_date | date:' E'}} </span> <span class="month-date">{{ task.due_date | date:'d'}}</span> <span class="of"> of </span>
               <span>{{task.due_date |
                 date:"LLL"}}</span>
-            </div>
-            } @else {
+            </div> -->
             <div>
               <span><ion-text color="medium">No date</ion-text> </span>
             </div>
+            } @else {
+              <div class="date">
+                <span class="week-day">{{ task.due_date | date:' E'}} </span> <span class="month-date">{{ task.due_date | date:'d'}}</span> <span class="of"> of </span>
+                <span>{{task.due_date |
+                  date:"LLL"}}</span>
+              </div>
             }
           </ion-col>
         </ion-row>

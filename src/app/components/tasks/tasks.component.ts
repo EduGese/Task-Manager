@@ -137,6 +137,7 @@ export class TasksComponent  {
   }
 
   openModalEditForm(task: Task) {
+    console.log('openModalEditForm at task.component', task)
     this.modalFormTrigger = true;
     this.task = task;
   }
@@ -146,7 +147,7 @@ export class TasksComponent  {
     this.FormEditModal.dismiss(this.task,'cancel')
   }
   editTask(task:Task){
-    console.log('editTask at task.component',task.due_date)
+   console.log('editTask at task.component',task)
     // const due_date = new Date(task.due_date);
     // task.due_date = due_date.toISOString();
     this.storage.updateTaskById(

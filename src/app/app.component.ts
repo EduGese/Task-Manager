@@ -6,6 +6,7 @@ import { TaskFormComponent } from './components/task-form/task-form.component';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { StorageService } from './services/storage.service';
 import { Task } from './models/task'
+import { SegmentNavigationComponent } from './components/segment-navigation/segment-navigation.component';
 
 
 @Component({
@@ -13,7 +14,8 @@ import { Task } from './models/task'
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, TaskFormComponent, RouterOutlet, RouterLink, RouterLinkActive ],
+  imports: [IonicModule, CommonModule, TaskFormComponent, 
+    RouterOutlet, SegmentNavigationComponent ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppComponent {

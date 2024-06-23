@@ -17,7 +17,11 @@ import { enableProdMode, importProvidersFrom, APP_INITIALIZER } from '@angular/c
      import { arrowUndoOutline, closeCircle, trash, close, settings, 
         settingsOutline, hammerOutline, personOutline, bookOutline,
         homeOutline, cashOutline, medkitOutline, beerOutline, 
-        helpCircleOutline,addSharp, closeCircleOutline, createOutline} from 'ionicons/icons'; 
+        helpCircleOutline,addSharp, closeCircleOutline, createOutline,
+        calendarOutline, listCircleOutline,
+        checkmarkDoneOutline,
+        timerOutline,
+        } from 'ionicons/icons'; 
    
      if (environment.production) {
          enableProdMode();
@@ -63,7 +67,15 @@ import { enableProdMode, importProvidersFrom, APP_INITIALIZER } from '@angular/c
         'beer-outline': beerOutline,
         'help-circle-outline': helpCircleOutline,
         'add-sharp': addSharp,
-        'create-outline': createOutline
+        'create-outline': createOutline,
+        'calendar-outline': calendarOutline,
+        'list-circle-outline': listCircleOutline,
+        'checkmark-done-outline': checkmarkDoneOutline,
+        'timer-outline': timerOutline
+       
+
+
+
       
       });
 

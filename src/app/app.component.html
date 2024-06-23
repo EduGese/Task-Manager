@@ -5,10 +5,19 @@
       <ion-title routerLink="/home">
         Tasks
       </ion-title>
+      
+      <!-- <ion-button class="ion-float-right ion-margin" (click)="isModalOpen()">
+        <ion-icon name="add-sharp"></ion-icon>
+      </ion-button> -->
     </ion-toolbar>
   </ion-header>
 
   <ion-content>
+    <ion-fab  slot="fixed" vertical="top" horizontal="end" [edge]="true">
+      <ion-fab-button color="light"  (click)="isModalOpen()">
+        <ion-icon name="add-sharp"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
     <ion-modal [isOpen]="modalTrigger" >
       <ng-template>
         <ion-header >
@@ -28,13 +37,10 @@
   </ion-content>
   
   <ion-footer [translucent]="true">
-    <ion-button routerLink="/home" class="ion-float-left ion-margin">
-      <ion-icon name="home-outline"></ion-icon>
-    </ion-button>
-    <ion-button routerLink="/completed-tasks" class="ion-float-center ion-margin">completed</ion-button>
-    <ion-button class="ion-float-right ion-margin" (click)="isModalOpen()">
-      <ion-icon name="add-sharp"></ion-icon>
-    </ion-button>
+    <app-segment-navigation></app-segment-navigation>
+    <!-- <ion-button class="ion-float-right ion-margin" (click)="isModalOpen()">
+        <ion-icon name="add-sharp"></ion-icon>
+      </ion-button> -->
   </ion-footer>
 
 </ion-app>
