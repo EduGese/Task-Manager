@@ -1,3 +1,4 @@
+
 import { Component, EventEmitter, Input, Output, ViewChild, WritableSignal, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule, IonModal } from '@ionic/angular';
@@ -7,6 +8,8 @@ import {  ActionSheetController } from '@ionic/angular/standalone';
 import { TaskFormComponent } from "../task-form/task-form.component";
 import { StorageService } from 'src/app/services/storage.service';
 import { TaskDetailsComponent } from '../task-details/task-details.component';
+import { IonItemSliding } from '@ionic/angular';
+
 
 
 @Component({
@@ -37,11 +40,14 @@ export class TasksComponent  {
   deleteTask(id: number) {
       this.taskIdDeleteEmitted.emit(id);
   }
-  completeTask(task: Task) {
+  completeTask(task: Task, slidingItem: IonItemSliding) {
     this.taskCompleteEmitted.emit(task);
+    slidingItem.close();
+
   }
-  updateTask(task: Task) {
+  updateTask(task: Task, slidingItem: IonItemSliding) {
     this.openModalEditForm(task);
+    slidingItem.close();
   }
   priorityColor(priority: string): string{
     if(priority === 'H'){
@@ -92,7 +98,7 @@ export class TasksComponent  {
         return 'medium';
     }
   }
-  async openActionSheet(task: Task) {
+  async openActionSheet(task: Task, slidingItem: IonItemSliding) {
     const actionSheet = await this.actionSheetCtrl.create({
       header: `${task.name} `,
       buttons:[{
@@ -107,7 +113,7 @@ export class TasksComponent  {
         text: 'Edit',
         icon: 'create-outline',
         handler:()=>{
-          this.updateTask(task);
+          this.updateTask(task,slidingItem );
         }
       },
       {
