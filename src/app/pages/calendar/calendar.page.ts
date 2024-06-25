@@ -26,6 +26,8 @@ import {  ActionSheetController } from '@ionic/angular/standalone';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { StorageService } from 'src/app/services/storage.service';
 import { Task } from '../../models/task';
+import { TaskDetailsComponent } from 'src/app/components/task-details/task-details.component';
+import { TaskFormComponent } from 'src/app/components/task-form/task-form.component';
 
 0
 const colors: Record<string, EventColor> = {
@@ -49,44 +51,64 @@ const colors: Record<string, EventColor> = {
   templateUrl: './calendar.page.html',
   styleUrls: ['./calendar.page.scss'],
   standalone: true,
-  imports: [ CommonModule,
+  imports: [
+    CommonModule,
     FormsModule,
     IonicModule,
     CalendarModule,
     CalendarCommonModule,
     CalendarMonthModule,
     CalendarWeekModule,
-    CalendarDayModule],
-    providers: [
-      CalendarUtils,
-      CalendarDateFormatter,
-      CalendarEventTitleFormatter,
-      {
-        provide: DateAdapter,
-        useFactory: adapterFactory,
-      },
-      CalendarA11y,
-    ],
-    animations: [
-      trigger('collapse', [
-        state('void', style({ height: '0px', opacity: 0 })),
-        state('*', style({ height: '*', opacity: 1 })),
-        transition(':enter, :leave', [
-          animate('0.2s')
-        ])
-      ])
-    ]
+    CalendarDayModule,
+    TaskDetailsComponent,
+    TaskFormComponent,
+  ],
+  providers: [
+    CalendarUtils,
+    CalendarDateFormatter,
+    CalendarEventTitleFormatter,
+    {
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    },
+    CalendarA11y,
+  ],
+  animations: [
+    trigger('collapse', [
+      state('void', style({ height: '0px', opacity: 0 })),
+      state('*', style({ height: '*', opacity: 1 })),
+      transition(':enter, :leave', [animate('0.2s')]),
+    ]),
+  ],
 })
-
-
-export class CalendarPage  implements OnInit{
+export class CalendarPage implements OnInit {
   // viewDate: Date = new Date();
   // events: CalendarEvent[] = [];
   // view: CalendarView = CalendarView.Month;
   // CalendarView = CalendarView;
   // activeDayIsOpen!: boolean;
+  timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  //TASKS Properties
   taskList!: Task[];
-  @ViewChild('modalContent', { static: true }) modalContent!: IonModal;
+  task: Task = {
+    id: 0,
+    name: '',
+    description: '',
+    priority: 'low',
+    tag: 'work',
+    done: 0,
+    creation_date: '',
+    due_date: '',
+  };
+
+  //MODALS properties
+  modalFormTrigger: boolean = false;
+  modalDetailsTrigger: boolean = false;
+  @ViewChild(IonModal) detailsModal!: IonModal;
+  @ViewChild(IonModal) FormEditModal!: IonModal;
+  isEditForm = true;
+
+  //CALENDAR properties
   view: CalendarView = CalendarView.Month;
   CalendarView = CalendarView;
   viewDate: Date = new Date();
@@ -95,23 +117,23 @@ export class CalendarPage  implements OnInit{
     event: CalendarEvent;
   };
 
-  actions: CalendarEventAction[] = [
-    {
-      label: '<i class="fas fa-fw fa-pencil-alt"></i>',
-      a11yLabel: 'Edit',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.handleEvent('Edited', event);
-      },
-    },
-    {
-      label: '<i class="fas fa-fw fa-trash-alt"></i>',
-      a11yLabel: 'Delete',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.events = this.events.filter((iEvent) => iEvent !== event);
-        this.handleEvent('Deleted', event);
-      },
-    },
-  ];
+  // actions: CalendarEventAction[] = [
+  //   {
+  //     label: '<button>Edit</button>',
+  //     a11yLabel: 'Edit',
+  //     onClick: ({ event }: { event: CalendarEvent }): void => {
+  //       this.handleEvent('Edited', event);
+  //     },
+  //   },
+  //   {
+  //     label: '<i class="fas fa-fw fa-trash-alt"></i>',
+  //     a11yLabel: 'Delete',
+  //     onClick: ({ event }: { event: CalendarEvent }): void => {
+  //       this.events = this.events.filter((iEvent) => iEvent !== event);
+  //       this.handleEvent('Deleted', event);
+  //     },
+  //   },
+  // ];
 
   refresh = new Subject<void>();
 
@@ -158,9 +180,11 @@ export class CalendarPage  implements OnInit{
 
   activeDayIsOpen: boolean = true;
 
-  constructor(private actionSheetCtrl: ActionSheetController, private storage: StorageService) { }
+  constructor(
+    private actionSheetCtrl: ActionSheetController,
+    private storage: StorageService
+  ) {}
   ngOnInit(): void {
-
     try {
       this.storage
         .taskState()
@@ -174,12 +198,13 @@ export class CalendarPage  implements OnInit{
           })
         )
         .subscribe((data) => {
-          this.taskList =  data;
+          this.taskList = data;
           this.events = data.map((task: Task) => ({
+            id: task.id,
             title: task.name,
             start: new Date(task.due_date),
             color: task.done ? colors['blue'] : colors['red'],
-            actions: this.actions,
+            //actions: this.actions,
           }));
         });
       console.log('this.taskList en calendar.page', this.taskList);
@@ -187,7 +212,13 @@ export class CalendarPage  implements OnInit{
       throw new Error(`Error: ${err}`);
     }
   }
+
+  //CALENDAR functions//
+
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+    // this.task.due_date = this.toIsoString(date);
+    // console.log('task', this.task);
+    // this.isModalFormOpen();
     if (isSameMonth(date, this.viewDate)) {
       if (
         (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
@@ -199,6 +230,22 @@ export class CalendarPage  implements OnInit{
       }
       this.viewDate = date;
     }
+  }
+  toIsoString(date: Date) {
+    let tzo = -date.getTimezoneOffset(),
+        dif = tzo >= 0 ? '+' : '-',
+        pad = function(num: number) {
+            return (num < 10 ? '0' : '') + num;
+        };
+  
+    return date.getFullYear() +
+        '-' + pad(date.getMonth() + 1) +
+        '-' + pad(date.getDate()) +
+        'T' + pad(date.getHours()) +
+        ':' + pad(date.getMinutes()) +
+        ':' + pad(date.getSeconds()) +
+        dif + pad(Math.floor(Math.abs(tzo) / 60)) +
+        ':' + pad(Math.abs(tzo) % 60);
   }
 
   eventTimesChanged({
@@ -220,33 +267,33 @@ export class CalendarPage  implements OnInit{
   }
 
   async handleEvent(action: string, event: CalendarEvent): Promise<void> {
+    console.log('handleEvent', action, event);
     this.modalData = { event, action };
     //this.modal.open(this.modalContent, { size: 'lg' });
-    const actionSheet = await this.actionSheetCtrl.create();
-
-    actionSheet.present();
+    this.task = this.taskList.find((task) => task.id === event.id)!;
+    this.openModalDetails();
   }
 
-  addEvent(): void {
-    this.events = [
-      ...this.events,
-      {
-        title: 'New event',
-        start: startOfDay(new Date()),
-        end: endOfDay(new Date()),
-        color: colors['red'],
-        draggable: true,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true,
-        },
-      },
-    ];
-  }
+  // addEvent(): void {
+  //   this.events = [
+  //     ...this.events,
+  //     {
+  //       title: 'New event',
+  //       start: startOfDay(new Date()),
+  //       end: endOfDay(new Date()),
+  //       color: colors['red'],
+  //       draggable: true,
+  //       resizable: {
+  //         beforeStart: true,
+  //         afterEnd: true,
+  //       },
+  //     },
+  //   ];
+  // }
 
-  deleteEvent(eventToDelete: CalendarEvent) {
-    this.events = this.events.filter((event) => event !== eventToDelete);
-  }
+  // deleteEvent(eventToDelete: CalendarEvent) {
+  //   this.events = this.events.filter((event) => event !== eventToDelete);
+  // }
 
   setView(view: CalendarView) {
     this.view = view;
@@ -255,12 +302,36 @@ export class CalendarPage  implements OnInit{
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
   }
-  // setView(view: CalendarView) {
-  //   this.view = view;
-  // }
 
-  // closeOpenMonthViewDay() {
-  //   this.activeDayIsOpen = false;
-  // }
 
+  //MODAL FUNCTIONS//
+
+  openModalDetails() {
+    this.modalDetailsTrigger = true;
+  }
+  closeModalDetails() {
+    this.modalDetailsTrigger = false;
+    this.detailsModal.dismiss(this.task, 'cancel');
+  }
+
+  //MODAL new form
+  // isModalFormOpen() {
+  //   this.modalFormTrigger = true;
+  // }
+  // closeModalEditForm() {
+  //   this.modalFormTrigger = false;
+  // }
+  // editTask(task: Task) {
+  //   task = this.task;
+  //   console.log('editTask at task.component', task);
+  //   this.storage.updateTaskById(
+  //     task.id.toString(),
+  //     task.name,
+  //     task.description,
+  //     task.priority,
+  //     task.tag,
+  //     task.due_date
+  //   );
+  //   this.closeModalEditForm();
+  // }
 }
