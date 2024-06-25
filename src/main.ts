@@ -2,7 +2,7 @@ import { enableProdMode, importProvidersFrom, APP_INITIALIZER } from '@angular/c
      import { bootstrapApplication } from '@angular/platform-browser';
      import { RouteReuseStrategy, provideRouter } from '@angular/router';
      import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-
+     import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
      import { routes } from './app/app.routes';
      import { AppComponent } from './app/app.component';
      import { environment } from './environments/environment';
@@ -21,6 +21,8 @@ import { enableProdMode, importProvidersFrom, APP_INITIALIZER } from '@angular/c
         calendarOutline, listCircleOutline,
         checkmarkDoneOutline,
         timerOutline,
+        arrowForwardOutline,
+        arrowBackOutline,
         } from 'ionicons/icons'; 
    
      if (environment.production) {
@@ -71,12 +73,9 @@ import { enableProdMode, importProvidersFrom, APP_INITIALIZER } from '@angular/c
         'calendar-outline': calendarOutline,
         'list-circle-outline': listCircleOutline,
         'checkmark-done-outline': checkmarkDoneOutline,
-        'timer-outline': timerOutline
-       
-
-
-
-      
+        'timer-outline': timerOutline,
+        'arrow-fordward-outline': arrowForwardOutline,  
+        'arrow-back-outline': arrowBackOutline,   
       });
 
      bootstrapApplication(AppComponent, {
@@ -85,7 +84,7 @@ import { enableProdMode, importProvidersFrom, APP_INITIALIZER } from '@angular/c
              StorageService,
              DbnameVersionService,
              { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-             importProvidersFrom(IonicModule.forRoot({})),
+             importProvidersFrom(IonicModule.forRoot({}), BrowserAnimationsModule,),
              provideRouter(routes),
              {
              provide: APP_INITIALIZER,

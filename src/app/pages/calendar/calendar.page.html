@@ -1,0 +1,62 @@
+
+<ion-content [fullscreen]="false">
+    <ion-grid>
+      <ion-row class="ion-justify-content-center">
+          <ion-button fill="outline" size="medium" color="primary" (click)="setView(CalendarView.Month)" [class.active]="view === CalendarView.Month">
+            Month
+          </ion-button>
+          <ion-button fill="outline" size="medium" color="primary" (click)="setView(CalendarView.Week)" [class.active]="view === CalendarView.Week">
+            Week
+          </ion-button>
+          <ion-button fill="outline" size="medium" color="primary" (click)="setView(CalendarView.Day)" [class.active]="view === CalendarView.Day">
+            Day
+          </ion-button>
+      </ion-row>
+      <ion-row class="ion-justify-content-center">
+        <ion-chip color="primary"><h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3></ion-chip>
+      </ion-row>
+      <ion-row class="ion-justify-content-center ion-align-items-center"> 
+          <ion-button fill="outline" size="small" color="primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate">
+            <ion-icon name="arrow-back-outline" ></ion-icon>
+          </ion-button>
+          <ion-text color="secondary" class="ion-padding-horizontal" mwlCalendarToday [(viewDate)]="viewDate">Today</ion-text>
+          <ion-button fill="outline" size="small" color="primary" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate">
+            <ion-icon name="arrow-fordward-outline" ></ion-icon>
+          </ion-button>
+      </ion-row>
+    </ion-grid>
+      
+  <div [ngSwitch]="view" class="calendar-container">
+    <mwl-calendar-month-view
+      *ngSwitchCase="CalendarView.Month"
+      [viewDate]="viewDate"
+      [events]="events"
+      [refresh]="refresh"
+      [activeDayIsOpen]="activeDayIsOpen"
+      (dayClicked)="dayClicked($event.day)"
+      (eventClicked)="handleEvent('Clicked', $event.event)"
+      (eventTimesChanged)="eventTimesChanged($event)"
+    >
+    </mwl-calendar-month-view>
+    <mwl-calendar-week-view
+      *ngSwitchCase="CalendarView.Week"
+      [viewDate]="viewDate"
+      [events]="events"
+      [refresh]="refresh"
+      (eventClicked)="handleEvent('Clicked', $event.event)"
+      (eventTimesChanged)="eventTimesChanged($event)"
+    >
+    </mwl-calendar-week-view>
+    <mwl-calendar-day-view
+      *ngSwitchCase="CalendarView.Day"
+      [viewDate]="viewDate"
+      [events]="events"
+      [refresh]="refresh"
+      (eventClicked)="handleEvent('Clicked', $event.event)"
+      (eventTimesChanged)="eventTimesChanged($event)"
+    >
+    </mwl-calendar-day-view>
+  </div>
+</ion-content >
+
+

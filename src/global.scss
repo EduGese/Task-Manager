@@ -35,3 +35,15 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
+@import "../node_modules/angular-calendar/css/angular-calendar.css";
+
+.cal-day-number {
+    color: black;
+}
+.cal-header{
+    color: black;
+    font-size: 8px;
+}
+.cal-time{
+    color: black;
+}
