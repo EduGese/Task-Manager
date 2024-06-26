@@ -1,3 +1,4 @@
+import { DateFormatService } from './../date-format/date-format.service';
 import { Task } from './../../models/task';
 import { Injectable } from '@angular/core';
 
@@ -6,7 +7,7 @@ import { Injectable } from '@angular/core';
 })
 export class TaskFilterService {
 
-  constructor() { }
+  constructor(private dateFormatService:DateFormatService) { }
 
   sortTaskList(taskList: Task[], done: number){
     const taskDateList = taskList
@@ -18,7 +19,7 @@ export class TaskFilterService {
       .sort((a: any, b: any) => a.due_date.getTime() - b.due_date.getTime())
       .map((task: any) => ({
         ...task,
-        due_date: task.due_date.toISOString(),
+        due_date: this.dateFormatService.toIsoString(task.due_date),
       }));
 
     const taskNoDateList = taskList.filter(
@@ -26,4 +27,5 @@ export class TaskFilterService {
     );
     return  [...taskDateList, ...taskNoDateList];
   }
+  
 }

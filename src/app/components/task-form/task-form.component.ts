@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
  import { IonicModule } from '@ionic/angular';
  import { FormBuilder, FormControl, FormsModule, Validators, FormGroup, ReactiveFormsModule} from '@angular/forms';
  import { Task } from '../../models/task';	
+import { DateFormatService } from 'src/app/services/date-format/date-format.service';
 
  
 
@@ -18,11 +19,11 @@ export class TaskFormComponent implements OnInit {
   @Input() task!: Task;
   @Input() isEditForm: boolean = false;
   taskForm!: FormGroup;
-  dateNow: string = new Date().toISOString();
+  dateNow: string = this.dateFormatService.toIsoString(new Date());
   dateButtonPressed: boolean = false;
   dateToogleChecked = false;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder, private dateFormatService:DateFormatService) {}
   ngOnInit(): void {
     if (this.isEditForm) {//Edit form
       
@@ -84,5 +85,21 @@ export class TaskFormComponent implements OnInit {
       this.dateButtonPressed = true;
       this.dateToogleChecked = true;
     }
+  }
+  toIsoString(date: Date) {
+    let tzo = -date.getTimezoneOffset(),
+        dif = tzo >= 0 ? '+' : '-',
+        pad = function(num: number) {
+            return (num < 10 ? '0' : '') + num;
+        };
+  
+    return date.getFullYear() +
+        '-' + pad(date.getMonth() + 1) +
+        '-' + pad(date.getDate()) +
+        'T' + pad(date.getHours()) +
+        ':' + pad(date.getMinutes()) +
+        ':' + pad(date.getSeconds()) +
+        dif + pad(Math.floor(Math.abs(tzo) / 60)) +
+        ':' + pad(Math.abs(tzo) % 60);
   }
 }
