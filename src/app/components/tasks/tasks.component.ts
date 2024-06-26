@@ -1,3 +1,4 @@
+import { TaskStylesService } from './../../services/task-styles/task-styles.service';
 
 import { Component, EventEmitter, Input, Output, ViewChild, WritableSignal, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -35,7 +36,9 @@ export class TasksComponent  {
   @ViewChild(IonModal) FormEditModal!: IonModal;
   
 
-  constructor(private actionSheetCtrl: ActionSheetController, private storage: StorageService) {}
+  constructor(private actionSheetCtrl: ActionSheetController,
+     private storage: StorageService,
+    private taskStylesService: TaskStylesService) {}
 
   deleteTask(id: number) {
       this.taskIdDeleteEmitted.emit(id);
@@ -51,53 +54,15 @@ export class TasksComponent  {
     slidingItem.close();
   }
   priorityColor(priority: string): string{
-    if(priority === 'H'){
-      return 'danger';
-    }else if(priority === 'M'){
-      return 'warning';
-    }else{
-      return 'success';
-    } 
+    return this.taskStylesService.priorityColor(priority);
   }
   tagIcon(tag:string):string{
-    switch(tag){
-      case 'Work':
-        return 'hammer-outline';
-      case 'Personal':
-        return 'person-outline';
-      case 'Study':
-        return 'book-outline';
-      case 'Home':
-        return 'home-outline';
-      case 'Finance':
-        return 'cash-outline';
-      case 'Health':
-        return 'medkit-outline';
-      case 'Leisure':
-        return 'beer-outline';
-      default:
-        return 'help-circle-outline';
-    }
+   
+    return this.taskStylesService.tagIcon(tag);
   }
   tagIconColor(tag:string):string{
-    switch(tag){
-      case 'Work':
-        return 'primary';
-      case 'Personal':
-        return 'secondary';
-      case 'Study':
-        return 'terciary';
-      case 'Home':
-        return 'warning';
-      case 'Finance':
-        return 'success';
-      case 'Health':
-        return 'danger';
-      case 'Leisure':
-        return 'dark';
-      default:
-        return 'medium';
-    }
+  
+    return this.taskStylesService.tagIconColor(tag);
   }
   async openActionSheet(task: Task, slidingItem: IonItemSliding) {
     const actionSheet = await this.actionSheetCtrl.create({
