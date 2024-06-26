@@ -71,7 +71,7 @@
     </ion-header>
 
     <ion-content>
-      <app-task-details [task]="task"></app-task-details>  <!-- TASK DETAILS COMPONENT -->
+      <app-task-details [task]="task" (modalDismissEmitter)="dismissModalDetails($event)"></app-task-details>  <!-- TASK DETAILS COMPONENT -->
     </ion-content>
 
     <ion-footer>

@@ -313,6 +313,11 @@ export class CalendarPage implements OnInit {
     this.modalDetailsTrigger = false;
     this.detailsModal.dismiss(this.task, 'cancel');
   }
+  dismissModalDetails(action: string){
+    if(action === 'close'){
+      this.closeModalDetails();
+    }
+  }
 
   //MODAL new form
   // isModalFormOpen() {

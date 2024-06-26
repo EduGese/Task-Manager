@@ -31,23 +31,31 @@ export class CompletedTasksPage implements OnInit {
           })
         )
         .subscribe((data) => {
-          this.taskList = data
-            .filter((task: Task) => task.done !== 0)
-            .map((task: Task) => ({
-              ...task,
-              due_date: new Date(task.due_date),
-            }))
-            .sort(
-              (a: any, b: any) => a.due_date.getTime() - b.due_date.getTime()
-            )
-            .map((task: any) => ({
-              ...task,
-              due_date: task.due_date.toString(),
-            }));
+          console.log('tasksList en com[pleted-taskPage',data);
+          this.taskList =  this.sortTaskList(data);
         });
+         console.log('TaskList en completed-task.page after filter',this.taskList)
     } catch (err) {
       throw new Error(`Error: ${err}`);
     }
+  }
+  sortTaskList(data: Task[]): Task[] {
+    const taskDateList = data
+      .filter((task: Task) => task.done !== 0 && task.due_date !== '')
+      .map((task: Task) => ({
+        ...task,
+        due_date: new Date(task.due_date),
+      }))
+      .sort((a: any, b: any) => a.due_date.getTime() - b.due_date.getTime())
+      .map((task: any) => ({
+        ...task,
+        due_date: task.due_date.toISOString(),
+      }));
+
+    const taskNoDateList = data.filter(
+      (task: Task) => task.done !== 0 && task.due_date === ''
+    );
+    return  [...taskDateList, ...taskNoDateList];
   }
   deleteTask(id: number) {
     if (id) {
@@ -61,9 +69,7 @@ export class CompletedTasksPage implements OnInit {
     }else{
       this.storage.updateTaskStatusById(task.id.toString(), false);
     }
-    // if (id) {
-    //   this.storage.updateTaskStatusById(id.toString());
-    // }
+ 
   }
 
 }

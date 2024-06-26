@@ -41,6 +41,7 @@ export class TasksComponent  {
       this.taskIdDeleteEmitted.emit(id);
   }
   completeTask(task: Task, slidingItem: IonItemSliding) {
+    console.log('complete', task);
     this.taskCompleteEmitted.emit(task);
     slidingItem.close();
 
@@ -131,8 +132,9 @@ export class TasksComponent  {
     actionSheet.present();
 
     }
-
+// MODAL details
   openModalDetails(task: Task) {
+    console.log('openModalDetails at task.component', task)
     this.modalDetailsTrigger = true;
     this.task = task;
   }
@@ -141,7 +143,13 @@ export class TasksComponent  {
     this.modalDetailsTrigger = false;
     this.detailsModal.dismiss(this.task,'cancel')
   }
+  dismissModalDetails(action: string){
+    if(action === 'close'){
+      this.closeModalDetails();
+    }
+  }
 
+  //MODAL editForm
   openModalEditForm(task: Task) {
     console.log('openModalEditForm at task.component', task)
     this.modalFormTrigger = true;

@@ -1,8 +1,9 @@
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Task } from 'src/app/models/task';
 import { StorageService } from 'src/app/services/storage.service';
+
 
 @Component({
   selector: 'app-task-details',
@@ -13,6 +14,7 @@ import { StorageService } from 'src/app/services/storage.service';
 })
 export class TaskDetailsComponent {
   @Input () task!: Task;
+  @Output() modalDismissEmitter: EventEmitter<string> = new EventEmitter();
 
   constructor(private storage: StorageService) { }
  
@@ -69,6 +71,7 @@ export class TaskDetailsComponent {
   deleteTask(id: number) {
     if (id) {
       this.storage.deleteTaskById(id.toString());
+      this.modalDismissEmitter.emit('close');
     }
   }
 

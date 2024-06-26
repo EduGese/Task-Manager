@@ -13,8 +13,7 @@
       </div>
 
     </ion-item>
-    <!-- <ion-item> -->
-      <!-- <ion-label color="primary">Date end</ion-label> -->
+
       @if (task.due_date !== '') {
         <ion-item>
           <ion-label color="primary">Date end</ion-label>
@@ -34,7 +33,7 @@
           <ion-text color="medium">No date has been set</ion-text>
         </ion-item>
       }
-    <!-- </ion-item> -->
+
     <ion-item>
       <ion-label color="primary">Priority</ion-label>
       <ion-chip [color]="priorityColor(task.priority)">
