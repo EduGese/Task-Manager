@@ -2,6 +2,7 @@ import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { Task } from 'src/app/models/task';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-task-details',
@@ -13,7 +14,7 @@ import { Task } from 'src/app/models/task';
 export class TaskDetailsComponent {
   @Input () task!: Task;
 
-  constructor() { }
+  constructor(private storage: StorageService) { }
  
  
   priorityColor(priority: string): string{
@@ -63,6 +64,11 @@ export class TaskDetailsComponent {
         return 'dark';
       default:
         return 'medium';
+    }
+  }
+  deleteTask(id: number) {
+    if (id) {
+      this.storage.deleteTaskById(id.toString());
     }
   }
 
