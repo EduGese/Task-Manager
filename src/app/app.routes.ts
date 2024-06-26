@@ -14,4 +14,8 @@ export const routes: Routes = [
     path: 'completed-tasks',
     loadComponent: () => import('./pages/completed-tasks/completed-tasks.page').then( m => m.CompletedTasksPage)
   },
+  {
+    path: 'calendar',
+    loadComponent: () => import('./pages/calendar/calendar.page').then( m => m.CalendarPage)
+  },
 ];

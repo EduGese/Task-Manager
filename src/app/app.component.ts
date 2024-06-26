@@ -7,6 +7,7 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { StorageService } from './services/storage.service';
 import { Task } from './models/task'
 import { SegmentNavigationComponent } from './components/segment-navigation/segment-navigation.component';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 
 @Component({

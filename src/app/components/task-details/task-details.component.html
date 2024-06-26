@@ -47,11 +47,27 @@
       <ion-icon size="medium" [name]="tagIcon(task.tag)" class="ion-no-margin"
       [color]="tagIconColor(task.tag)"></ion-icon>
     </ion-item>
-    @if (task.due_date !== '') {
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-button color="danger" (click)="deleteTask(task.id)">
+            <ion-label>Delete</ion-label>
+            <ion-icon name="trash"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <ion-col>
+
+        </ion-col>
+        <ion-col>
+
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <!-- @if (task.due_date !== '') {
     <ion-item>
       <ion-datetime  disabled="true" [value]="task.due_date"></ion-datetime>
     </ion-item>
     
-    }
+    } -->
     
   
