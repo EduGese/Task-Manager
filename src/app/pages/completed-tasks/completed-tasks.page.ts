@@ -4,6 +4,7 @@ import { TasksComponent } from '../../components/tasks/tasks.component';
 import { StorageService } from '../../services/storage.service';
 import { Task } from '../../models/task';
 import { of, switchMap } from 'rxjs';
+import { TaskFilterService } from 'src/app/services/task-filter/task-filter.service';
 
 
 @Component({
@@ -15,7 +16,8 @@ import { of, switchMap } from 'rxjs';
 })
 export class CompletedTasksPage implements OnInit {
   taskList: Task[] = [];
-  constructor( private storage: StorageService) { }
+
+  constructor( private storage: StorageService,  private taskFilterService: TaskFilterService) { }
 
   ngOnInit(): void {
     try {
@@ -32,30 +34,12 @@ export class CompletedTasksPage implements OnInit {
         )
         .subscribe((data) => {
           console.log('tasksList en com[pleted-taskPage',data);
-          this.taskList =  this.sortTaskList(data);
+          this.taskList = this.taskFilterService.sortTaskList(data, 0)
         });
          console.log('TaskList en completed-task.page after filter',this.taskList)
     } catch (err) {
       throw new Error(`Error: ${err}`);
     }
-  }
-  sortTaskList(data: Task[]): Task[] {
-    const taskDateList = data
-      .filter((task: Task) => task.done !== 0 && task.due_date !== '')
-      .map((task: Task) => ({
-        ...task,
-        due_date: new Date(task.due_date),
-      }))
-      .sort((a: any, b: any) => a.due_date.getTime() - b.due_date.getTime())
-      .map((task: any) => ({
-        ...task,
-        due_date: task.due_date.toISOString(),
-      }));
-
-    const taskNoDateList = data.filter(
-      (task: Task) => task.done !== 0 && task.due_date === ''
-    );
-    return  [...taskDateList, ...taskNoDateList];
   }
   deleteTask(id: number) {
     if (id) {
@@ -69,7 +53,5 @@ export class CompletedTasksPage implements OnInit {
     }else{
       this.storage.updateTaskStatusById(task.id.toString(), false);
     }
- 
   }
-
 }
