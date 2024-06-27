@@ -1,4 +1,4 @@
-import { CommonModule, WeekDay } from '@angular/common';
+import { CommonModule} from '@angular/common';
 import { Component, ViewChild, OnInit, TemplateRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, IonModal } from '@ionic/angular';
@@ -8,7 +8,6 @@ import {
   CalendarDateFormatter,
   CalendarDayModule,
   CalendarEvent,
-  CalendarEventAction,
   CalendarEventTimesChangedEvent,
   CalendarEventTitleFormatter,
   CalendarModule,
@@ -20,7 +19,7 @@ import {
 } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { EventColor } from 'calendar-utils';
-import { addDays, addHours, endOfDay, endOfMonth, isSameDay, isSameMonth, startOfDay, subDays } from 'date-fns';
+import {  isSameDay, isSameMonth } from 'date-fns';
 import { Subject, of, switchMap } from 'rxjs';
 import {  ActionSheetController } from '@ionic/angular/standalone';
 import { animate, state, style, transition, trigger } from '@angular/animations';
@@ -82,12 +81,8 @@ const colors: Record<string, EventColor> = {
   ],
 })
 export class CalendarPage implements OnInit {
-  // viewDate: Date = new Date();
-  // events: CalendarEvent[] = [];
-  // view: CalendarView = CalendarView.Month;
-  // CalendarView = CalendarView;
-  // activeDayIsOpen!: boolean;
   timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
   //TASKS Properties
   taskList!: Task[];
   task: Task = {
@@ -119,66 +114,10 @@ export class CalendarPage implements OnInit {
   };
   activeDayIsOpen: boolean = true;
   customHeader!: TemplateRef<any>;
-  // actions: CalendarEventAction[] = [
-  //   {
-  //     label: '<button>Edit</button>',
-  //     a11yLabel: 'Edit',
-  //     onClick: ({ event }: { event: CalendarEvent }): void => {
-  //       this.handleEvent('Edited', event);
-  //     },
-  //   },
-  //   {
-  //     label: '<i class="fas fa-fw fa-trash-alt"></i>',
-  //     a11yLabel: 'Delete',
-  //     onClick: ({ event }: { event: CalendarEvent }): void => {
-  //       this.events = this.events.filter((iEvent) => iEvent !== event);
-  //       this.handleEvent('Deleted', event);
-  //     },
-  //   },
-  // ];
 
   refresh = new Subject<void>();
 
-  events: CalendarEvent[] = [
-    // {
-    //   start: subDays(startOfDay(new Date()), 1),
-    //   end: addDays(new Date(), 1),
-    //   title: 'A 3 day event',
-    //   color: { ...colors['red'] },
-    //   actions: this.actions,
-    //   allDay: true,
-    //   resizable: {
-    //     beforeStart: true,
-    //     afterEnd: true,
-    //   },
-    //   draggable: true,
-    // },
-    // {
-    //   start: startOfDay(new Date()),
-    //   title: 'An event with no end date',
-    //   color: { ...colors['yellow'] },
-    //   actions: this.actions,
-    // },
-    // {
-    //   start: subDays(endOfMonth(new Date()), 3),
-    //   end: addDays(endOfMonth(new Date()), 3),
-    //   title: 'A long event that spans 2 months',
-    //   color: { ...colors['blue'] },
-    //   allDay: true,
-    // },
-    // {
-    //   start: addHours(startOfDay(new Date()), 2),
-    //   end: addHours(new Date(), 2),
-    //   title: 'A draggable and resizable event',
-    //   color: { ...colors['yellow'] },
-    //   actions: this.actions,
-    //   resizable: {
-    //     beforeStart: true,
-    //     afterEnd: true,
-    //   },
-    //   draggable: true,
-    // },
-  ];
+  events: CalendarEvent[] = [];
 
   constructor(
     private actionSheetCtrl: ActionSheetController,
@@ -214,7 +153,7 @@ export class CalendarPage implements OnInit {
   }
 
   //CALENDAR functions//
- 
+
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
       if (
@@ -254,27 +193,6 @@ export class CalendarPage implements OnInit {
     this.openModalDetails();
   }
 
-  // addEvent(): void {
-  //   this.events = [
-  //     ...this.events,
-  //     {
-  //       title: 'New event',
-  //       start: startOfDay(new Date()),
-  //       end: endOfDay(new Date()),
-  //       color: colors['red'],
-  //       draggable: true,
-  //       resizable: {
-  //         beforeStart: true,
-  //         afterEnd: true,
-  //       },
-  //     },
-  //   ];
-  // }
-
-  // deleteEvent(eventToDelete: CalendarEvent) {
-  //   this.events = this.events.filter((event) => event !== eventToDelete);
-  // }
-
   setView(view: CalendarView) {
     this.view = view;
   }
@@ -297,25 +215,4 @@ export class CalendarPage implements OnInit {
       this.closeModalDetails();
     }
   }
-
-  //MODAL new form
-  // isModalFormOpen() {
-  //   this.modalFormTrigger = true;
-  // }
-  // closeModalEditForm() {
-  //   this.modalFormTrigger = false;
-  // }
-  // editTask(task: Task) {
-  //   task = this.task;
-  //   console.log('editTask at task.component', task);
-  //   this.storage.updateTaskById(
-  //     task.id.toString(),
-  //     task.name,
-  //     task.description,
-  //     task.priority,
-  //     task.tag,
-  //     task.due_date
-  //   );
-  //   this.closeModalEditForm();
-  // }
 }
