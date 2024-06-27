@@ -46,27 +46,63 @@
       <ion-icon size="medium" [name]="tagIcon(task.tag)" class="ion-no-margin"
       [color]="tagIconColor(task.tag)"></ion-icon>
     </ion-item>
+    <ion-item>
+      <ion-label color="primary">State</ion-label>
+        @if (task.done) {
+            <ion-chip color="success" outline="true" >Completed</ion-chip>
+        }@else {
+            <ion-chip color="warning" outline="true" >Uncomplete</ion-chip>
+        }
+    </ion-item>
+
     <ion-grid>
       <ion-row>
-        <ion-col>
-          <ion-button color="danger" (click)="deleteTask(task.id)">
-            <ion-label>Delete</ion-label>
-            <ion-icon name="trash"></ion-icon>
+        <ion-col class=" ion-no-margin">
+          <ion-button [color]="task.done ? 'warning' : 'success'" (click)="completeTask(task)">
+            <ion-label position="fixed">
+              @if (task.done) {
+              Incomplete
+              }@else {
+              Complete
+              }
+            </ion-label>
+            <ion-icon [name]="task.done ? 'close-outline' : 'checkmark-outline'"></ion-icon>
           </ion-button>
         </ion-col>
-        <ion-col>
 
-        </ion-col>
-        <ion-col>
-
+        <ion-col class=" ion-no-margin">
+          <ion-button  color="primary" (click)="openModalEditForm(task)">
+            <ion-label position="fixed">Edit</ion-label>
+            <ion-icon name="create-outline"></ion-icon>
+          </ion-button>
         </ion-col>
       </ion-row>
+
+      <ion-row class="ion-justify-content-center">
+        <ion-button  color="danger" (click)="deleteTask(task.id)">
+          <ion-label position="fixed">Delete</ion-label>
+          <ion-icon name="trash"></ion-icon>
+        </ion-button>
+      </ion-row>
     </ion-grid>
-    <!-- @if (task.due_date !== '') {
-    <ion-item>
-      <ion-datetime  disabled="true" [value]="task.due_date"></ion-datetime>
-    </ion-item>
     
-    } -->
-    
+
+     <!-- Modal FormEdit-->
+
+<ion-modal [isOpen]="modalFormTrigger" >
+  <ng-template>
+    <ion-header >
+      <ion-toolbar color="primary">
+        <ion-title>New task</ion-title>
+        <ion-buttons slot="end" >
+          <ion-icon size="large" name="close-circle-outline" (click)="closeModalEditForm()"></ion-icon>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content [fullscreen]="true">
+      <app-task-form [isEditForm]="isEditForm" [task]="task" (taskEmitted)="editTask($event)"></app-task-form> <!-- TASK FROM COMPONENT -->
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
   

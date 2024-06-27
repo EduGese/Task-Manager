@@ -42,6 +42,10 @@ const colors: Record<string, EventColor> = {
     primary: '#e3bc08',
     secondary: '#FDF1BA',
   },
+  green:{
+    primary: '#2dd55b',
+    secondary: '#28bb50',
+  }
 };
 
 
@@ -142,7 +146,7 @@ export class CalendarPage implements OnInit {
             id: task.id,
             title: task.name,
             start: new Date(task.due_date),
-            color: task.done ? colors['blue'] : colors['red'],
+            color: task.done ? colors['green'] : colors['yellow'],
             //actions: this.actions,
           }));
         });

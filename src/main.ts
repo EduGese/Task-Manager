@@ -24,6 +24,8 @@ import { enableProdMode, importProvidersFrom, APP_INITIALIZER } from '@angular/c
         pencilOutline,
         chevronBackOutline,
         chevronForwardOutline,
+        checkmarkOutline,
+        closeOutline,
         } from 'ionicons/icons'; 
    
      if (environment.production) {
@@ -77,7 +79,9 @@ import { enableProdMode, importProvidersFrom, APP_INITIALIZER } from '@angular/c
         'timer-outline': timerOutline,
         'chevron-fordward-outline': chevronForwardOutline,  
         'chevron-back-outline': chevronBackOutline,
-        "pencil-outline": pencilOutline,   
+        "pencil-outline": pencilOutline, 
+        'checkmark-outline': checkmarkOutline, 
+        'close-outline': closeOutline
       });
 
      bootstrapApplication(AppComponent, {
