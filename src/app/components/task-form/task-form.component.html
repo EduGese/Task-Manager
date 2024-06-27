@@ -34,7 +34,7 @@
     <ion-toggle [checked]="dateToogleChecked ? 'true' : 'false'" (click)="addDate()"></ion-toggle>
    </ion-item>
    <ion-item *ngIf="this.dateButtonPressed">
-    <ion-datetime formControlName="due_date" presentation="date-time" [min]="dateNow"></ion-datetime>
+    <ion-datetime formControlName="due_date" presentation="date-time" [min]="dateNow" [firstDayOfWeek]="1" hourCycle="h24"></ion-datetime>
   </ion-item> 
   <div class="button-container">
     <ion-button type="submit" [disabled]="!taskForm.valid">Save</ion-button>

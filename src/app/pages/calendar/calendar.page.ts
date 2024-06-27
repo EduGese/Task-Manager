@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { CommonModule, WeekDay } from '@angular/common';
+import { Component, ViewChild, OnInit, TemplateRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, IonModal } from '@ionic/angular';
 import {
@@ -100,6 +100,7 @@ export class CalendarPage implements OnInit {
     creation_date: '',
     due_date: '',
   };
+  days: string[] = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 
   //MODALS properties
   modalFormTrigger: boolean = false;
@@ -116,7 +117,8 @@ export class CalendarPage implements OnInit {
     action: string;
     event: CalendarEvent;
   };
-
+  activeDayIsOpen: boolean = true;
+  customHeader!: TemplateRef<any>;
   // actions: CalendarEventAction[] = [
   //   {
   //     label: '<button>Edit</button>',
@@ -178,8 +180,6 @@ export class CalendarPage implements OnInit {
     // },
   ];
 
-  activeDayIsOpen: boolean = true;
-
   constructor(
     private actionSheetCtrl: ActionSheetController,
     private storage: StorageService
@@ -214,11 +214,8 @@ export class CalendarPage implements OnInit {
   }
 
   //CALENDAR functions//
-
+ 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-    // this.task.due_date = this.toIsoString(date);
-    // console.log('task', this.task);
-    // this.isModalFormOpen();
     if (isSameMonth(date, this.viewDate)) {
       if (
         (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
@@ -253,7 +250,6 @@ export class CalendarPage implements OnInit {
   async handleEvent(action: string, event: CalendarEvent): Promise<void> {
     console.log('handleEvent', action, event);
     this.modalData = { event, action };
-    //this.modal.open(this.modalContent, { size: 'lg' });
     this.task = this.taskList.find((task) => task.id === event.id)!;
     this.openModalDetails();
   }
@@ -287,7 +283,6 @@ export class CalendarPage implements OnInit {
     this.activeDayIsOpen = false;
   }
 
-
   //MODAL FUNCTIONS//
 
   openModalDetails() {
@@ -297,8 +292,8 @@ export class CalendarPage implements OnInit {
     this.modalDetailsTrigger = false;
     this.detailsModal.dismiss(this.task, 'cancel');
   }
-  dismissModalDetails(action: string){
-    if(action === 'close'){
+  dismissModalDetails(action: string) {
+    if (action === 'close') {
       this.closeModalDetails();
     }
   }
