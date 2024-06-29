@@ -20,8 +20,7 @@ export class TaskDetailsComponent {
   @Output() modalDismissEmitter: EventEmitter<string> = new EventEmitter();
   
   //Modals
-  isOpen = false;
-  modalFormTrigger: boolean = false;
+
   @ViewChild(IonModal) FormEditModal!: IonModal;
   isEditForm = true;
 
@@ -47,13 +46,9 @@ export class TaskDetailsComponent {
     }
   }
   //MODAL editForm
-  openModalEditForm(task: Task) {
-    this.modalFormTrigger = true;
-    this.task = task;
-  }
-  
+
   closeModalEditForm() {
-    this.modalFormTrigger = false;
+    
     this.FormEditModal.dismiss(this.task,'cancel')
   }
   editTask(task:Task){
@@ -66,7 +61,7 @@ export class TaskDetailsComponent {
       task.tag,
       task.due_date
     )
-    this.closeModalEditForm();
+    this.FormEditModal.dismiss(null,'cancel')
   }
   completeTask(task: Task) {
     if (task.done === 0) {

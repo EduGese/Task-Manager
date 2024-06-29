@@ -71,7 +71,7 @@
         </ion-col>
 
         <ion-col class=" ion-no-margin">
-          <ion-button  color="primary" (click)="openModalEditForm(task)">
+          <ion-button id="open-editModal"  color="primary" >
             <ion-label position="fixed">Edit</ion-label>
             <ion-icon name="create-outline"></ion-icon>
           </ion-button>
@@ -89,7 +89,7 @@
 
      <!-- Modal FormEdit-->
 
-<ion-modal [isOpen]="modalFormTrigger" >
+<ion-modal trigger="open-editModal" >
   <ng-template>
     <ion-header >
       <ion-toolbar color="primary">
