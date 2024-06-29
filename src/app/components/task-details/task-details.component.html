@@ -1,90 +1,106 @@
-     @if (task.description !== '') {
-      <ion-item>{{task.description}}</ion-item>
-    }@else {
-      <ion-item ><ion-text color="medium">No description</ion-text>
-        </ion-item>
-    }
-    
-    <ion-item>
-      <ion-label color="primary">Date creation</ion-label>
-      <div class="date">
-        <span>{{ task.creation_date | date:' E'}} </span> , <span>{{ task.creation_date | date:'d'}}</span> of <span>{{task.creation_date |
-          date:"LLL"}} </span> of <span> {{ task.creation_date | date:'YYYY' }}</span>
-      </div>
-
-    </ion-item>
-
-      @if (task.due_date !== '') {
-        <ion-item>
-          <ion-label color="primary">Date end</ion-label>
-          <div class="date">
-            <span>{{ task.due_date | date:' E'}} </span> , <span>{{ task.due_date | date:'d'}}</span> of <span>{{task.due_date |
-              date:"LLL"}} </span> of <span> {{ task.due_date | date:'YYYY' }}</span>
-          </div>
-        </ion-item>
-        <ion-item>
-          <ion-label color="primary">Time end</ion-label>
-          <span>{{ task.due_date | date: 'HH:mm'}}</span>
-        </ion-item>
-        
+     
+     <ion-header>
+      <ion-toolbar color="primary">
+        <ion-title>{{task.name}}</ion-title>
+      </ion-toolbar>
+    </ion-header>
+     
+     <ion-content>
+      @if (task.description !== '') {
+        <ion-item>{{task.description}}</ion-item>
       }@else {
-        <ion-item >
-          <ion-label color="primary">Date end</ion-label>
-          <ion-text color="medium">No date has been set</ion-text>
-        </ion-item>
+        <ion-item ><ion-text color="medium">No description</ion-text>
+          </ion-item>
       }
-
-    <ion-item>
-      <ion-label color="primary">Priority</ion-label>
-      <ion-chip [color]="priorityColor(task.priority)">
-        <ion-label>{{ task.priority }}</ion-label>
-      </ion-chip>
-    </ion-item>
-    <ion-item>
-      <ion-label color="primary">Tag</ion-label>
-      <ion-text [color]="tagIconColor(task.tag)" class="ion-margin-end">{{ task.tag }}</ion-text>
-      <ion-icon size="medium" [name]="tagIcon(task.tag)" class="ion-no-margin"
-      [color]="tagIconColor(task.tag)"></ion-icon>
-    </ion-item>
-    <ion-item>
-      <ion-label color="primary">State</ion-label>
-        @if (task.done) {
-            <ion-chip color="success" outline="true" >Completed</ion-chip>
+      
+      <ion-item>
+        <ion-label color="primary">Date creation</ion-label>
+        <div class="date">
+          <span>{{ task.creation_date | date:' E'}} </span> , <span>{{ task.creation_date | date:'d'}}</span> of <span>{{task.creation_date |
+            date:"LLL"}} </span> of <span> {{ task.creation_date | date:'YYYY' }}</span>
+        </div>
+  
+      </ion-item>
+  
+        @if (task.due_date !== '') {
+          <ion-item>
+            <ion-label color="primary">Date end</ion-label>
+            <div class="date">
+              <span>{{ task.due_date | date:' E'}} </span> , <span>{{ task.due_date | date:'d'}}</span> of <span>{{task.due_date |
+                date:"LLL"}} </span> of <span> {{ task.due_date | date:'YYYY' }}</span>
+            </div>
+          </ion-item>
+          <ion-item>
+            <ion-label color="primary">Time end</ion-label>
+            <span>{{ task.due_date | date: 'HH:mm'}}</span>
+          </ion-item>
+          
         }@else {
-            <ion-chip color="warning" outline="true" >Uncomplete</ion-chip>
+          <ion-item >
+            <ion-label color="primary">Date end</ion-label>
+            <ion-text color="medium">No date has been set</ion-text>
+          </ion-item>
         }
-    </ion-item>
-
-    <ion-grid>
-      <ion-row>
-        <ion-col class=" ion-no-margin">
-          <ion-button [color]="task.done ? 'warning' : 'success'" (click)="completeTask(task)">
-            <ion-label position="fixed">
-              @if (task.done) {
-              Incomplete
-              }@else {
-              Complete
-              }
-            </ion-label>
-            <ion-icon [name]="task.done ? 'close-outline' : 'checkmark-outline'"></ion-icon>
+  
+      <ion-item>
+        <ion-label color="primary">Priority</ion-label>
+        <ion-chip [color]="priorityColor(task.priority)">
+          <ion-label>{{ task.priority }}</ion-label>
+        </ion-chip>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary">Tag</ion-label>
+        <ion-text [color]="tagIconColor(task.tag)" class="ion-margin-end">{{ task.tag }}</ion-text>
+        <ion-icon size="medium" [name]="tagIcon(task.tag)" class="ion-no-margin"
+        [color]="tagIconColor(task.tag)"></ion-icon>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary">State</ion-label>
+          @if (task.done) {
+              <ion-chip color="success" outline="true" >Completed</ion-chip>
+          }@else {
+              <ion-chip color="warning" outline="true" >Uncomplete</ion-chip>
+          }
+      </ion-item>
+  
+      <ion-grid>
+        <ion-row>
+          <ion-col class=" ion-no-margin">
+            <ion-button [color]="task.done ? 'warning' : 'success'" (click)="completeTask(task)">
+              <ion-label position="fixed">
+                @if (task.done) {
+                Incomplete
+                }@else {
+                Complete
+                }
+              </ion-label>
+              <ion-icon [name]="task.done ? 'close-outline' : 'checkmark-outline'"></ion-icon>
+            </ion-button>
+          </ion-col>
+  
+          <ion-col class=" ion-no-margin">
+            <ion-button id="open-editModal"  color="primary" >
+              <ion-label position="fixed">Edit</ion-label>
+              <ion-icon name="create-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+  
+        <ion-row class="ion-justify-content-center">
+          <ion-button  color="danger" (click)="deleteTask(task.id)">
+            <ion-label position="fixed">Delete</ion-label>
+            <ion-icon name="trash"></ion-icon>
           </ion-button>
-        </ion-col>
-
-        <ion-col class=" ion-no-margin">
-          <ion-button id="open-editModal"  color="primary" >
-            <ion-label position="fixed">Edit</ion-label>
-            <ion-icon name="create-outline"></ion-icon>
-          </ion-button>
-        </ion-col>
-      </ion-row>
-
-      <ion-row class="ion-justify-content-center">
-        <ion-button  color="danger" (click)="deleteTask(task.id)">
-          <ion-label position="fixed">Delete</ion-label>
-          <ion-icon name="trash"></ion-icon>
-        </ion-button>
-      </ion-row>
-    </ion-grid>
+        </ion-row>
+      </ion-grid>
+     </ion-content>
+     <ion-footer>
+      <ion-grid>
+        <ion-row class="ion-justify-content-center">
+          <ion-icon size="large" name="close-circle" color="primary" (click)="closeModalDetails()"></ion-icon>
+        </ion-row>
+      </ion-grid>
+    </ion-footer>
     
 
      <!-- Modal FormEdit-->

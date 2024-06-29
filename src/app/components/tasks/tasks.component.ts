@@ -1,13 +1,10 @@
 import { TaskStylesService } from './../../services/task-styles/task-styles.service';
-
-import { Component, EventEmitter, Input, Output, ViewChild, WritableSignal, signal } from '@angular/core';
+import { Component, EventEmitter, Input, Output} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonicModule, IonModal } from '@ionic/angular';
-import { FormsModule} from '@angular/forms';
+import { IonicModule, ModalController } from '@ionic/angular';
 import { Task } from '../../models/task';
-import {  ActionSheetController } from '@ionic/angular/standalone';
+import { ActionSheetController } from '@ionic/angular/standalone';
 import { TaskFormComponent } from "../task-form/task-form.component";
-import { StorageService } from 'src/app/services/storage.service';
 import { TaskDetailsComponent } from '../task-details/task-details.component';
 import { IonItemSliding } from '@ionic/angular';
 
@@ -21,7 +18,6 @@ import { IonItemSliding } from '@ionic/angular';
   imports: [
     CommonModule,
     IonicModule,
-    FormsModule,
     TaskFormComponent,
     TaskDetailsComponent,
   ],
@@ -33,35 +29,12 @@ export class TasksComponent {
   task: Task = {} as Task;
   isEditForm = true;
 
-  //Modals
-  isOpen = false;
-  modalDetailsTrigger: boolean = false;
-  modalFormTrigger: boolean = false;
-  @ViewChild(IonModal) detailsModal!: IonModal;
-  @ViewChild(IonModal) FormEditModal!: IonModal;
-
   constructor(
     private actionSheetCtrl: ActionSheetController,
-    private storage: StorageService,
-    private taskStylesService: TaskStylesService
+    private taskStylesService: TaskStylesService,
+    private modalCtrl: ModalController
   ) {}
 
-  completeTask(task: Task, slidingItem: IonItemSliding) {
-    this.taskCompleteEmitted.emit(task);
-    slidingItem.close();
-  }
-
-  editTask(task: Task) {
-    this.storage.updateTaskById(
-      task.id.toString(),
-      task.name,
-      task.description,
-      task.priority,
-      task.tag,
-      task.due_date
-    );
-    this.closeModalEditForm();
-  }
   priorityColor(priority: string): string {
     return this.taskStylesService.priorityColor(priority);
   }
@@ -72,10 +45,10 @@ export class TasksComponent {
     return this.taskStylesService.tagIconColor(tag);
   }
 
-    // ActionSheet functions
-  async openActionSheet(task: Task, slidingItem: IonItemSliding) {
+  // ActionSheet functions
+  async openActionSheet(task: Task) {
     const actionSheet = await this.actionSheetCtrl.create({
-      header: `${task.name} `,
+      header: `You are going to delete ${task.name} `,
       buttons: [
         {
           text: 'Delete',
@@ -83,13 +56,6 @@ export class TasksComponent {
           icon: 'trash',
           handler: () => {
             this.deleteTask(task.id);
-          },
-        },
-        {
-          text: 'Edit',
-          icon: 'create-outline',
-          handler: () => {
-            this.updateTask(task, slidingItem);
           },
         },
         {
@@ -109,36 +75,33 @@ export class TasksComponent {
   deleteTask(id: number) {
     this.taskIdDeleteEmitted.emit(id);
   }
-  updateTask(task: Task, slidingItem: IonItemSliding) {
-    this.openModalEditForm(task);
+  completeTask(task: Task, slidingItem: IonItemSliding) {
+    this.taskCompleteEmitted.emit(task);
     slidingItem.close();
   }
 
-
   // MODAL details
-  openModalDetails(task: Task) {
-    this.modalDetailsTrigger = true;
+  async openModalDetails(task: Task) {
     this.task = task;
-  }
-
-  closeModalDetails() {
-    this.modalDetailsTrigger = false;
-    this.detailsModal.dismiss(this.task, 'cancel');
-  }
-  dismissModalDetails(action: string) {
-    if (action === 'close') {
-      this.closeModalDetails();
-    }
+    const modal = await this.modalCtrl.create({
+      component: TaskDetailsComponent,
+      componentProps: {
+        task: this.task,
+        isEditForm: this.isEditForm,
+      },
+    });
+    await modal.present();
   }
 
   //MODAL editForm
-  openModalEditForm(task: Task) {
-    this.modalFormTrigger = true;
+  async openModalEditForm(task: Task) {
     this.task = task;
-  }
-
-  closeModalEditForm() {
-    this.modalFormTrigger = false;
-    this.FormEditModal.dismiss(this.task, 'cancel');
+    const modal = await this.modalCtrl.create({
+      component: TaskFormComponent,
+      componentProps: {
+        task: this.task,
+      },
+    });
+    await modal.present();
   }
 }

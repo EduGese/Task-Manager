@@ -1,4 +1,4 @@
-import { IonicModule, IonModal } from '@ionic/angular';
+import { IonicModule, IonModal, ModalController  } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { Task } from 'src/app/models/task';
@@ -26,7 +26,7 @@ export class TaskDetailsComponent {
 
   constructor(private storage: StorageService, 
     private taskStylesService: TaskStylesService,
-
+    private modalCtrl: ModalController
   ) { }
  
  
@@ -44,6 +44,12 @@ export class TaskDetailsComponent {
       this.storage.deleteTaskById(id.toString());
       this.modalDismissEmitter.emit('close');
     }
+  }
+  //MODAL details
+  closeModalDetails() {
+    this.modalCtrl.dismiss({
+      'dismissed': true
+    });
   }
   //MODAL editForm
 
