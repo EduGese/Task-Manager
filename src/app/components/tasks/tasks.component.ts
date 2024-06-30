@@ -87,7 +87,6 @@ export class TasksComponent {
       component: TaskDetailsComponent,
       componentProps: {
         task: this.task,
-        isEditForm: this.isEditForm,
       },
     });
     await modal.present();

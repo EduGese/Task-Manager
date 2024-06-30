@@ -17,10 +17,9 @@ import { TaskFormComponent } from '../task-form/task-form.component';
 })
 export class TaskDetailsComponent {
   @Input () task!: Task;
-  @Output() modalDismissEmitter: EventEmitter<string> = new EventEmitter();
+ 
   
   //Modals
-
   @ViewChild(IonModal) FormEditModal!: IonModal;
   isEditForm = true;
 
@@ -42,7 +41,7 @@ export class TaskDetailsComponent {
   deleteTask(id: number) {
     if (id) {
       this.storage.deleteTaskById(id.toString());
-      this.modalDismissEmitter.emit('close');
+      this.closeModalDetails();
     }
   }
   //MODAL details
@@ -51,6 +50,7 @@ export class TaskDetailsComponent {
       'dismissed': true
     });
   }
+  
   //MODAL editForm
 
   closeModalEditForm() {

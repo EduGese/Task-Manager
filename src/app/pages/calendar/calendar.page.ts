@@ -1,7 +1,7 @@
 import { CommonModule} from '@angular/common';
 import { Component, ViewChild, OnInit, TemplateRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, IonModal } from '@ionic/angular';
+import { IonicModule, IonModal, ModalController } from '@ionic/angular';
 import {
   CalendarA11y,
   CalendarCommonModule,
@@ -125,7 +125,8 @@ export class CalendarPage implements OnInit {
 
   constructor(
     private actionSheetCtrl: ActionSheetController,
-    private storage: StorageService
+    private storage: StorageService,
+    private modalCtrl: ModalController
   ) {}
   ngOnInit(): void {
     try {
@@ -194,7 +195,7 @@ export class CalendarPage implements OnInit {
     console.log('handleEvent', action, event);
     this.modalData = { event, action };
     this.task = this.taskList.find((task) => task.id === event.id)!;
-    this.openModalDetails();
+    this.openModalDetails(this.task);
   }
 
   setView(view: CalendarView) {
@@ -206,17 +207,15 @@ export class CalendarPage implements OnInit {
   }
 
   //MODAL FUNCTIONS//
-
-  openModalDetails() {
-    this.modalDetailsTrigger = true;
+  async openModalDetails(task: Task) {
+    this.task = task;
+    const modal = await this.modalCtrl.create({
+      component: TaskDetailsComponent,
+      componentProps: {
+        task: this.task,
+      },
+    });
+    await modal.present();
   }
-  closeModalDetails() {
-    this.modalDetailsTrigger = false;
-    this.detailsModal.dismiss(this.task, 'cancel');
-  }
-  dismissModalDetails(action: string) {
-    if (action === 'close') {
-      this.closeModalDetails();
-    }
-  }
+ 
 }

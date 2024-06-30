@@ -69,29 +69,3 @@
   </tr>
 </ng-template>
 
-
-
-                                      <!-- Modal Details -->
-
-<ion-modal [isOpen]="modalDetailsTrigger">
-  <ng-template>
-    <ion-header>
-      <ion-toolbar color="primary">
-        <ion-title>{{task.name}}</ion-title>
-      </ion-toolbar>
-    </ion-header>
-
-    <ion-content>
-      <app-task-details [task]="task" (modalDismissEmitter)="dismissModalDetails($event)"></app-task-details> <!-- TASK DETAILS COMPONENT -->
-    </ion-content>
-
-    <ion-footer>
-      <ion-grid>
-        <ion-row class="ion-justify-content-center">
-          <ion-icon size="large" name="close-circle" color="primary" (click)="closeModalDetails()"></ion-icon>
-        </ion-row>
-      </ion-grid>
-    </ion-footer>
-  </ng-template>
-</ion-modal>
-
