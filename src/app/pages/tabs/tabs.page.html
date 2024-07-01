@@ -1,0 +1,53 @@
+ <ion-header [translucent]="true">
+  <ion-toolbar color="light">
+    <ion-title color="primary">
+      Tasks
+    </ion-title>
+    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  
+  <ion-fab  slot="fixed" vertical="top" horizontal="end" [edge]="true">
+      <ion-fab-button color="light" id="open-modal">
+      <ion-icon name="add-sharp"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-modal trigger="open-modal" >
+    <ng-template>
+      <ion-header >
+        <ion-toolbar color="primary">
+          <ion-title>New task</ion-title>
+          <ion-buttons slot="end" >
+            <ion-icon size="large" name="close-circle-outline" (click)="cancel()"></ion-icon>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content [fullscreen]="true">
+        <app-task-form (taskEmitted)="createTask($event)"></app-task-form>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ion-content>
+
+  <ion-tabs [environmentInjector]="environmentInjector">
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button tab="home">
+        <ion-icon name="list-circle-outline"></ion-icon>
+        <ion-label>Pending</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button tab="completed-tasks">
+        <ion-icon name="checkmark-done-outline"></ion-icon>
+        <ion-label>Completed</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button tab="calendar">
+        <ion-icon name="calendar-outline"></ion-icon>
+        <ion-label>Calendar</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  
+  </ion-tabs>

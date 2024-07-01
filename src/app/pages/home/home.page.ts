@@ -5,6 +5,7 @@ import { StorageService } from '../../services/storage.service';
 import { Task } from '../../models/task';
 import {  of, switchMap } from 'rxjs';
 import { TaskFilterService } from 'src/app/services/task-filter/task-filter.service';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
@@ -12,7 +13,7 @@ import { TaskFilterService } from 'src/app/services/task-filter/task-filter.serv
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   standalone: true,
-  imports: [IonicModule, TasksComponent],
+  imports: [IonicModule, CommonModule, TasksComponent],
 })
 export class HomePage implements OnInit {
   taskList: Task[] = [];

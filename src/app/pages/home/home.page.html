@@ -1,14 +1,6 @@
-<div class="ion-page">
-  <ion-content [fullscreen]="true">
-    <div class="ion-text-center">
-      <ion-text color="secondary">
-        <h2>
-          Pending
-        </h2>
-      </ion-text>
-    
-    </div>
+  <ion-header>
+    <ion-toolbar></ion-toolbar>
+  </ion-header>
+  <ion-content [fullscreen]="false">
     <app-tasks (taskIdDeleteEmitted)="deleteTask($event)" (taskCompleteEmitted)="completeTask($event)" [taskList]="taskList"></app-tasks>
   </ion-content>
-  
-</div>
