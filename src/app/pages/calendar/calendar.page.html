@@ -41,6 +41,7 @@
       (eventTimesChanged)="eventTimesChanged($event)"
       [weekStartsOn]="1"
       [headerTemplate]="customHeader"
+      [tooltipTemplate]="customToolTip"
     > 
     </mwl-calendar-month-view>
     <mwl-calendar-week-view
@@ -51,6 +52,7 @@
       (eventClicked)="handleEvent('Clicked', $event.event)"
       (eventTimesChanged)="eventTimesChanged($event)"
       [weekStartsOn]="1"
+      [tooltipTemplate]="customToolTip"
     >
     </mwl-calendar-week-view>
 
@@ -61,6 +63,7 @@
       [refresh]="refresh"
       (eventClicked)="handleEvent('Clicked', $event.event)"
       (eventTimesChanged)="eventTimesChanged($event)"
+      [tooltipTemplate]="customToolTip"
     >
     </mwl-calendar-day-view>
   </div>
@@ -70,5 +73,7 @@
   <tr >
     <th *ngFor="let day of days;"><ion-text [color]="day === 'S' ? 'danger' : 'medium'">{{ day }}</ion-text></th>
   </tr>
+</ng-template>
+<ng-template #customToolTip>
 </ng-template>
 

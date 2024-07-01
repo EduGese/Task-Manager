@@ -28,7 +28,6 @@ import { Task } from '../../models/task';
 import { TaskDetailsComponent } from 'src/app/components/task-details/task-details.component';
 import { TaskFormComponent } from 'src/app/components/task-form/task-form.component';
 
-0
 const colors: Record<string, EventColor> = {
   red: {
     primary: '#ad2121',
@@ -116,7 +115,7 @@ export class CalendarPage implements OnInit {
     action: string;
     event: CalendarEvent;
   };
-  activeDayIsOpen: boolean = true;
+  activeDayIsOpen: boolean = false;
   customHeader!: TemplateRef<any>;
 
   refresh = new Subject<void>();
