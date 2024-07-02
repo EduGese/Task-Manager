@@ -1,6 +1,16 @@
-  <ion-header>
-    <ion-toolbar></ion-toolbar>
-  </ion-header>
-  <ion-content [fullscreen]="false">
-    <app-tasks (taskIdDeleteEmitted)="deleteTask($event)" (taskCompleteEmitted)="completeTask($event)" [taskList]="taskList"></app-tasks>
-  </ion-content>
+<ion-header>
+  <ion-toolbar></ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="false">
+  @if(taskList.length === 0){
+  <div class="emptyTasks-container">
+    <ion-text>You have no pending tasks</ion-text><br>
+    <ion-icon name="list-circle-outline" color="success"></ion-icon>
+  </div>
+  }@else{
+  <app-tasks (taskIdDeleteEmitted)="deleteTask($event)" (taskCompleteEmitted)="completeTask($event)"
+    [taskList]="taskList"></app-tasks>
+  }
+
+</ion-content>
