@@ -5,7 +5,7 @@ import { StorageService } from '../../services/storage.service';
 import { Task } from '../../models/task';
 import { of, switchMap } from 'rxjs';
 import { TaskFilterService } from 'src/app/services/task-filter/task-filter.service';
-
+import { ActionSheetController } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-completed-tasks',
@@ -17,7 +17,9 @@ import { TaskFilterService } from 'src/app/services/task-filter/task-filter.serv
 export class CompletedTasksPage implements OnInit {
   taskList: Task[] = [];
 
-  constructor( private storage: StorageService,  private taskFilterService: TaskFilterService) { }
+  constructor( private storage: StorageService,
+      private taskFilterService: TaskFilterService,
+      private actionSheetCtrl: ActionSheetController) { }
 
   ngOnInit(): void {
     try {
@@ -41,10 +43,40 @@ export class CompletedTasksPage implements OnInit {
       throw new Error(`Error: ${err}`);
     }
   }
+  // ActionSheet functions
+  async openActionSheet() {
+    const actionSheet = await this.actionSheetCtrl.create({
+      header: `Are you sure to delete all completed tasks? `,
+      buttons: [
+        {
+          text: 'Delete all',
+          role: 'destructive',
+          icon: 'trash',
+          handler: () => {
+            this.deleteAllcompletedTasks();
+          },
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          icon: 'close',
+        },
+      ],
+      cssClass: 'custom-css',
+      animated: true,
+      backdropDismiss: true,
+      mode: 'ios',
+    });
+
+    actionSheet.present();
+  }
   deleteTask(id: number) {
     if (id) {
       this.storage.deleteTaskById(id.toString());
     }
+  }
+  deleteAllcompletedTasks(){
+    this.storage.deleteCompletedTasks();
   }
   completeTask(task: Task) {
     console.log('Task completed:', task)
