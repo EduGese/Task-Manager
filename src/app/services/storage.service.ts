@@ -74,9 +74,11 @@ import { SQLiteDBConnection } from '@capacitor-community/sqlite';
          priority: string,
          tag: string,
          creation_date: string,
-         due_date: string
+         due_date: string,
+         notification_date_range: string,
+         notification_date: string
        ) {
-         const sql = `INSERT INTO tasks (name, description, priority, tag, creation_date, due_date) VALUES (?, ?, ?, ?, ?, ?);`;
+         const sql = `INSERT INTO tasks (name, description, priority, tag, creation_date, due_date, notification_date_range, notification_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?);`;
          await this.db.run(sql, [
            name,
            description,
@@ -84,6 +86,8 @@ import { SQLiteDBConnection } from '@capacitor-community/sqlite';
            tag,
            creation_date,
            due_date,
+           notification_date_range,
+           notification_date
          ]);
          await this.getTasks();
        }
@@ -94,11 +98,13 @@ import { SQLiteDBConnection } from '@capacitor-community/sqlite';
          description: string,
          priority: string,
          tag: string,
-         due_date: string
+         due_date: string,
+         notification_date: string,
+         notification_date_range: string
        ) {
          try {
-           const sql = `UPDATE tasks SET name = ?, description = ?, priority = ?, tag = ?, due_date = ? WHERE id = ?`;
-           const params = [name, description, priority, tag, due_date, id];
+           const sql = `UPDATE tasks SET name = ?, description = ?, priority = ?, tag = ?, due_date = ?, notification_date_range = ?,notification_date = ?  WHERE id = ?`;
+           const params = [name, description, priority, tag, due_date, notification_date_range, notification_date, id];
            await this.db.run(sql, params);
            await this.getTasks();
          } catch (error) {
@@ -117,15 +123,10 @@ import { SQLiteDBConnection } from '@capacitor-community/sqlite';
          await this.getTasks();
        }
 
-       async updateTaskStatusById(id: string, done: boolean) {
-         let status;
-         if (done) {
-           status = 1;
-         } else {
-           status = 0;
-         }
-         const sql = `UPDATE tasks SET done=${status} WHERE id=${id}`;
-         await this.db.run(sql);
+       async updateTaskStatusById(task: Task, done: boolean) {
+         const sql = `UPDATE tasks SET done = ?, notification_date_range = ?,notification_date = ?  WHERE id=${task.id}`;
+         const params = [task.done, task.notification_date_range, task.notification_date];
+         await this.db.run(sql, params);
          await this.getTasks();
        }
      }
