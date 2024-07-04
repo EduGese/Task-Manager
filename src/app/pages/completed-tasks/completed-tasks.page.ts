@@ -16,6 +16,7 @@ import { ActionSheetController } from '@ionic/angular/standalone';
 })
 export class CompletedTasksPage implements OnInit {
   taskList: Task[] = [];
+  task!: Task;
 
   constructor( private storage: StorageService,
       private taskFilterService: TaskFilterService,
@@ -35,10 +36,10 @@ export class CompletedTasksPage implements OnInit {
           })
         )
         .subscribe((data) => {
-          console.log('tasksList en com[pleted-taskPage',data);
-          this.taskList = this.taskFilterService.sortTaskList(data, 0)
+          this.taskList = this.taskFilterService.sortTaskList(data, 0);
+          console.log('TaskList en completed-task.page after filter',this.taskList)
         });
-         console.log('TaskList en completed-task.page after filter',this.taskList)
+         
     } catch (err) {
       throw new Error(`Error: ${err}`);
     }
@@ -80,10 +81,19 @@ export class CompletedTasksPage implements OnInit {
   }
   completeTask(task: Task) {
     console.log('Task completed:', task)
-    if(task.done === 0){
-      this.storage.updateTaskStatusById(task.id.toString(), true);
-    }else{
-      this.storage.updateTaskStatusById(task.id.toString(), false);
+    this.task = task;
+    if (task.done === 0) {
+      this.deleteNotification();
+      this.task.done = 1;
+      this.storage.updateTaskStatusById(this.task, true);
+    } else {
+      this.task.done = 0;
+      this.storage.updateTaskStatusById(this.task, false);
+      
     }
+  }
+  deleteNotification(){
+    this.task.notification_date = '';
+    this.task.notification_date_range = '';
   }
 }

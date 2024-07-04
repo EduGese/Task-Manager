@@ -30,7 +30,10 @@ export class TabsPage {
       task.priority,
       task.tag,
       task.creation_date,
-      task.due_date
+      task.due_date,
+      task.notification_date_range,
+      task.notification_date
+
     );
     this.cancel();
   }
