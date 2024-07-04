@@ -97,6 +97,9 @@ export class CalendarPage implements OnInit {
     done: 0,
     creation_date: '',
     due_date: '',
+    notification_date_range:'',
+    notification_date:''
+
   };
   days: string[] = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 

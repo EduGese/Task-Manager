@@ -34,6 +34,16 @@
             <ion-label color="primary">Time end</ion-label>
             <span>{{ task.due_date | date: 'HH:mm'}}</span>
           </ion-item>
+          <ion-item>
+            <ion-label color="primary">Notification</ion-label>
+            <span>{{ task.notification_date_range}}</span>
+            @if(task.notification_date_range){
+            <ion-icon name="notifications" color="warning"></ion-icon>
+            }@else {
+              <ion-icon name="notifications-off"></ion-icon>
+            }
+            
+          </ion-item>
           
         }@else {
           <ion-item >
@@ -79,7 +89,7 @@
           </ion-col>
   
           <ion-col class=" ion-no-margin">
-            <ion-button id="open-editModal"  color="primary" >
+            <ion-button id="open-editModal"  color="primary" [disabled]="task.done ? 'true': 'false'">
               <ion-label position="fixed">Edit</ion-label>
               <ion-icon name="create-outline"></ion-icon>
             </ion-button>

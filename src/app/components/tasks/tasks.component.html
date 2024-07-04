@@ -43,6 +43,13 @@
               </div>
             }
           </ion-col>
+          <ion-col size="auto">
+            @if(task.notification_date_range){
+              <ion-icon name="notifications" color="warning"></ion-icon>
+              }@else {
+                <ion-icon name="notifications-off" ></ion-icon>
+              }
+          </ion-col>
         </ion-row>
       </ion-grid>
     </ion-item>
