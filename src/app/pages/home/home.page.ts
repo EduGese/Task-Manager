@@ -17,7 +17,7 @@ import { CommonModule } from '@angular/common';
 })
 export class HomePage implements OnInit {
   taskList: Task[] = [];
-
+  task!: Task;
   constructor(private storage: StorageService, private taskFilterService: TaskFilterService) {}
 
   ngOnInit(): void {
@@ -49,10 +49,19 @@ export class HomePage implements OnInit {
   }
   completeTask(task: Task) {
     console.log('Task completed:', task);
+    this.task = task;
     if (task.done === 0) {
-      this.storage.updateTaskStatusById(task.id.toString(), true);
+      this.deleteNotification();
+      this.task.done = 1;
+      this.storage.updateTaskStatusById(this.task, true);
     } else {
-      this.storage.updateTaskStatusById(task.id.toString(), false);
+      this.task.done = 0;
+      this.storage.updateTaskStatusById(this.task, false);
+      
     }
+  }
+  deleteNotification(){
+    this.task.notification_date = '';
+    this.task.notification_date_range = '';
   }
 }

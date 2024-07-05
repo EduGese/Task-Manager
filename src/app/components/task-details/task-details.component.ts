@@ -58,6 +58,7 @@ export class TaskDetailsComponent {
     this.FormEditModal.dismiss(this.task,'cancel')
   }
   editTask(task:Task){
+    console.log('editTask, task-details-->',task)
    this.task = task;
     this.storage.updateTaskById(
       task.id.toString(),
@@ -65,17 +66,26 @@ export class TaskDetailsComponent {
       task.description,
       task.priority,
       task.tag,
-      task.due_date
+      task.due_date,
+      task.notification_date,
+      task.notification_date_range
     )
+    
     this.FormEditModal.dismiss(null,'cancel')
   }
   completeTask(task: Task) {
-    if (task.done === 0) {
-      this.storage.updateTaskStatusById(task.id.toString(), true);
+    this.task = task;
+    if (this.task.done === 0) {
+      this.deleteNotification();
       this.task.done = 1;
+      this.storage.updateTaskStatusById(this.task, true);
     } else {
-      this.storage.updateTaskStatusById(task.id.toString(), false);
       this.task.done = 0;
+      this.storage.updateTaskStatusById(this.task, false);
     }
+  }
+  deleteNotification(){
+    this.task.notification_date = '';
+    this.task.notification_date_range = '';
   }
 }

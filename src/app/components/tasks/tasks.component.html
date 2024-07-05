@@ -4,9 +4,13 @@
   <ion-item-sliding #slidingItem>
     <ion-item lines="none">
       <ion-grid>
-        <ion-row>
+        <ion-row class="task-container">
           <ion-col>
             <div class="ion-text-start" (click)="openModalDetails(task)">
+              @if(task.done){
+                <ion-icon name="checkmark-outline" size="medium" color="success" slot="start"></ion-icon>
+              }
+              
               <ion-text color="primary" [ngClass]="task.done === 1 ? 'task-done':''">{{task.name}}</ion-text>
             </div>
           </ion-col>
@@ -38,6 +42,13 @@
                   date:"LLL"}}</span>
               </div>
             }
+          </ion-col>
+          <ion-col size="auto">
+            @if(task.notification_date_range){
+              <ion-icon name="notifications" color="warning"></ion-icon>
+              }@else {
+                <ion-icon name="notifications-off" ></ion-icon>
+              }
           </ion-col>
         </ion-row>
       </ion-grid>
