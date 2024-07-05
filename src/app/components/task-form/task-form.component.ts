@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
  import { Task } from '../../models/task';	
 import { DateFormatService } from 'src/app/services/date-format/date-format.service';
 
+
  
 
 @Component({
@@ -22,15 +23,20 @@ export class TaskFormComponent implements OnInit {
   dateNow: string = this.dateFormatService.toIsoString(new Date());
   dateButtonPressed: boolean = false;
   dateToogleChecked = false;
+  notificationButtonPressed: boolean = false;
+  notificationToogleChecked = false;
 
-  constructor(private formBuilder: FormBuilder, private dateFormatService:DateFormatService) {}
+  constructor(private formBuilder: FormBuilder,
+     private dateFormatService:DateFormatService,
+     
+    ) {}
   ngOnInit(): void {
     if (this.isEditForm) {
-      
+      console.log('Task al abrir edit form',this.task)
       this.handleDueDateState();
+      this.handleNotificationState();
       this.createEditTAskForm();
     } else {
-      
       this.createNewTaskForm();
     }
   }
@@ -44,6 +50,8 @@ export class TaskFormComponent implements OnInit {
       done: false,
       creation_date: new FormControl(this.task.creation_date),
       due_date: new FormControl(this.task.due_date),
+      notification_date_range: new FormControl(this.task.notification_date_range),
+      notification_date: new FormControl(this.task.notification_date)
     });
   }
   createNewTaskForm() {
@@ -56,17 +64,26 @@ export class TaskFormComponent implements OnInit {
       done: false,
       creation_date: this.dateNow,
       due_date: new FormControl(''),
+      notification_date_range: new FormControl(''),
+      notification_date: new FormControl('')
     });
   }
 
   sendTask() {
     if (this.taskForm.valid) {
-      this.taskEmitted.emit(this.taskForm.value);
-      this.task = this.taskForm.value;
-    } else {
-      alert('Name field is mandatory');
-    }
+    //   if(this.taskForm.value.notification_date_range !== ''){
+    //     this.taskForm.patchValue(
+    //     { notification_date: this.notificationService.setNotificationDateTime(
+    //     this.taskForm.value.due_date, this.taskForm.value.notification_date_range)
+    //   }
+    // );
+    //   }
+      console.log('TaskForm sent', this.taskForm.value);
+       this.taskEmitted.emit(this.taskForm.value);
+       this.task = this.taskForm.value;
+    } 
   }
+
 
   addDate() {
     if (this.dateButtonPressed) {
@@ -86,5 +103,27 @@ export class TaskFormComponent implements OnInit {
       this.dateToogleChecked = true;
     }
   }
-
+  showNotificationOptions() {
+    if (this.notificationButtonPressed) {
+      this.notificationButtonPressed = false;
+      this.deleteNotification();
+    } else {
+      this.notificationButtonPressed = true;
+      this.taskForm.patchValue({ notification_date_range: '1 day' });
+      
+    }
+  }
+  handleNotificationState() {
+    if (this.task.notification_date_range === '') {
+      this.notificationButtonPressed = false;
+      this.notificationToogleChecked = false;
+    } else {
+      this.notificationButtonPressed = true;
+      this.notificationToogleChecked = true;
+    }
+  }
+  deleteNotification(){
+    this.taskForm.patchValue({ notification_date_range: ''});
+    this.taskForm.patchValue({ notification_date: ''});
+  }
 }
