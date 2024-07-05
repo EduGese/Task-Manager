@@ -9,11 +9,10 @@
     <ion-icon name="checkmark-circle" color="warning"></ion-icon>
   </div>
   }@else {
-    <!-- <ion-buttons slot="start"> -->
-      <ion-button color="danger" > <ion-label>Delete all</ion-label></ion-button>
-     
-    <!-- </ion-buttons> -->
-    
+  <ion-button color="danger" class="ion-margin" (click)="openActionSheet()"> 
+    <ion-label position="fixed" >Delete all </ion-label>
+    <ion-icon name="trash"></ion-icon>
+  </ion-button>
   <app-tasks (taskIdDeleteEmitted)="deleteTask($event)" (taskCompleteEmitted)="completeTask($event)"
     [taskList]="taskList"></app-tasks>
   }
