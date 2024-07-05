@@ -26,6 +26,7 @@ import { enableProdMode, importProvidersFrom, APP_INITIALIZER } from '@angular/c
         chevronForwardOutline,
         checkmarkOutline,
         closeOutline,
+        checkmarkCircle,
         } from 'ionicons/icons'; 
    
      if (environment.production) {
@@ -81,7 +82,8 @@ import { enableProdMode, importProvidersFrom, APP_INITIALIZER } from '@angular/c
         'chevron-back-outline': chevronBackOutline,
         "pencil-outline": pencilOutline, 
         'checkmark-outline': checkmarkOutline, 
-        'close-outline': closeOutline
+        'close-outline': closeOutline,
+        'checkmark-circle': checkmarkCircle,
       });
 
      bootstrapApplication(AppComponent, {

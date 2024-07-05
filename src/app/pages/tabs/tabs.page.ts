@@ -20,6 +20,7 @@ import { RouterModule } from '@angular/router';
 })
 export class TabsPage {
   @ViewChild(IonModal) modal!: IonModal ;
+  tab!: string;
 
   constructor(public environmentInjector: EnvironmentInjector, private storage: StorageService) { }
   createTask(task: Task) {
