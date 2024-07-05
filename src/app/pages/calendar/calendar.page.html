@@ -5,15 +5,17 @@
 <ion-content [fullscreen]="false">
     <ion-grid>
       <ion-row class="ion-justify-content-center">
-          <ion-button fill="outline" size="medium" color="primary" (click)="setView(CalendarView.Month)" [class.active]="view === CalendarView.Month">
-            Month
-          </ion-button>
-          <ion-button fill="outline" size="medium" color="primary" (click)="setView(CalendarView.Week)" [class.active]="view === CalendarView.Week">
-            Week
-          </ion-button>
-          <ion-button fill="outline" size="medium" color="primary" (click)="setView(CalendarView.Day)" [class.active]="view === CalendarView.Day">
-            Day
-          </ion-button>
+          <ion-segment value="buttons" color="primary"  swipeGesture="false">
+            <ion-segment-button value="buttons" (click)="setView(CalendarView.Month)">
+              <ion-label>Month</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="Week" (click)="setView(CalendarView.Week)">
+              <ion-label>Week</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="Day" (click)="setView(CalendarView.Day)">
+              <ion-label>Day</ion-label>
+            </ion-segment-button>
+          </ion-segment>
       </ion-row>
       <ion-row class="ion-justify-content-center">
         <ion-chip color="primary"><h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3></ion-chip>
@@ -41,6 +43,7 @@
       (eventTimesChanged)="eventTimesChanged($event)"
       [weekStartsOn]="1"
       [headerTemplate]="customHeader"
+      [tooltipTemplate]="customToolTip"
     > 
     </mwl-calendar-month-view>
     <mwl-calendar-week-view
@@ -51,6 +54,7 @@
       (eventClicked)="handleEvent('Clicked', $event.event)"
       (eventTimesChanged)="eventTimesChanged($event)"
       [weekStartsOn]="1"
+      [tooltipTemplate]="customToolTip"
     >
     </mwl-calendar-week-view>
 
@@ -61,6 +65,7 @@
       [refresh]="refresh"
       (eventClicked)="handleEvent('Clicked', $event.event)"
       (eventTimesChanged)="eventTimesChanged($event)"
+      [tooltipTemplate]="customToolTip"
     >
     </mwl-calendar-day-view>
   </div>
@@ -70,5 +75,7 @@
   <tr >
     <th *ngFor="let day of days;"><ion-text [color]="day === 'S' ? 'danger' : 'medium'">{{ day }}</ion-text></th>
   </tr>
+</ng-template>
+<ng-template #customToolTip>
 </ng-template>
 
