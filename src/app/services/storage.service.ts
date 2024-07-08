@@ -44,7 +44,7 @@ import { SQLiteDBConnection } from '@capacitor-community/sqlite';
            false
          );
          this.dbVerService.set(this.databaseName, this.loadToVersion);
-
+         console.log('Schema version',this.versionUpgrades)
          await this.getTasks();
        }
        // Current database state

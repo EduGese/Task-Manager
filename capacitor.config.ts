@@ -27,7 +27,12 @@ import { CapacitorConfig } from '@capacitor/cli';
      electronWindowsLocation: "C:\\ProgramData\\CapacitorDatabases",
      electronMacLocation: "/Users/YOUR_NAME/CapacitorDatabases",
      electronLinuxLocation: "Databases"
-     }
+     },
+     LocalNotifications: {
+        smallIcon: "ic_stat_icon_config_sample",
+        iconColor: "#488AFF",
+        sound: "beep.wav",
+      }
  }
  };
  export default config;

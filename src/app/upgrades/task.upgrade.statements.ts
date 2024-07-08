@@ -29,18 +29,16 @@ export class TaskUpgradeStatements {
         toVersion: 3,
         statements: [
             `ALTER TABLE tasks ADD COLUMN creation_date TEXT NOT NULL;`,
-            `ALTER TABLE tasks ADD COLUMN due_date TEXT NOT NULL;`,
-            `ALTER TABLE tasks ADD COLUMN notification_date_range TEXT NOT NULL;`,
-            `ALTER TABLE tasks ADD COLUMN notification_date TEXT NOT NULL;`
+            `ALTER TABLE tasks ADD COLUMN due_date TEXT NOT NULL;`
         ]
         },
-        // {
-        //     toVersion: 4,
-        //     statements: [
-        //         `ALTER TABLE tasks ADD COLUMN notification_date_range TEXT NOT NULL;`,
-        //         `ALTER TABLE tasks ADD COLUMN notification_date TEXT NOT NULL;`
-        //     ]
-        //     },
+        {
+            toVersion: 4,
+            statements: [
+                `ALTER TABLE tasks ADD COLUMN notification_date_range TEXT;`,
+                `ALTER TABLE tasks ADD COLUMN notification_date TEXT;`
+            ]
+            },
         
     ]
 }    

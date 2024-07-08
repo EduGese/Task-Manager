@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
  import { FormBuilder, FormControl, FormsModule, Validators, FormGroup, ReactiveFormsModule} from '@angular/forms';
  import { Task } from '../../models/task';	
 import { DateFormatService } from 'src/app/services/date-format/date-format.service';
+import { NotificationsService } from 'src/app/services/notifications/notifications.service';
 
 
  
@@ -28,6 +29,7 @@ export class TaskFormComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
      private dateFormatService:DateFormatService,
+     private notificationsService: NotificationsService
      
     ) {}
   ngOnInit(): void {
@@ -71,13 +73,14 @@ export class TaskFormComponent implements OnInit {
 
   sendTask() {
     if (this.taskForm.valid) {
-    //   if(this.taskForm.value.notification_date_range !== ''){
-    //     this.taskForm.patchValue(
-    //     { notification_date: this.notificationService.setNotificationDateTime(
-    //     this.taskForm.value.due_date, this.taskForm.value.notification_date_range)
-    //   }
-    // );
-    //   }
+      if(this.taskForm.value.notification_date_range !== ''){
+        this.taskForm.patchValue(
+        { notification_date: this.notificationsService.setNotificationDateTime(
+        this.taskForm.value.due_date, this.taskForm.value.notification_date_range)
+      }
+    );
+
+      }
       console.log('TaskForm sent', this.taskForm.value);
        this.taskEmitted.emit(this.taskForm.value);
        this.task = this.taskForm.value;
@@ -125,5 +128,6 @@ export class TaskFormComponent implements OnInit {
   deleteNotification(){
     this.taskForm.patchValue({ notification_date_range: ''});
     this.taskForm.patchValue({ notification_date: ''});
+    this.notificationsService.cancelNotification(this.task);
   }
 }
