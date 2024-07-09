@@ -1,3 +1,4 @@
+import { NotificationsService } from 'src/app/services/notifications/notifications.service';
 import { SQLiteDBConnection } from '@capacitor-community/sqlite';
      import { Injectable} from '@angular/core';
      import { SQLiteService } from './sqlite.service';
@@ -22,7 +23,8 @@ import { SQLiteDBConnection } from '@capacitor-community/sqlite';
 
        constructor(
          private sqliteService: SQLiteService,
-         private dbVerService: DbnameVersionService
+         private dbVerService: DbnameVersionService,
+         private notificationsService: NotificationsService
        ) {
          this.versionUpgrades = this.tUpdStmts.taskUpgrades;
          this.loadToVersion =
@@ -44,7 +46,6 @@ import { SQLiteDBConnection } from '@capacitor-community/sqlite';
            false
          );
          this.dbVerService.set(this.databaseName, this.loadToVersion);
-         console.log('Schema version',this.versionUpgrades)
          await this.getTasks();
        }
        // Current database state
@@ -79,7 +80,7 @@ import { SQLiteDBConnection } from '@capacitor-community/sqlite';
          notification_date: string
        ) {
          const sql = `INSERT INTO tasks (name, description, priority, tag, creation_date, due_date, notification_date_range, notification_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?);`;
-         await this.db.run(sql, [
+         const createdTask = await this.db.run(sql, [
            name,
            description,
            priority,
@@ -89,6 +90,17 @@ import { SQLiteDBConnection } from '@capacitor-community/sqlite';
            notification_date_range,
            notification_date
          ]);
+         //console.log('storageService.addTask -- Task created', createdTask.changes?.lastId);
+          if(notification_date_range !== '' && createdTask.changes?.lastId){ //Add notification 
+          this.notificationsService.scheduleNotificacion(
+            createdTask.changes?.lastId,
+            notification_date,
+            name,
+            description,
+            notification_date_range
+          );
+          }
+         
          await this.getTasks();
        }
 
@@ -106,6 +118,17 @@ import { SQLiteDBConnection } from '@capacitor-community/sqlite';
            const sql = `UPDATE tasks SET name = ?, description = ?, priority = ?, tag = ?, due_date = ?, notification_date_range = ?,notification_date = ?  WHERE id = ?`;
            const params = [name, description, priority, tag, due_date, notification_date_range, notification_date, id];
            await this.db.run(sql, params);
+           if(notification_date_range !==  ''){
+            this.notificationsService.scheduleNotificacion(
+              Number(id),
+              notification_date,
+              name,
+              description,
+              notification_date_range
+            );
+           }else{
+            this.notificationsService.cancelNotification(Number(id));
+           }
            await this.getTasks();
          } catch (error) {
            console.error('Error updating task:', error);
@@ -115,6 +138,7 @@ import { SQLiteDBConnection } from '@capacitor-community/sqlite';
        async deleteTaskById(id: string) {
          const sql = `DELETE FROM tasks WHERE id=${id}`;
          await this.db.run(sql);
+         this.notificationsService.cancelNotification(Number(id));
          await this.getTasks();
        }
        async deleteCompletedTasks() {
@@ -127,6 +151,9 @@ import { SQLiteDBConnection } from '@capacitor-community/sqlite';
          const sql = `UPDATE tasks SET done = ?, notification_date_range = ?,notification_date = ?  WHERE id=${task.id}`;
          const params = [task.done, task.notification_date_range, task.notification_date];
          await this.db.run(sql, params);
+         if(task.done){
+          this.notificationsService.cancelNotification(task.id);
+         };
          await this.getTasks();
        }
      }

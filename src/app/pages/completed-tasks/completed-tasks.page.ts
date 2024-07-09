@@ -6,6 +6,7 @@ import { Task } from '../../models/task';
 import { of, switchMap } from 'rxjs';
 import { TaskFilterService } from 'src/app/services/task-filter/task-filter.service';
 import { ActionSheetController } from '@ionic/angular/standalone';
+import { NotificationsService } from 'src/app/services/notifications/notifications.service';
 
 @Component({
   selector: 'app-completed-tasks',
@@ -20,7 +21,8 @@ export class CompletedTasksPage implements OnInit {
 
   constructor( private storage: StorageService,
       private taskFilterService: TaskFilterService,
-      private actionSheetCtrl: ActionSheetController) { }
+      private actionSheetCtrl: ActionSheetController,
+      private notificationsService: NotificationsService) { }
 
   ngOnInit(): void {
     try {

@@ -5,6 +5,7 @@ import { Task } from 'src/app/models/task';
 import { StorageService } from 'src/app/services/storage.service';
 import { TaskStylesService } from 'src/app/services/task-styles/task-styles.service';
 import { TaskFormComponent } from '../task-form/task-form.component';
+import { NotificationsService } from 'src/app/services/notifications/notifications.service';
 
 
 
@@ -25,7 +26,7 @@ export class TaskDetailsComponent {
 
   constructor(private storage: StorageService, 
     private taskStylesService: TaskStylesService,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
   ) { }
  
  
@@ -58,7 +59,6 @@ export class TaskDetailsComponent {
     this.FormEditModal.dismiss(this.task,'cancel')
   }
   editTask(task:Task){
-    console.log('editTask, task-details-->',task)
    this.task = task;
     this.storage.updateTaskById(
       task.id.toString(),
@@ -76,6 +76,7 @@ export class TaskDetailsComponent {
   completeTask(task: Task) {
     this.task = task;
     if (this.task.done === 0) {
+      console.log('completeTask, task-details-->', task.id)
       this.deleteNotification();
       this.task.done = 1;
       this.storage.updateTaskStatusById(this.task, true);

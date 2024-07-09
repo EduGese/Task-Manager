@@ -6,6 +6,7 @@ import { Task } from '../../models/task';
 import {  of, switchMap } from 'rxjs';
 import { TaskFilterService } from 'src/app/services/task-filter/task-filter.service';
 import { CommonModule } from '@angular/common';
+import { NotificationsService } from 'src/app/services/notifications/notifications.service';
 
 
 @Component({
@@ -51,7 +52,7 @@ export class HomePage implements OnInit {
     console.log('Task completed:', task);
     this.task = task;
     if (task.done === 0) {
-      this.deleteNotification();
+      this.deleteNotification(task.id);
       this.task.done = 1;
       this.storage.updateTaskStatusById(this.task, true);
     } else {
@@ -60,7 +61,7 @@ export class HomePage implements OnInit {
       
     }
   }
-  deleteNotification(){
+  deleteNotification(id: number){
     this.task.notification_date = '';
     this.task.notification_date_range = '';
   }

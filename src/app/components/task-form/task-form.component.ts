@@ -73,17 +73,17 @@ export class TaskFormComponent implements OnInit {
 
   sendTask() {
     if (this.taskForm.valid) {
-      if(this.taskForm.value.notification_date_range !== ''){
-        this.taskForm.patchValue(
-        { notification_date: this.notificationsService.setNotificationDateTime(
-        this.taskForm.value.due_date, this.taskForm.value.notification_date_range)
+      if (this.taskForm.value.notification_date_range !== '') {
+        this.taskForm.patchValue({
+          notification_date: this.notificationsService.setNotificationDateTime(
+            this.taskForm.value.due_date,
+            this.taskForm.value.notification_date_range
+          ),
+        });
       }
-    );
-
-      }
-      console.log('TaskForm sent', this.taskForm.value);
-       this.taskEmitted.emit(this.taskForm.value);
-       this.task = this.taskForm.value;
+      this.taskEmitted.emit(this.taskForm.value);
+      this.task = this.taskForm.value;
+      
     } 
   }
 
@@ -92,6 +92,7 @@ export class TaskFormComponent implements OnInit {
     if (this.dateButtonPressed) {
       this.dateButtonPressed = false;
       this.taskForm.patchValue({ due_date: '' });
+      this.deleteNotification();
     } else {
       this.dateButtonPressed = true;
       this.taskForm.patchValue({ due_date: this.dateNow });
@@ -128,6 +129,9 @@ export class TaskFormComponent implements OnInit {
   deleteNotification(){
     this.taskForm.patchValue({ notification_date_range: ''});
     this.taskForm.patchValue({ notification_date: ''});
-    this.notificationsService.cancelNotification(this.task);
+    if(this.task.notification_date !==''){
+      let notificationResponse = this.notificationsService.cancelNotification(this.task.id)
+      console.log('Notificacion cancelada',notificationResponse);
+    }
   }
 }

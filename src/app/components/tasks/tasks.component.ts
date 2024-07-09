@@ -7,6 +7,7 @@ import { ActionSheetController } from '@ionic/angular/standalone';
 import { TaskFormComponent } from "../task-form/task-form.component";
 import { TaskDetailsComponent } from '../task-details/task-details.component';
 import { IonItemSliding } from '@ionic/angular';
+import { NotificationsService } from 'src/app/services/notifications/notifications.service';
 
 
 
@@ -32,7 +33,8 @@ export class TasksComponent {
   constructor(
     private actionSheetCtrl: ActionSheetController,
     private taskStylesService: TaskStylesService,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private notificationsService: NotificationsService
   ) {}
 
   priorityColor(priority: string): string {

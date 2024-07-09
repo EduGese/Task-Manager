@@ -2,64 +2,61 @@ import { Injectable } from '@angular/core';
 import { CancelOptions, LocalNotifications, Schedule, ScheduleOptions } from '@capacitor/local-notifications';
 import { Task } from '../../models/task';
 import { DateFormatService } from '../date-format/date-format.service';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotificationsService {
   
+  
 
   constructor( private dateFormatService:DateFormatService) { }
 
-  async scheduleNotificacion(task: Task){
+  async scheduleNotificacion(id:number, notification_date: string, name: string, description: string, notification_date_range: string){
+    console.log('Task al notificar', id, notification_date, name, description, notification_date_range)
     const dateTime: Schedule = {
-      at: new Date(task.due_date)
+      at: new Date(notification_date)
     }
         let options:ScheduleOptions = {
           notifications:[
             {
-              id:task.id,
-              title:task.name,
-              body:"Your task is ended",
-              largeBody:"Tienes una tarea pendiente desde hace tiempo",
-              summaryText:"Blabla",
-              schedule: dateTime
+              id: id,
+              title: name,
+              body: "Your task is about to end",
+              largeBody: description,
+              summaryText: `${notification_date_range} to end`,
+              schedule: dateTime,
+              attachments:[]
             }
           ]
         }
         try{
          await LocalNotifications.schedule(options);
-         console.log(dateTime);
+         this.getPendingNotifications();
         }catch(err){
           console.log(err);
         }
       }
-      async cancelNotification(task:Task){
-        let options:CancelOptions = {
-          notifications:[
-            {
-              id: task.id,
-
-            }
-          ]
-
-        }
+  async cancelNotification(id:number){
+        let options:CancelOptions = { notifications:[ { id: id,}]}
         await LocalNotifications.cancel(options);
-      }
-
-      setNotificationDateTime(due_date:string, date_range:string):string{
+        this.getPendingNotifications();
+      }    
+  async getPendingNotifications(){
+         await LocalNotifications.getPending().then((res)=>{
+           console.log('Pending notifications: ',res.notifications);
+        });
+    }
+  setNotificationDateTime(due_date:string, date_range:string):string{
         const dateNotification:Date = new Date(due_date);
         if (date_range === '1 day') {
           dateNotification.setHours(dateNotification.getHours() - 24);
-          console.log( 'DateNotification 1 day', this.dateFormatService.toIsoString(dateNotification));
         } else if (date_range === '1 hour') {
           dateNotification.setHours(dateNotification.getHours() - 1);
-          console.log( 'DateNotification 1 hour', this.dateFormatService.toIsoString(dateNotification));
         } else {
           dateNotification.setMinutes(dateNotification.getMinutes() - 5);
-          console.log( 'DateNotification 5 min', this.dateFormatService.toIsoString(dateNotification));
         }
         return this.dateFormatService.toIsoString(dateNotification);
-      }
-
+      }   
 }
