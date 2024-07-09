@@ -7,7 +7,6 @@ import { ActionSheetController } from '@ionic/angular/standalone';
 import { TaskFormComponent } from "../task-form/task-form.component";
 import { TaskDetailsComponent } from '../task-details/task-details.component';
 import { IonItemSliding } from '@ionic/angular';
-import { NotificationsService } from 'src/app/services/notifications/notifications.service';
 
 
 
@@ -30,13 +29,15 @@ export class TasksComponent {
   task: Task = {} as Task;
   isEditForm = true;
 
+
   constructor(
     private actionSheetCtrl: ActionSheetController,
     private taskStylesService: TaskStylesService,
-    private modalCtrl: ModalController,
-    private notificationsService: NotificationsService
+    private modalCtrl: ModalController
   ) {}
 
+  //STYLING
+ 
   priorityColor(priority: string): string {
     return this.taskStylesService.priorityColor(priority);
   }
@@ -45,6 +46,15 @@ export class TasksComponent {
   }
   tagIconColor(tag: string): string {
     return this.taskStylesService.tagIconColor(tag);
+  }
+  isTaskPast(task: Task){
+    const dueDate = new Date(task.due_date);
+    const dateTimeNow = new Date()
+    if(dateTimeNow > dueDate){
+      return true;
+    }else{
+      return false;
+    }
   }
 
   // ActionSheet functions
@@ -105,4 +115,6 @@ export class TasksComponent {
     });
     await modal.present();
   }
+
+ 
 }

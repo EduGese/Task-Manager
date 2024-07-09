@@ -2,19 +2,19 @@
 <ion-list >
   @for (task of taskList; track $index) {
   <ion-item-sliding #slidingItem>
-    <ion-item lines="none">
+    <ion-item lines="none" >
       <ion-grid>
-        <ion-row class="task-container">
-          <ion-col>
+        <ion-row  [ngClass]="this.isTaskPast(task) ? 'taskPast-container' : 'task-container'">
+          <ion-col >
             <div class="ion-text-start" (click)="openModalDetails(task)">
               @if(task.done){
                 <ion-icon name="checkmark-outline" size="medium" color="success" slot="start"></ion-icon>
               }
               
-              <ion-text color="primary" [ngClass]="task.done === 1 ? 'task-done':''">{{task.name}}</ion-text>
+              <ion-text color="primary" [ngClass]="task.done === 1 ? 'task-done':''">{{task.name}} </ion-text>
             </div>
           </ion-col>
-          <ion-col>
+          <!-- <ion-col>
             <ion-grid>
               <ion-row>
                 <ion-col>
@@ -28,6 +28,15 @@
                 </ion-col>
               </ion-row>
             </ion-grid>
+          </ion-col> -->
+          <ion-col size="auto">
+            <ion-chip [color]="priorityColor(task.priority)">
+              <ion-label>{{ task.priority }}</ion-label>
+            </ion-chip>
+          </ion-col>
+          <ion-col size="auto">
+            <ion-icon size="medium" [name]="tagIcon(task.tag)" class="ion-no-margin"
+                    [color]="tagIconColor(task.tag)"></ion-icon>
           </ion-col>
           <ion-col>
             
