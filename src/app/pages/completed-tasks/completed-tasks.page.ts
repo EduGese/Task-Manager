@@ -22,7 +22,7 @@ export class CompletedTasksPage implements OnInit {
   constructor( private storage: StorageService,
       private taskFilterService: TaskFilterService,
       private actionSheetCtrl: ActionSheetController,
-      private notificationsService: NotificationsService) { }
+      ) { }
 
   ngOnInit(): void {
     try {

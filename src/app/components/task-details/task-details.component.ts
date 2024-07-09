@@ -1,11 +1,10 @@
 import { IonicModule, IonModal, ModalController  } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { Task } from 'src/app/models/task';
 import { StorageService } from 'src/app/services/storage.service';
 import { TaskStylesService } from 'src/app/services/task-styles/task-styles.service';
 import { TaskFormComponent } from '../task-form/task-form.component';
-import { NotificationsService } from 'src/app/services/notifications/notifications.service';
 
 
 
