@@ -80,6 +80,7 @@ export class TaskFormComponent implements OnInit {
   }
 
   sendTask() {
+    const action = this.isEditForm ? 'edited' : 'added';
     if (this.taskForm.valid) {
       if (this.taskForm.value.notification_date_range !== '') {//If user choose notification
         this.taskForm.patchValue({
@@ -97,12 +98,12 @@ export class TaskFormComponent implements OnInit {
         } else {
           this.taskEmitted.emit(this.taskForm.value);
           this.task = this.taskForm.value;
-          this.presentToast(this.taskForm.value.name,'Task added succesfully','checkmark-circle', 'success' );
+          this.presentToast(this.taskForm.value.name,`Task ${action} succesfully`,'checkmark-circle', 'success' );
         }
       } else {
         this.taskEmitted.emit(this.taskForm.value);
         this.task = this.taskForm.value;
-        this.presentToast(this.taskForm.value.name,'Task added succesfully','checkmark-circle', 'success' );
+        this.presentToast(this.taskForm.value.name,`Task ${action} succesfully`,'checkmark-circle', 'success' );
       }
     }
   }
