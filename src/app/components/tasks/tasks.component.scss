@@ -21,10 +21,19 @@ ion-col {
   font-size: x-small;
 }
 .task-container {
-  border-radius: 5px;
-  border:1px solid #0054e9;
+    border-radius: 5px;
+  border-left:4px solid #0054e9;
+ border-top:1px outset #f6f8fc;
+ border-bottom:1px outset #f6f8fc;
+ border-right:1px outset #f6f8fc;
+  
+ 
 }
 .taskPast-container{
-  border-radius: 5px;
-  border:1px solid #cb1a27;
+    border-radius: 5px;
+  border-left:4px solid #cb1a27;
+  border-top:1px outset #f6f8fc;
+  border-bottom:1px outset #f6f8fc;
+  border-right:1px outset #f6f8fc;
 }
+

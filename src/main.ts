@@ -30,6 +30,7 @@ import { enableProdMode, importProvidersFrom, APP_INITIALIZER } from '@angular/c
         notifications,
         notificationsOff,
         alertCircleOutline,
+        notificationsCircleOutline,
         } from 'ionicons/icons'; 
    
      if (environment.production) {
@@ -89,7 +90,8 @@ import { enableProdMode, importProvidersFrom, APP_INITIALIZER } from '@angular/c
         'checkmark-circle': checkmarkCircle,
         'notifications': notifications,
         'notifications-off': notificationsOff,
-        'alert-circle-outline': alertCircleOutline
+        'alert-circle-outline': alertCircleOutline,
+        'notifications-circle-outline': notificationsCircleOutline
       });
 
      bootstrapApplication(AppComponent, {
