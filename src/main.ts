@@ -31,6 +31,8 @@ import { enableProdMode, importProvidersFrom, APP_INITIALIZER } from '@angular/c
         notificationsOff,
         alertCircleOutline,
         notificationsCircleOutline,
+        sunnyOutline,
+        moonOutline,
         } from 'ionicons/icons'; 
    
      if (environment.production) {
@@ -91,7 +93,10 @@ import { enableProdMode, importProvidersFrom, APP_INITIALIZER } from '@angular/c
         'notifications': notifications,
         'notifications-off': notificationsOff,
         'alert-circle-outline': alertCircleOutline,
-        'notifications-circle-outline': notificationsCircleOutline
+        'notifications-circle-outline': notificationsCircleOutline,
+        'sunny-outline': sunnyOutline,
+        'moon-outline': moonOutline
+
       });
 
      bootstrapApplication(AppComponent, {

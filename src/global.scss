@@ -33,8 +33,8 @@
  */
 
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
-/* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import '@ionic/angular/css/palettes/dark.system.css';
+ @import "@ionic/angular/css/palettes/dark.class.css"; 
+// @import '@ionic/angular/css/palettes/dark.system.css';
 @import "../node_modules/angular-calendar/css/angular-calendar.css";
 
 .cal-day-number {
@@ -54,4 +54,8 @@ mwl-calendar-month-view-header tr, td{
 mwl-calendar-month-view-header th{
     width: 100px;
 }
+/* (Optional) This is added to prevent the flashing that happens when toggling between palettes */
+ion-item {
+    --transition: none;
+  }
 
