@@ -1,6 +1,6 @@
      
      <ion-header>
-      <ion-toolbar color="primary">
+      <ion-toolbar [color]="darkMode ? 'light' : 'primary'">
         <ion-title>{{task.name}}</ion-title>
       </ion-toolbar>
     </ion-header>
@@ -77,14 +77,14 @@
         <ion-row>
           <ion-col class=" ion-no-margin">
             <ion-button [color]="task.done ? 'warning' : 'success'" (click)="completeTask(task)">
-              <ion-label position="fixed">
+              <ion-label position="fixed" color="light">
                 @if (task.done) {
                 Incomplete
                 }@else {
                 Complete
                 }
               </ion-label>
-              <ion-icon [name]="task.done ? 'close-outline' : 'checkmark-outline'"></ion-icon>
+              <ion-icon [name]="task.done ? 'close-outline' : 'checkmark-outline'" color="light"></ion-icon>
             </ion-button>
           </ion-col>
   
@@ -106,8 +106,8 @@
      </ion-content>
      <ion-footer>
       <ion-grid>
-        <ion-row class="ion-justify-content-center">
-          <ion-icon size="large" name="close-circle" color="primary" (click)="closeModalDetails()"></ion-icon>
+        <ion-row class="ion-justify-content-center" >
+          <ion-icon size="large" name="close-circle" [color]="darkMode ? 'dark' : 'primary'" (click)="closeModalDetails()"></ion-icon>
         </ion-row>
       </ion-grid>
     </ion-footer>

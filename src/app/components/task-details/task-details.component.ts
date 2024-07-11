@@ -1,6 +1,6 @@
 import { IonicModule, IonModal, ModalController  } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Task } from 'src/app/models/task';
 import { StorageService } from 'src/app/services/storage.service';
 import { TaskStylesService } from 'src/app/services/task-styles/task-styles.service';
@@ -15,7 +15,7 @@ import { TaskFormComponent } from '../task-form/task-form.component';
   imports: [CommonModule, IonicModule, TaskFormComponent],
   standalone: true,
 })
-export class TaskDetailsComponent {
+export class TaskDetailsComponent implements OnInit{
   @Input () task!: Task;
  
   
@@ -23,10 +23,19 @@ export class TaskDetailsComponent {
   @ViewChild(IonModal) FormEditModal!: IonModal;
   isEditForm = true;
 
-  constructor(private storage: StorageService, 
+  //DakMode
+  darkMode: boolean = false;
+
+  constructor(
+    private storage: StorageService, 
     private taskStylesService: TaskStylesService,
     private modalCtrl: ModalController,
   ) { }
+  ngOnInit(): void {
+   this.taskStylesService.getDarkModeState().subscribe((darkMode)=>{
+      this.darkMode = darkMode;
+    })
+  }
  
  
   priorityColor(priority: string): string{

@@ -5,6 +5,8 @@ import { TaskFormComponent } from 'src/app/components/task-form/task-form.compon
 import { StorageService } from 'src/app/services/storage.service';
 import { Task } from '../../models/task';
 import { RouterModule } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
+import { TaskStylesService } from 'src/app/services/task-styles/task-styles.service';
 
 @Component({
   selector: 'app-tabs',
@@ -22,13 +24,14 @@ export class TabsPage implements OnInit{
   @ViewChild(IonModal) modal!: IonModal ;
   tab!: string;
   paletteToggle = false;
+  //paletteToggleEmit: BehaviorSubject<boolean> = new BehaviorSubject(this.paletteToggle);
 
-  constructor(public environmentInjector: EnvironmentInjector, private storage: StorageService) { }
+  constructor(public environmentInjector: EnvironmentInjector, private storage: StorageService, private taskStylesService:TaskStylesService) { }
 
 
   ngOnInit(): void {
     
-   
+
      // Use matchMedia to check the user preference
      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
 
@@ -56,6 +59,7 @@ export class TabsPage implements OnInit{
       this.paletteToggle = true;
     }
     this.toggleDarkPalette(this.paletteToggle);
+    this.taskStylesService.setDarkModeState(this.paletteToggle);
   }
 
   

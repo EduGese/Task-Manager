@@ -31,6 +31,9 @@ export class TaskFormComponent implements OnInit {
   dateToogleChecked = false;
   notificationButtonPressed: boolean = false;
   notificationToogleChecked = false;
+  
+  //DakMode
+  darkMode: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -40,7 +43,6 @@ export class TaskFormComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     if (this.isEditForm) {
-      console.log('Task al abrir edit form', this.task);
       this.handleDueDateState();
       this.handleNotificationState();
       this.createEditTAskForm();

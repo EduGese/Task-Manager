@@ -28,6 +28,7 @@ import { Task } from '../../models/task';
 import { TaskDetailsComponent } from 'src/app/components/task-details/task-details.component';
 import { TaskFormComponent } from 'src/app/components/task-form/task-form.component';
 import { DOCUMENT } from '@angular/common'
+import { TaskStylesService } from 'src/app/services/task-styles/task-styles.service';
 
 const colors: Record<string, EventColor> = {
   red: {
@@ -126,16 +127,21 @@ export class CalendarPage implements OnInit {
 
   //DARK THEME
   private readonly darkThemeClass = 'dark-theme';
+  darkmode: boolean = false;
 
   constructor(
-    private actionSheetCtrl: ActionSheetController,
     private storage: StorageService,
     private modalCtrl: ModalController,
+    private taskStylesService:TaskStylesService,
     @Inject(DOCUMENT) private document: Document
   ) {}
   ngOnInit(): void {
     try {
       this.document.body.classList.add(this.darkThemeClass);
+      this.taskStylesService.getDarkModeState().subscribe((darkMode)=>{
+        console.log('darkMode',darkMode);
+        this.darkmode = darkMode;
+      })
       this.storage
         .taskState()
         .pipe(
@@ -159,6 +165,7 @@ export class CalendarPage implements OnInit {
           }));
         });
       console.log('this.taskList en calendar.page', this.taskList);
+      
     } catch (err) {
       throw new Error(`Error: ${err}`);
     }
