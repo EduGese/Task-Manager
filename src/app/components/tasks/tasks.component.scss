@@ -3,8 +3,8 @@ ion-col {
     align-items: center;
     justify-content: center;
     text-align: center;
-  
   }
+ 
   .task-done{
     text-decoration: line-through;
     color: #5f5f5f;
@@ -23,17 +23,15 @@ ion-col {
 .task-container {
     border-radius: 5px;
   border-left:4px solid #0054e9;
- border-top:1px outset #f6f8fc;
- border-bottom:1px outset #f6f8fc;
- border-right:1px outset #f6f8fc;
-  
- 
+//  border-top:1px outset #f6f8fc;
+//  border-bottom:1px outset #f6f8fc;
+//  border-right:1px outset #f6f8fc;  
 }
 .taskPast-container{
     border-radius: 5px;
   border-left:4px solid #cb1a27;
-  border-top:1px outset #f6f8fc;
-  border-bottom:1px outset #f6f8fc;
-  border-right:1px outset #f6f8fc;
+  // border-top:1px outset #f6f8fc;
+  // border-bottom:1px outset #f6f8fc;
+  // border-right:1px outset #f6f8fc;
 }
 
