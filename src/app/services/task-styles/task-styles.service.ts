@@ -53,7 +53,7 @@ getDarkModeState(){
       case 'Personal':
         return 'secondary';
       case 'Study':
-        return 'terciary';
+        return 'primary';
       case 'Home':
         return 'warning';
       case 'Finance':
