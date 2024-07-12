@@ -5,15 +5,15 @@
       </ion-toolbar>
     </ion-header>
      
-     <ion-content>
+     <ion-content >
       @if (task.description !== '') {
-        <ion-item>{{task.description}}</ion-item>
+        <ion-item color="light" >{{task.description}}</ion-item>
       }@else {
-        <ion-item ><ion-text color="medium">No description</ion-text>
+        <ion-item color="light"><ion-text color="medium">No description</ion-text>
           </ion-item>
       }
       
-      <ion-item>
+      <ion-item color="light">
         <ion-label color="primary">Date creation</ion-label>
         <div class="date">
           <span>{{ task.creation_date | date:' E'}} </span> , <span>{{ task.creation_date | date:'d'}}</span> of <span>{{task.creation_date |
@@ -23,18 +23,18 @@
       </ion-item>
   
         @if (task.due_date !== '') {
-          <ion-item>
+          <ion-item color="light">
             <ion-label color="primary">Date end</ion-label>
             <div class="date">
               <span>{{ task.due_date | date:' E'}} </span> , <span>{{ task.due_date | date:'d'}}</span> of <span>{{task.due_date |
                 date:"LLL"}} </span> of <span> {{ task.due_date | date:'YYYY' }}</span>
             </div>
           </ion-item>
-          <ion-item>
+          <ion-item color="light">
             <ion-label color="primary">Time end</ion-label>
             <span>{{ task.due_date | date: 'HH:mm'}}</span>
           </ion-item>
-          <ion-item>
+          <ion-item color="light">
             <ion-label color="primary">Notification</ion-label>
             <span>{{ task.notification_date_range}}</span>
             @if(task.notification_date_range){
@@ -46,25 +46,25 @@
           </ion-item>
           
         }@else {
-          <ion-item >
+          <ion-item color="light" >
             <ion-label color="primary">Date end</ion-label>
             <ion-text color="medium">No date has been set</ion-text>
           </ion-item>
         }
   
-      <ion-item>
+      <ion-item color="light">
         <ion-label color="primary">Priority</ion-label>
         <ion-chip [color]="priorityColor(task.priority)">
           <ion-label>{{ task.priority }}</ion-label>
         </ion-chip>
       </ion-item>
-      <ion-item>
+      <ion-item color="light">
         <ion-label color="primary">Tag</ion-label>
         <ion-text [color]="tagIconColor(task.tag)" class="ion-margin-end">{{ task.tag }}</ion-text>
         <ion-icon size="medium" [name]="tagIcon(task.tag)" class="ion-no-margin"
         [color]="tagIconColor(task.tag)"></ion-icon>
       </ion-item>
-      <ion-item>
+      <ion-item color="light">
         <ion-label color="primary">State</ion-label>
           @if (task.done) {
               <ion-chip color="success" outline="true" >Completed</ion-chip>
@@ -73,8 +73,8 @@
           }
       </ion-item>
   
-      <ion-grid>
-        <ion-row>
+      <ion-grid >
+        <ion-row color="light">
           <ion-col class=" ion-no-margin">
             <ion-button [color]="task.done ? 'warning' : 'success'" (click)="completeTask(task)">
               <ion-label position="fixed" color="light">
@@ -96,7 +96,7 @@
           </ion-col>
         </ion-row>
   
-        <ion-row class="ion-justify-content-center">
+        <ion-row color="light" class="ion-justify-content-center">
           <ion-button  color="danger" (click)="deleteTask(task.id)">
             <ion-label position="fixed">Delete</ion-label>
             <ion-icon name="trash"></ion-icon>
