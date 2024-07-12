@@ -58,7 +58,7 @@ export class TasksComponent {
   }
 
   // ActionSheet functions
-  async openActionSheet(task: Task) {
+  async openActionSheet(task: Task, slidingItem: IonItemSliding) {
     const actionSheet = await this.actionSheetCtrl.create({
       header: `You are going to delete ${task.name} `,
       buttons: [
@@ -67,7 +67,7 @@ export class TasksComponent {
           role: 'destructive',
           icon: 'trash',
           handler: () => {
-            this.deleteTask(task.id);
+            this.deleteTask(task.id, slidingItem);
           },
         },
         {
@@ -84,8 +84,9 @@ export class TasksComponent {
 
     actionSheet.present();
   }
-  deleteTask(id: number) {
+  deleteTask(id: number, slidingItem:IonItemSliding) {
     this.taskIdDeleteEmitted.emit(id);
+    slidingItem.close()
   }
   completeTask(task: Task, slidingItem: IonItemSliding) {
     this.taskCompleteEmitted.emit(task);
