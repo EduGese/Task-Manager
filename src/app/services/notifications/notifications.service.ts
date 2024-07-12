@@ -1,16 +1,12 @@
 import { Injectable } from '@angular/core';
 import { CancelOptions, LocalNotifications, Schedule, ScheduleOptions } from '@capacitor/local-notifications';
-import { Task } from '../../models/task';
 import { DateFormatService } from '../date-format/date-format.service';
-import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotificationsService {
   
-  
-
   constructor( private dateFormatService:DateFormatService) { }
 
   async scheduleNotificacion(id:number, notification_date: string, name: string, description: string, notification_date_range: string){
@@ -27,7 +23,8 @@ export class NotificationsService {
               largeBody: description,
               summaryText: `${notification_date_range} to end`,
               schedule: dateTime,
-              attachments:[]
+              largeIcon:"res://drawable/bell_alarm",
+              smallIcon:"res://drawable/bell_alarm"
             }
           ]
         }
