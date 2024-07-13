@@ -87,10 +87,10 @@ export class TaskDetailsComponent implements OnInit{
       console.log('completeTask, task-details-->', task.id)
       this.deleteNotification();
       this.task.done = 1;
-      this.storage.updateTaskStatusById(this.task, true);
+      this.storage.updateTaskStatusById(this.task);
     } else {
       this.task.done = 0;
-      this.storage.updateTaskStatusById(this.task, false);
+      this.storage.updateTaskStatusById(this.task);
     }
   }
   deleteNotification(){
