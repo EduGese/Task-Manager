@@ -16,7 +16,6 @@ import { CommonModule } from '@angular/common';
   imports: [IonicModule, CommonModule, TasksComponent],
 })
 export class HomePage implements OnInit {
-  //taskList: Task[] = [];
   taskListDate: Task[] = [];
   taskListNoDate: Task[] = [];
   taskListDatePast: Task[] = [];
@@ -38,7 +37,6 @@ export class HomePage implements OnInit {
           })
         )
         .subscribe((data) => {
-          //this.taskListDate = this.taskFilterService.sortTaskList(data, 1, true, false);
           this.taskListDatePast = this.taskFilterService.sortTaskList(data, 1, true, false, true);
           this.taskListDateDue = this.taskFilterService.sortTaskList(data, 1, true, false, false);
           this.taskListNoDate = this.taskFilterService.sortTaskList(data, 1, false, false);

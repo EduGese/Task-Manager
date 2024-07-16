@@ -3,22 +3,49 @@
 </ion-header>
 
 <ion-content [fullscreen]="false" color="light">
-  @if(taskListDatePast.length === 0 || taskListDateDue.length === 0 || taskListNoDate.length === 0){
+  @if(taskListDatePast.length === 0 && taskListDateDue.length === 0 && taskListNoDate.length === 0){
   <div class="emptyTasks-container">
     <ion-text>You have no pending tasks</ion-text><br>
     <ion-icon name="list-circle-outline" color="success"></ion-icon>
   </div>
   }@else{
-    <h2>Past</h2>
-    <app-tasks (taskIdDeleteEmitted)="deleteTask($event)" (taskCompleteEmitted)="completeTask($event)"
-    [taskList]="taskListDatePast"></app-tasks>
-    <h2>Due</h2>
-  <app-tasks (taskIdDeleteEmitted)="deleteTask($event)" (taskCompleteEmitted)="completeTask($event)"
-    [taskList]="taskListDateDue"></app-tasks>
-
-    <h2>No date</h2>
-    <app-tasks (taskIdDeleteEmitted)="deleteTask($event)" (taskCompleteEmitted)="completeTask($event)"
-    [taskList]="taskListNoDate"></app-tasks>
+    <div class="task-container">
+      <ion-text><h2 class="ion-text-center">Pending</h2></ion-text>
+      <ion-accordion-group [multiple]="true" [value]="['past', 'due', 'no date']" expand="inset">
+        @if(taskListDatePast.length > 0){
+          <ion-accordion >
+          <ion-item slot="header" color="danger">
+            <ion-label >Past</ion-label>
+            <ion-badge slot="end" color="dark">{{taskListDatePast.length}}</ion-badge>
+          </ion-item>
+          <app-tasks (taskIdDeleteEmitted)="deleteTask($event)" (taskCompleteEmitted)="completeTask($event)"
+          [taskList]="taskListDatePast" slot="content"></app-tasks>
+        </ion-accordion>
+        }
+        
+        @if(taskListDateDue.length > 0){
+          <ion-accordion >
+            <ion-item slot="header" color="warning">
+              <ion-label >Due</ion-label>
+              <ion-badge slot="end" color="dark">{{taskListDateDue.length}}</ion-badge>
+            </ion-item>
+            <app-tasks (taskIdDeleteEmitted)="deleteTask($event)" (taskCompleteEmitted)="completeTask($event)"
+            [taskList]="taskListDateDue" slot="content"></app-tasks>
+          </ion-accordion>
+        }
+        
+        @if (taskListNoDate.length > 0) {
+          <ion-accordion >
+            <ion-item slot="header" color="medium">
+              <ion-label>No date</ion-label>
+              <ion-badge slot="end" color="dark">{{taskListNoDate.length}}</ion-badge>
+            </ion-item>
+            <app-tasks (taskIdDeleteEmitted)="deleteTask($event)" (taskCompleteEmitted)="completeTask($event)"
+            [taskList]="taskListNoDate" slot="content"></app-tasks>
+          </ion-accordion>
+        }
+      </ion-accordion-group>
+    </div>
   }
 
 </ion-content>

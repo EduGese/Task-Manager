@@ -3,14 +3,14 @@
   <ion-item-sliding #slidingItem >
     <ion-item lines="none" color="light">
       <ion-grid >
-        <ion-row  [ngClass]="this.isTaskPast(task) ? 'taskPast-container' : 'task-container'">
+        <ion-row  [ngClass]="setTaskColor(task, false)">
           <ion-col >
             <div class="ion-text-start" (click)="openModalDetails(task)">
               @if(task.done){
                 <ion-icon name="checkmark-outline" size="medium" color="success" slot="start"></ion-icon>
               }
               
-              <ion-text color="primary"  [color]="this.isTaskPast(task) ? 'danger' : 'primary'" [ngClass]="task.done === 1 ? 'task-done':''" >{{task.name}} </ion-text>
+              <ion-text color="primary"  [color]="this.setTaskColor(task, true)" [ngClass]="task.done === 1 ? 'task-done':''" >{{task.name}} </ion-text>
             </div>
           </ion-col>
           <ion-col size="auto">

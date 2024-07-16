@@ -56,6 +56,18 @@ export class TasksComponent {
       return false;
     }
   }
+  setTaskColor(task: Task, isText: boolean): string {
+   if(task.due_date === '' || task.due_date === 'Invalid Date'){
+    return isText ? 'dark' : 'taskNodate-container';
+   }else if(this.isTaskPast(task)){
+    return isText ? 'danger' : 'taskPast-container'; 
+   }else{
+    return isText ? 'warning' : 'taskDue-container'; 
+   }  
+  }
+
+
+  //SLIDING
 
   // ActionSheet functions
   async openActionSheet(task: Task, slidingItem: IonItemSliding) {

@@ -20,18 +20,16 @@ ion-col {
 .of{
   font-size: x-small;
 }
-.task-container {
+.taskDue-container {
     border-radius: 5px;
-  border-left:4px solid #0054e9;
-//  border-top:1px outset #f6f8fc;
-//  border-bottom:1px outset #f6f8fc;
-//  border-right:1px outset #f6f8fc;  
+    border-left:4px solid #ffc409;
 }
 .taskPast-container{
     border-radius: 5px;
-  border-left:4px solid #cb1a27;
-  // border-top:1px outset #f6f8fc;
-  // border-bottom:1px outset #f6f8fc;
-  // border-right:1px outset #f6f8fc;
+   border-left:4px solid #cb1a27;
+}
+.taskNodate-container{
+  border-radius: 5px;
+  border-left:4px solid #5f5f5f;
 }
 
