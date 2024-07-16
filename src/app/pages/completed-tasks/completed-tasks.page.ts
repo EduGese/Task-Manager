@@ -38,7 +38,7 @@ export class CompletedTasksPage implements OnInit {
           })
         )
         .subscribe((data) => {
-          this.taskList = this.taskFilterService.sortTaskList(data, 0);
+          this.taskList = this.taskFilterService.sortTaskList(data, 0, true, true);
           console.log('TaskList en completed-task.page after filter',this.taskList)
         });
          

@@ -16,7 +16,11 @@ import { CommonModule } from '@angular/common';
   imports: [IonicModule, CommonModule, TasksComponent],
 })
 export class HomePage implements OnInit {
-  taskList: Task[] = [];
+  //taskList: Task[] = [];
+  taskListDate: Task[] = [];
+  taskListNoDate: Task[] = [];
+  taskListDatePast: Task[] = [];
+  taskListDateDue: Task[] = [];
   task!: Task;
   constructor(private storage: StorageService, private taskFilterService: TaskFilterService) {}
 
@@ -34,9 +38,12 @@ export class HomePage implements OnInit {
           })
         )
         .subscribe((data) => {
-          this.taskList = this.taskFilterService.sortTaskList(data, 1);
+          //this.taskListDate = this.taskFilterService.sortTaskList(data, 1, true, false);
+          this.taskListDatePast = this.taskFilterService.sortTaskList(data, 1, true, false, true);
+          this.taskListDateDue = this.taskFilterService.sortTaskList(data, 1, true, false, false);
+          this.taskListNoDate = this.taskFilterService.sortTaskList(data, 1, false, false);
         });
-      console.log('this.taskList en home.page', this.taskList);
+      console.log('taskListDateDue en home.page', this.taskListDateDue);
     } catch (err) {
       throw new Error(`Error: ${err}`);
     }
