@@ -1,7 +1,9 @@
- <ion-header [translucent]="true">
-  <ion-toolbar color="light">
-    <ion-title color="primary">
-      Tasks
+<ion-header [translucent]="true">
+  <ion-toolbar color="light" class="ion-text-center">
+    <ion-title [color]="paletteToggle ? 'dark' : 'primary'" class="lobster-regular " >
+      <ion-text class="title-text ion-align-self-start ">
+        Task Manager
+      </ion-text>
     </ion-title>
     
   </ion-toolbar>
@@ -10,18 +12,23 @@
 <ion-content [fullscreen]="true">
   
   <ion-fab  slot="fixed" vertical="top" horizontal="end" [edge]="true">
-      <ion-fab-button color="light" id="open-modal">
+      <ion-fab-button [color]="paletteToggle ? 'dark' : 'primary'"  id="open-modal">
       <ion-icon name="add-sharp"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+  <ion-fab  slot="fixed" vertical="top" horizontal="start" [edge]="true" (click)="toggleChange()">
+    <ion-fab-button color="light"  size="small">
+      <ion-icon  color="dark" size="small" [name]="paletteToggle ? 'sunny-outline' : 'moon-outline'"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
 
   <ion-modal trigger="open-modal" >
     <ng-template>
       <ion-header >
-        <ion-toolbar color="primary">
-          <ion-title>New task</ion-title>
+        <ion-toolbar [color]="paletteToggle ? 'light' : 'primary'">
+          <ion-title>Add a new task</ion-title>
           <ion-buttons slot="end" >
-            <ion-icon size="large" name="close-circle-outline" (click)="cancel()"></ion-icon>
+            <ion-icon size="large" name="close-circle-outline" (click)="closeModal()"></ion-icon>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
@@ -33,8 +40,8 @@
 </ion-content>
 
   <ion-tabs [environmentInjector]="environmentInjector">
-    <ion-tab-bar slot="bottom">
-      <ion-tab-button tab="home">
+    <ion-tab-bar slot="bottom" >
+      <ion-tab-button tab="home" selected="true">
         <ion-icon name="list-circle-outline"></ion-icon>
         <ion-label>Pending</ion-label>
       </ion-tab-button>

@@ -1,12 +1,21 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskStylesService {
+  darkMode: boolean = false;
+  darkModeEmit: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor() { }
-
+setDarkModeState(paletteToogle:boolean){
+   this.darkMode = paletteToogle;
+   this.darkModeEmit.next(this.darkMode);
+}
+getDarkModeState(){
+  return this.darkModeEmit.asObservable();
+}
 
   priorityColor(priority: string): string{
     if(priority === 'H'){
@@ -44,7 +53,7 @@ export class TaskStylesService {
       case 'Personal':
         return 'secondary';
       case 'Study':
-        return 'terciary';
+        return 'primary';
       case 'Home':
         return 'warning';
       case 'Finance':

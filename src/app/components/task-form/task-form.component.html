@@ -1,62 +1,64 @@
-<form [formGroup]="taskForm" (submit)="sendTask()">
-  <ion-item>
-    <ion-label position="stacked" color="primary">Name</ion-label>
-    <ion-input formControlName="name" type="text" placeholder="Write a name for task" clear-input="true"
-     errorText="Name is mandatory" helper-text="Name is mandatory" autocapitalize="on" maxlength="15" counter="true"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="stacked" color="primary">Description</ion-label>
-    <ion-textarea formControlName="description" type="text" placeholder="Write a description for task" clear-input="true" maxlength="100"
-      counter="true"></ion-textarea>
-  </ion-item>
-  <ion-item>
-    <ion-select formControlName="priority" color="primary" interface="popover" label-placement="stacked" justify="end"
-      type="ios">
-      <div slot="label"><ion-text color="primary">Priority</ion-text></div>
-      <ion-select-option value="H">High</ion-select-option>
-      <ion-select-option value="M">Medium</ion-select-option>
-      <ion-select-option value="L">Low</ion-select-option>
-    </ion-select>
-    <ion-select formControlName="tag" color="primary" interface="popover" label-placement="stacked">
-      <div slot="label"><ion-text color="primary">Tag</ion-text></div>
-      <ion-select-option value="Work">Work</ion-select-option>
-      <ion-select-option value="Personal">Personal</ion-select-option>
-      <ion-select-option value="Study">Study</ion-select-option>
-      <ion-select-option value="Home">Home</ion-select-option>
-      <ion-select-option value="Finance">Finance</ion-select-option>
-      <ion-select-option value="Health">Health</ion-select-option>
-      <ion-select-option value="Leisure">Leisure</ion-select-option>
-      <ion-select-option value="Other">Other</ion-select-option>
-    </ion-select>
-  </ion-item>
-   <ion-item>
-    <ion-label color="primary">Date</ion-label>
-    <ion-toggle [checked]="dateToogleChecked ? 'true' : 'false'" (click)="addDate()"></ion-toggle>
-   </ion-item>
-  @if(this.dateButtonPressed){
-  <ion-item>
-    <ion-datetime formControlName="due_date" presentation="date-time" [min]="dateNow" [firstDayOfWeek]="1"
-      hourCycle="h24"></ion-datetime>
-  </ion-item>
-  <ion-item>
-    <ion-label color="primary">Notification</ion-label>
-    <ion-toggle [checked]="notificationToogleChecked ?  'true' : 'false'" (click)="showNotificationOptions()"></ion-toggle>
-  </ion-item>
-  @if(notificationButtonPressed){
-  <ion-item class="schedule-container" color="light">
-    <ion-label color="primary">Schedule</ion-label>
-    <ion-radio-group value="strawberries" formControlName="notification_date_range">
-      <ion-radio value="5 minutes">5 minutes</ion-radio><br />
-      <ion-radio value="1 hour">1 hour</ion-radio><br />
-      <ion-radio value="1 day">1 day</ion-radio><br />
-    </ion-radio-group>
-  </ion-item>
-  }
-
-  }
+<ion-content color="light">
+  <form [formGroup]="taskForm" (submit)="sendTask()">
+    <ion-item color="light">
+      <ion-label position="stacked" color="primary">Name</ion-label>
+      <ion-input formControlName="name" type="text" placeholder="Write a name for task" clear-input="true"
+       errorText="Name is mandatory" helper-text="Name is mandatory" autocapitalize="on" maxlength="15" counter="true"></ion-input>
+    </ion-item>
+    <ion-item color="light">
+      <ion-label position="stacked" color="primary">Description</ion-label>
+      <ion-textarea formControlName="description" type="text" placeholder="Write a description for task" clear-input="true" maxlength="100"
+        counter="true"></ion-textarea>
+    </ion-item>
+    <ion-item color="light">
+      <ion-select formControlName="priority" color="primary" interface="popover" label-placement="stacked" justify="end"
+        type="ios">
+        <div slot="label"><ion-text color="primary">Priority</ion-text></div>
+        <ion-select-option value="H">High</ion-select-option>
+        <ion-select-option value="M">Medium</ion-select-option>
+        <ion-select-option value="L">Low</ion-select-option>
+      </ion-select>
+      <ion-select formControlName="tag" color="primary" interface="popover" label-placement="stacked">
+        <div slot="label"><ion-text color="primary">Tag</ion-text></div>
+        <ion-select-option value="Work">Work</ion-select-option>
+        <ion-select-option value="Personal">Personal</ion-select-option>
+        <ion-select-option value="Study">Study</ion-select-option>
+        <ion-select-option value="Home">Home</ion-select-option>
+        <ion-select-option value="Finance">Finance</ion-select-option>
+        <ion-select-option value="Health">Health</ion-select-option>
+        <ion-select-option value="Leisure">Leisure</ion-select-option>
+        <ion-select-option value="Other">Other</ion-select-option>
+      </ion-select>
+    </ion-item>
+     <ion-item color="light">
+      <ion-label color="primary">Date</ion-label>
+      <ion-toggle [checked]="dateToogleChecked ? 'true' : 'false'" (click)="addDate()"></ion-toggle>
+     </ion-item>
+    @if(this.dateButtonPressed){
+    <ion-item color="light">
+      <ion-datetime formControlName="due_date" presentation="date-time" [min]="dateNow" [firstDayOfWeek]="1"
+        hourCycle="h24"></ion-datetime>
+    </ion-item>
+    <ion-item color="light">
+      <ion-label color="primary">Notification</ion-label>
+      <ion-toggle [checked]="notificationToogleChecked ?  'true' : 'false'" (click)="showNotificationOptions()"></ion-toggle>
+    </ion-item>
+    @if(notificationButtonPressed){
+    <ion-item color="light" class="schedule-container" >
+      <ion-label color="primary">Reminder</ion-label>
+      <ion-radio-group value="strawberries" formControlName="notification_date_range" color="light">
+        <ion-radio value="5 minutes">5 minutes</ion-radio><br />
+        <ion-radio value="1 hour">1 hour</ion-radio><br />
+        <ion-radio value="1 day">1 day</ion-radio><br />
+      </ion-radio-group>
+    </ion-item>
+    }
   
-  <div class="button-container">
-    <ion-button type="submit" [disabled]="!taskForm.valid">Save</ion-button>
-  </div>
-
-</form>
+    }
+    
+    <div class="button-container">
+      <ion-button type="submit" [disabled]="!taskForm.valid">Save</ion-button>
+    </div>
+  
+  </form>
+</ion-content>

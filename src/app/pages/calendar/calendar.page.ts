@@ -1,5 +1,5 @@
 import { CommonModule} from '@angular/common';
-import { Component, ViewChild, OnInit, TemplateRef } from '@angular/core';
+import { Component, ViewChild, OnInit, TemplateRef, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, IonModal, ModalController } from '@ionic/angular';
 import {
@@ -27,6 +27,8 @@ import { StorageService } from 'src/app/services/storage.service';
 import { Task } from '../../models/task';
 import { TaskDetailsComponent } from 'src/app/components/task-details/task-details.component';
 import { TaskFormComponent } from 'src/app/components/task-form/task-form.component';
+import { DOCUMENT } from '@angular/common'
+import { TaskStylesService } from 'src/app/services/task-styles/task-styles.service';
 
 const colors: Record<string, EventColor> = {
   red: {
@@ -120,18 +122,26 @@ export class CalendarPage implements OnInit {
   };
   activeDayIsOpen: boolean = false;
   customHeader!: TemplateRef<any>;
-
   refresh = new Subject<void>();
-
   events: CalendarEvent[] = [];
 
+  //DARK THEME
+  private readonly darkThemeClass = 'dark-theme';
+  darkmode: boolean = false;
+
   constructor(
-    private actionSheetCtrl: ActionSheetController,
     private storage: StorageService,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private taskStylesService:TaskStylesService,
+    @Inject(DOCUMENT) private document: Document
   ) {}
   ngOnInit(): void {
     try {
+      this.document.body.classList.add(this.darkThemeClass);
+      this.taskStylesService.getDarkModeState().subscribe((darkMode)=>{
+        console.log('darkMode',darkMode);
+        this.darkmode = darkMode;
+      })
       this.storage
         .taskState()
         .pipe(
@@ -149,13 +159,30 @@ export class CalendarPage implements OnInit {
             id: task.id,
             title: task.name,
             start: new Date(task.due_date),
-            color: task.done ? colors['green'] : colors['yellow'],
-            //actions: this.actions,
+           
+            color: this.getStatusTaskColor(task),
+           
           }));
         });
       console.log('this.taskList en calendar.page', this.taskList);
+      
     } catch (err) {
       throw new Error(`Error: ${err}`);
+    }
+  }
+  getStatusTaskColor(task:Task){
+    if(this.isTaskPast(task)){
+      return colors['red']
+    };
+    return task.done ? colors['green'] : colors['yellow'];
+  }
+  isTaskPast(task: Task){
+    const dueDate = new Date(task.due_date);
+    const dateTimeNow = new Date()
+    if(dateTimeNow > dueDate){
+      return true;
+    }else{
+      return false;
     }
   }
 

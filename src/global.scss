@@ -33,25 +33,61 @@
  */
 
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
-/* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import '@ionic/angular/css/palettes/dark.system.css';
+ @import "@ionic/angular/css/palettes/dark.class.css"; 
+// @import '@ionic/angular/css/palettes/dark.system.css';
 @import "../node_modules/angular-calendar/css/angular-calendar.css";
+// C:\Users\Edu\Desktop\TRAINNING\Ionic\tasksApp\node_modules\angular-calendar\scss\angular-calendar.scss
+@import "../node_modules/angular-calendar/scss/angular-calendar.scss";
+
+/*GoogleFonts*/
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+.lobster-regular {
+    font-family: "Lobster", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
 
 .cal-day-number {
-    color: black;
+    color: #f8f8f8;
+    
+    
 }
 .cal-header{
-    color: black;
-    font-size: 8px;
+    font-size: 0.5625em;
 }
-.cal-time{
-    color: black;
-}
+
 mwl-calendar-month-view-header tr, td{
     width: 1000px;
-    background-color: #F4F5F8;
+    background-color: #00000000;
+    height: 10px;
 }
 mwl-calendar-month-view-header th{
     width: 100px;
+    background-color: #00000000;
 }
 
+ion-item {
+  --transition: none;
+}
+
+.dark-theme {
+    $bg-dark-primary: #1f262d34;
+    $bg-dark-secondary: #394046;
+    $bg-active: #2c343a;
+    $text-color: #d5d6d7;
+    $border-color: rgb(0 0 0 / 60%);
+
+        @include cal-theme((
+                bg-primary: $bg-dark-primary,
+                bg-secondary: transparent,
+                weekend-color: indianred,
+                bg-active: transparent,
+                border-color: $border-color,
+                gray: $bg-dark-secondary,
+                today-bg: $bg-active,
+                event-color-primary: $bg-dark-secondary,
+            ));
+    .cal-month-view .cal-day-cell.cal-out-month .cal-day-number {
+      opacity: 0.15;
+    }    
+  }

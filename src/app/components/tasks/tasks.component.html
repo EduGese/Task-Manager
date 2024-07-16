@@ -1,33 +1,26 @@
-
-<ion-list >
+<ion-list>
   @for (task of taskList; track $index) {
-  <ion-item-sliding #slidingItem>
-    <ion-item lines="none">
-      <ion-grid>
-        <ion-row class="task-container">
-          <ion-col>
+  <ion-item-sliding #slidingItem >
+    <ion-item lines="none" color="light">
+      <ion-grid >
+        <ion-row  [ngClass]="this.isTaskPast(task) ? 'taskPast-container' : 'task-container'">
+          <ion-col >
             <div class="ion-text-start" (click)="openModalDetails(task)">
               @if(task.done){
                 <ion-icon name="checkmark-outline" size="medium" color="success" slot="start"></ion-icon>
               }
               
-              <ion-text color="primary" [ngClass]="task.done === 1 ? 'task-done':''">{{task.name}}</ion-text>
+              <ion-text color="primary"  [color]="this.isTaskPast(task) ? 'danger' : 'primary'" [ngClass]="task.done === 1 ? 'task-done':''" >{{task.name}} </ion-text>
             </div>
           </ion-col>
-          <ion-col>
-            <ion-grid>
-              <ion-row>
-                <ion-col>
-                  <ion-chip [color]="priorityColor(task.priority)">
-                    <ion-label>{{ task.priority }}</ion-label>
-                  </ion-chip>
-                </ion-col>
-                <ion-col>
-                  <ion-icon size="medium" [name]="tagIcon(task.tag)" class="ion-no-margin"
+          <ion-col size="auto">
+            <ion-chip [color]="priorityColor(task.priority)">
+              <ion-label>{{ task.priority }}</ion-label>
+            </ion-chip>
+          </ion-col>
+          <ion-col size="auto">
+            <ion-icon size="medium" [name]="tagIcon(task.tag)" class="ion-no-margin"
                     [color]="tagIconColor(task.tag)"></ion-icon>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
           </ion-col>
           <ion-col>
             
@@ -43,18 +36,16 @@
               </div>
             }
           </ion-col>
-          <ion-col size="auto">
-            @if(task.notification_date_range){
-              <ion-icon name="notifications" color="warning"></ion-icon>
-              }@else {
-                <ion-icon name="notifications-off" ></ion-icon>
-              }
-          </ion-col>
         </ion-row>
       </ion-grid>
+      @if(task.notification_date_range){
+        <ion-icon size="small" name="notifications" color="warning"></ion-icon>
+        }@else {
+          <ion-icon size="small" name="" ></ion-icon>
+        }
     </ion-item>
     <ion-item-options side="end">
-      <ion-item-option color="danger" (click)="openActionSheet(task)" expandable>
+      <ion-item-option color="danger" (click)="openActionSheet(task, slidingItem)" expandable>
         <ion-label position="fixed">Delete</ion-label>
         <ion-icon size="large" name="trash"></ion-icon>
       </ion-item-option>
@@ -71,5 +62,3 @@
   </ion-item-sliding>
   }
 </ion-list>
-
-  

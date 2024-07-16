@@ -29,6 +29,10 @@ import { enableProdMode, importProvidersFrom, APP_INITIALIZER } from '@angular/c
         checkmarkCircle,
         notifications,
         notificationsOff,
+        alertCircleOutline,
+        notificationsCircleOutline,
+        sunnyOutline,
+        moonOutline,
         } from 'ionicons/icons'; 
    
      if (environment.production) {
@@ -87,7 +91,12 @@ import { enableProdMode, importProvidersFrom, APP_INITIALIZER } from '@angular/c
         'close-outline': closeOutline,
         'checkmark-circle': checkmarkCircle,
         'notifications': notifications,
-        'notifications-off': notificationsOff
+        'notifications-off': notificationsOff,
+        'alert-circle-outline': alertCircleOutline,
+        'notifications-circle-outline': notificationsCircleOutline,
+        'sunny-outline': sunnyOutline,
+        'moon-outline': moonOutline
+
       });
 
      bootstrapApplication(AppComponent, {

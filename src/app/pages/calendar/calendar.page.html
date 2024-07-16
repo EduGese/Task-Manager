@@ -5,7 +5,7 @@
 <ion-content [fullscreen]="false">
     <ion-grid>
       <ion-row class="ion-justify-content-center">
-          <ion-segment value="buttons" color="primary"  swipeGesture="false">
+          <ion-segment value="buttons" [color]="darkmode ? 'dark' : 'primary'"  swipeGesture="false" mode="md">
             <ion-segment-button value="buttons" (click)="setView(CalendarView.Month)">
               <ion-label>Month</ion-label>
             </ion-segment-button>
@@ -18,14 +18,14 @@
           </ion-segment>
       </ion-row>
       <ion-row class="ion-justify-content-center">
-        <ion-chip color="primary"><h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3></ion-chip>
+        <ion-chip [color]="darkmode ? 'dark' : 'primary'"><h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3></ion-chip>
       </ion-row>
       <ion-row class="ion-justify-content-center ion-align-items-center"> 
-          <ion-button fill="outline" size="small" color="primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate">
+          <ion-button fill="outline" size="small" [color]="darkmode ? 'dark' : 'primary'" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate">
             <ion-icon size="medium" name="chevron-back-outline" ></ion-icon>
           </ion-button>
-          <ion-text color="secondary" class="ion-padding-horizontal" mwlCalendarToday [(viewDate)]="viewDate">Today</ion-text>
-          <ion-button fill="outline" size="small" color="primary" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate">
+          <ion-text [color]="darkmode ? 'dark' : 'primary'" class="ion-padding-horizontal" mwlCalendarToday [(viewDate)]="viewDate">Today</ion-text>
+          <ion-button fill="outline" size="small" [color]="darkmode ? 'dark' : 'primary'" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate">
             <ion-icon name="chevron-fordward-outline" ></ion-icon>
           </ion-button>
       </ion-row>

@@ -29,12 +29,15 @@ export class TasksComponent {
   task: Task = {} as Task;
   isEditForm = true;
 
+
   constructor(
     private actionSheetCtrl: ActionSheetController,
     private taskStylesService: TaskStylesService,
     private modalCtrl: ModalController
   ) {}
 
+  //STYLING
+ 
   priorityColor(priority: string): string {
     return this.taskStylesService.priorityColor(priority);
   }
@@ -44,9 +47,18 @@ export class TasksComponent {
   tagIconColor(tag: string): string {
     return this.taskStylesService.tagIconColor(tag);
   }
+  isTaskPast(task: Task){
+    const dueDate = new Date(task.due_date);
+    const dateTimeNow = new Date()
+    if(dateTimeNow > dueDate){
+      return true;
+    }else{
+      return false;
+    }
+  }
 
   // ActionSheet functions
-  async openActionSheet(task: Task) {
+  async openActionSheet(task: Task, slidingItem: IonItemSliding) {
     const actionSheet = await this.actionSheetCtrl.create({
       header: `You are going to delete ${task.name} `,
       buttons: [
@@ -55,7 +67,7 @@ export class TasksComponent {
           role: 'destructive',
           icon: 'trash',
           handler: () => {
-            this.deleteTask(task.id);
+            this.deleteTask(task.id, slidingItem);
           },
         },
         {
@@ -72,8 +84,9 @@ export class TasksComponent {
 
     actionSheet.present();
   }
-  deleteTask(id: number) {
+  deleteTask(id: number, slidingItem:IonItemSliding) {
     this.taskIdDeleteEmitted.emit(id);
+    slidingItem.close()
   }
   completeTask(task: Task, slidingItem: IonItemSliding) {
     this.taskCompleteEmitted.emit(task);
@@ -103,4 +116,6 @@ export class TasksComponent {
     });
     await modal.present();
   }
+
+ 
 }
