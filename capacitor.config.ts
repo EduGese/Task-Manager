@@ -2,7 +2,7 @@ import { CapacitorConfig } from '@capacitor/cli';
 
  const config: CapacitorConfig = {
  appId: 'YOUR_APP_ID',
- appName: 'TASK_APP',
+ appName: 'Task Manager',
  webDir: 'www',
  loggingBehavior: 'debug',
  server: {
