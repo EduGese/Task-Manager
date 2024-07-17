@@ -1,5 +1,7 @@
-# Task Manager 
-![icon](https://github.com/user-attachments/assets/51dfc9e6-db2d-462a-99aa-44986b7d0086)
+# Task Manager
+![ic_launcher_round](https://github.com/user-attachments/assets/da7506c6-56ed-4037-94ba-2f08775126d2)
+
+
 
 Effectively manage your tasks, stay organized, and achieve your goals with Task Manager, a powerful and user-friendly Android application.
 
