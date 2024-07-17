@@ -1,44 +1,17 @@
-<h1 align="center">Welcome to tasksApp 👋</h1>
-<p>
-  <img alt="Version" src="https://img.shields.io/badge/version-0.0.1-blue.svg?cacheSeconds=2592000" />
-  <a href="#" target="_blank">
-    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
-  </a>
-</p>
+# Task Manager 
+![icon](https://github.com/user-attachments/assets/51dfc9e6-db2d-462a-99aa-44986b7d0086)
 
-> Ionic-android app developed with angular 19 and SQLite
+Effectively manage your tasks, stay organized, and achieve your goals with Task Manager, a powerful and user-friendly Android application.
 
-### 🏠 [Homepage](https://ionicframework.com/)
-
-## Install
-
-```sh
-npm install
-```
-
-## Usage
-
-```sh
-npm run start
-```
-
-## Run tests
-
-```sh
-npm run test
-```
-
-## Author
-
-👤 **EduGese**
-
-* Website: https://github.com/EduGese
-* Github: [@EduGese](https://github.com/EduGese)
-* LinkedIn: [@https:\/\/www.linkedin.com\/in\/eduardo-gonz%C3%A1lez-seco-0938a2a4\/](https://linkedin.com/in/https:\/\/www.linkedin.com\/in\/eduardo-gonz%C3%A1lez-seco-0938a2a4\/)
-
-## Show your support
-
-Give a ⭐️ if this project helped you!
-
-***
-_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
+## Features ✨
+- **Effortless Task Management:** Create, edit, or delete tasks with ease.
+- **Detailed Task Organization:** Assign names, descriptions, priorities (high, medium, low), tags (work, personal, study, etc.), and due dates (including time) to each task.
+- **Reminders:** Set reminders for upcoming tasks with options for 5 minutes, 1 hour, or 1 day before the due date. Local notifications will appear on your device to keep you informed.
+- **Multiple Task Views:** Manage your tasks efficiently with various views:
+  - Pending Tasks: See upcoming tasks categorized as Past Due, Due Today, and No Due Date.
+  - Completed Tasks: Review and track tasks you've marked as completed.
+  - Calendar View: Visualize all tasks in a calendar format.
+- **Mark as Complete:** Accomplish tasks and mark them as completed (and viceversa) to remove them from your active task lists and disable reminders.
+- **Theme Customization:** Switch between dark and light themes to personalize your app experience (App takes device theme by default).
+- **Offline Functionality:** Work seamlessly even without an internet connection. The app stores your tasks locally using SQLite for reliable access.
+ 
