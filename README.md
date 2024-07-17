@@ -1,5 +1,6 @@
-# Task Manager
+# Task Manager <img src="https://github.com/user-attachments/assets/da7506c6-56ed-4037-94ba-2f08775126d2" width="40" height="40" alt="Task Manager Icon">
 ![ic_launcher_round](https://github.com/user-attachments/assets/da7506c6-56ed-4037-94ba-2f08775126d2)
+
 
 
 
