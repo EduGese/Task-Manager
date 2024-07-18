@@ -40,18 +40,28 @@ Effectively manage your tasks, stay organized, and achieve your goals with Task 
 ### IDE's
 - VSCode (Recomended)
 - Android Studio (Required)
+## Demo screen (Screen Recording)
+Presentation<video src="https://github.com/user-attachments/assets/2b04ef06-d5c1-4606-a3b3-526bda4ed2be" width="200" />
+
+Task with notificartion<video src="https://github.com/user-attachments/assets/7c3f73f4-8b8f-4da1-9ea6-f916b20a15ab" width="200" />
+
+
+
 ## Screen shots
 ### Icon app
   <img src="https://github.com/user-attachments/assets/ff86124c-c1c7-4679-a082-3f035011792c" alt="Icon app" width="200">
   
-### Empty Completed Tasks List
+### Empty Pending Tasks List
  <span>Dark</span>
+ <img src="https://github.com/user-attachments/assets/3331b864-0f69-44e0-b145-fe085749b326" alt="Icon app" width="200">
+  <span>Light</span>
+ <img src="https://github.com/user-attachments/assets/c4a0e737-8e52-4e89-800a-dee71cf73724" alt="Icon app" width="200">
+
+### Empty Completed Tasks List
+<span>Dark</span>
  <img src="https://github.com/user-attachments/assets/3c8a983c-7cee-4389-b530-11b20cffd217" alt="Icon app" width="200">
   <span>Light</span>
  <img src="https://github.com/user-attachments/assets/925c1846-c439-46d7-9160-2a52b5b47a62" alt="Icon app" width="200">
-
-### Empty Completed Tasks List
-Falta
  
 ### Pending Tasks List
 <div style="display: flex;">
@@ -104,6 +114,9 @@ Falta
 <img src="https://github.com/user-attachments/assets/f50a3b8f-b924-4e5c-bdd6-046aafcb991f" alt="Icon app" width="150">
 <img src="https://github.com/user-attachments/assets/75083ede-cb01-4226-a271-5c9b102e4c52" alt="Icon app" width="150">
 <img src="https://github.com/user-attachments/assets/95bde8d7-27dc-4412-b6f3-3b3edcf419c2" alt="Icon app" width="150">
+
+### Local notification 
+<img src="https://github.com/user-attachments/assets/9757dda0-6580-475e-8ad8-ad7ef9dd8b21" alt="Icon app" width="200">
 
 ## Clone and installation 
 ### 1/ Clone repository
