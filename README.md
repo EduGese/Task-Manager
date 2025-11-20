@@ -1,10 +1,13 @@
   <img src="https://github.com/user-attachments/assets/da7506c6-56ed-4037-94ba-2f08775126d2" width="200" height="200" alt="Task Manager Icon">
-
- <a href="#" target="_blank">
-    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
-  </a>
   
 # Task Manager
+[![Version](https://img.shields.io/github/package-json/v/EduGese/Task-Manager?style=flat&color=blue)](https://github.com/EduGese/Task-Manager/blob/main/package.json)
+[![Angular](https://img.shields.io/badge/Angular-18-red?logo=angular)](https://angular.io/)
+[![Ionic](https://img.shields.io/badge/Ionic-6-blue?logo=ionic)](https://ionicframework.com/)
+[![Capacitor](https://img.shields.io/badge/Capacitor-6-purple?logo=capacitor)](https://capacitorjs.com/)
+[![Platform](https://img.shields.io/badge/platform-android-green?logo=android)](https://www.android.com/)
+[![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Demo](https://img.shields.io/badge/Demo-Video-blueviolet?logo=play&logoColor=white)](https://github-production-user-asset-6210df.s3.amazonaws.com/122921699/349902945-2b04ef06-d5c1-4606-a3b3-526bda4ed2be.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20251120%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20251120T203741Z&X-Amz-Expires=300&X-Amz-Signature=8f1983af196809082b8794fabd7d8cf56172b531df02663ecef05f0fb90c38d6&X-Amz-SignedHeaders=host)
 
 Effectively manage your tasks, stay organized, and achieve your goals with Task Manager, a powerful and user-friendly Android application.
 
@@ -133,6 +136,68 @@ Task with notificartion<video src="https://github.com/user-attachments/assets/7c
 ``npm run build:native``
 ## Build for android
 ``npm run ionic:android``
+---
+
+## Architecture Overview
+This application follows a layered hybrid mobile architecture using Angular 18 standalone components, Ionic Framework, and Capacitor. It features clear separation of concerns (presentation, service, data, and native integration layers) for maintainability and scalability. State management relies on RxJS BehaviorSubject for reactive updates, and the Service Layer encapsulates all business logic and SQLite database operations.
+
+## Folder Structure
+- `src/app/pages`: Main route-level pages (Home, Calendar, Completed Tasks, Tabs)
+- `src/app/components`: Reusable UI components (Task List, Task Form, Task Details)
+- `src/app/services`: Business logic and data services (Storage, SQLite, Notifications)
+- `src/app/models`: TypeScript interfaces/data models
+- `src/app/upgrades`: Version-controlled database migrations
+
+## Core Logic Example
+```typescript
+// Task creation in StorageService
+async addTask(task: Task): Promise<void> {
+  const sql = 'INSERT INTO tasks (name, description, priority, tag, creationdate, duedate, notificationdaterange, notificationdate) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+  const params = [task.name, task.description, task.priority, task.tag, task.creationdate, task.duedate, task.notificationdaterange, task.notificationdate];
+  const createdTask = await this.db.run(sql, params);
+  if (task.notificationdaterange && createdTask.changes?.lastId) {
+    this.notificationsService.scheduleNotification(createdTask.changes?.lastId, task.notificationdate, task.name, task.description, task.notificationdaterange);
+  }
+  await this.getTasks(); // Refresh the task list for all subscribers
+}
+```
+- Tasks are stored using parameterized SQL queries.
+- After each change, the app calls `getTasks()` to update the reactive state (BehaviorSubject) and all subscribed components.
+- Notifications are scheduled immediately after creating a new task if required.
+
+## Best Practices & Extensibility
+- Angular 18 Standalone Components: All UI components are standalone, no NgModules.
+- Reactive State Management: Always interact with tasks through services and observables, not directly in components.
+- Database Migration System: Never edit existing migration scripts, always version your schema changes.
+- Initialization: Never bypass the initialization flow - always let APP_INITIALIZER prepare critical services and DB.
+- Cross-Platform Coding: Always test new features both on web and native (SQLite WASM vs. native SQLite).
+- Modals & Forms: Use Ionic's Modal Controller with reactive forms and validators.
+- DI Structure: Singleton services via providedIn: 'root', bootstrap-level providers via bootstrapApplication.
+- Theming: Use Ionic dark mode and CSS variables. Dynamic styling is handled by TaskStylesService.
+- Contributing: See [DeepWiki](https://deepwiki.com/EduGese/Task-Manager/1-overview) for extension guidelines and advanced plugin/model integration patterns.
+
+## Testing & Quality
+- Unit test stubs are in place (Jasmine, Karma).
+  **Note:** Full test coverage for business logic and database operations is a planned improvement.
+- Linting (ESLint) is configured.
+- Before contributing, run:
+  ```bash
+  npm run lint
+  npm run test
+  ```
+- See [DeepWiki](https://deepwiki.com/EduGese/Task-Manager/1-overview) for more on testing strategy and continuous integration suggestions.
+
+## Troubleshooting & Common Pitfalls
+- To avoid issues with database initialization, **always** let the app fully bootstrap before user interaction.
+- For Android builds, ensure all plugin permissions are granted and devices are properly set up.
+- Never modify the DB schema directly - only make structural changes through the migration system.
+- When adding features that use SQLite, **test both web and Android** (WASM vs. native engines).
+- For help on error messages, advanced debugging, and DevTips, see the [DeepWiki](https://deepwiki.com/EduGese/Task-Manager/1-overview).
+
+## Advanced Technical Documentation
+For detailed architecture diagrams, migration conventions, developer onboarding, and technical deep dives, please visit the [DeepWiki](https://deepwiki.com/EduGese/Task-Manager/1-overview).
+
+---
 ## License
 This project is licensed under the [MIT License](#).
 
