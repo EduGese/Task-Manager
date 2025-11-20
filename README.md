@@ -43,7 +43,7 @@ Effectively manage your tasks, stay organized, and achieve your goals with Task 
 ### IDE's
 - VSCode (Recomended)
 - Android Studio (Required)
-## Demo screen (Screen Recording)
+## 🎥 Demo screen (Screen Recording) 
 Presentation<video src="https://github.com/user-attachments/assets/2b04ef06-d5c1-4606-a3b3-526bda4ed2be" width="200" />
 
 Task with notificartion<video src="https://github.com/user-attachments/assets/7c3f73f4-8b8f-4da1-9ea6-f916b20a15ab" width="200" />
@@ -121,7 +121,7 @@ Task with notificartion<video src="https://github.com/user-attachments/assets/7c
 ### Local notification 
 <img src="https://github.com/user-attachments/assets/9757dda0-6580-475e-8ad8-ad7ef9dd8b21" alt="Icon app" width="200">
 
-## Clone and installation 
+##   📦   Clone and installation 
 ### 1/ Clone repository
 ``git@github.com:EduGese/Task-Manager.git``
 ### 2/ Install dependencies
@@ -130,25 +130,26 @@ Task with notificartion<video src="https://github.com/user-attachments/assets/7c
 - [Android Studio](https://developer.android.com/studio)
 - [java](https://www.oracle.com/java/technologies/downloads/): for android build you need to install a recent version of Java JDK Development Kit
 
-## Development server
+##  🚀  Development server
 ``ionic serve``
-## Build app
+##  🛠️  Build app
 ``npm run build:native``
-## Build for android
+##  🤖  Build for android
 ``npm run ionic:android``
+
 ---
 
-## Architecture Overview
+##  🏗️  Architecture Overview
 This application follows a layered hybrid mobile architecture using Angular 18 standalone components, Ionic Framework, and Capacitor. It features clear separation of concerns (presentation, service, data, and native integration layers) for maintainability and scalability. State management relies on RxJS BehaviorSubject for reactive updates, and the Service Layer encapsulates all business logic and SQLite database operations.
 
-## Folder Structure
+##  📂  Folder Structure
 - `src/app/pages`: Main route-level pages (Home, Calendar, Completed Tasks, Tabs)
 - `src/app/components`: Reusable UI components (Task List, Task Form, Task Details)
 - `src/app/services`: Business logic and data services (Storage, SQLite, Notifications)
 - `src/app/models`: TypeScript interfaces/data models
 - `src/app/upgrades`: Version-controlled database migrations
 
-## Core Logic Example
+##  💻  Core Logic Example
 ```typescript
 // Task creation in StorageService
 async addTask(task: Task): Promise<void> {
@@ -165,7 +166,7 @@ async addTask(task: Task): Promise<void> {
 - After each change, the app calls `getTasks()` to update the reactive state (BehaviorSubject) and all subscribed components.
 - Notifications are scheduled immediately after creating a new task if required.
 
-## Best Practices & Extensibility
+##  🌟 Best Practices & Extensibility
 - Angular 18 Standalone Components: All UI components are standalone, no NgModules.
 - Reactive State Management: Always interact with tasks through services and observables, not directly in components.
 - Database Migration System: Never edit existing migration scripts, always version your schema changes.
@@ -176,7 +177,7 @@ async addTask(task: Task): Promise<void> {
 - Theming: Use Ionic dark mode and CSS variables. Dynamic styling is handled by TaskStylesService.
 - Contributing: See [DeepWiki](https://deepwiki.com/EduGese/Task-Manager/1-overview) for extension guidelines and advanced plugin/model integration patterns.
 
-## Testing & Quality
+##  🧪 Testing & Quality
 - Unit test stubs are in place (Jasmine, Karma).
   **Note:** Full test coverage for business logic and database operations is a planned improvement.
 - Linting (ESLint) is configured.
@@ -187,18 +188,18 @@ async addTask(task: Task): Promise<void> {
   ```
 - See [DeepWiki](https://deepwiki.com/EduGese/Task-Manager/1-overview) for more on testing strategy and continuous integration suggestions.
 
-## Troubleshooting & Common Pitfalls
+##  🐞 Troubleshooting & Common Pitfalls
 - To avoid issues with database initialization, **always** let the app fully bootstrap before user interaction.
 - For Android builds, ensure all plugin permissions are granted and devices are properly set up.
 - Never modify the DB schema directly - only make structural changes through the migration system.
 - When adding features that use SQLite, **test both web and Android** (WASM vs. native engines).
 - For help on error messages, advanced debugging, and DevTips, see the [DeepWiki](https://deepwiki.com/EduGese/Task-Manager/1-overview).
 
-## Advanced Technical Documentation
+##  📚 Advanced Technical Documentation
 For detailed architecture diagrams, migration conventions, developer onboarding, and technical deep dives, please visit the [DeepWiki](https://deepwiki.com/EduGese/Task-Manager/1-overview).
 
 ---
-## License
+## 🔓 License
 This project is licensed under the [MIT License](#).
 
 
