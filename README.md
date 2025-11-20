@@ -7,7 +7,7 @@
 [![Capacitor](https://img.shields.io/badge/Capacitor-6-purple?logo=capacitor)](https://capacitorjs.com/)
 [![Platform](https://img.shields.io/badge/platform-android-green?logo=android)](https://www.android.com/)
 [![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Demo](https://img.shields.io/badge/Demo-Video-blueviolet?logo=play&logoColor=white)](https://github-production-user-asset-6210df.s3.amazonaws.com/122921699/349902945-2b04ef06-d5c1-4606-a3b3-526bda4ed2be.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20251120%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20251120T203741Z&X-Amz-Expires=300&X-Amz-Signature=8f1983af196809082b8794fabd7d8cf56172b531df02663ecef05f0fb90c38d6&X-Amz-SignedHeaders=host)
+[![Demo](https://img.shields.io/badge/Demo-Video-blueviolet?logo=play&logoColor=white)](https://github-production-user-asset-6210df.s3.amazonaws.com/122921699/349902945-2b04ef06-d5c1-4606-a3b3-526bda4ed2be.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20251120%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20251120T204933Z&X-Amz-Expires=300&X-Amz-Signature=71c1658d140d91ed52ef7c15bd40689ba0b9fefed27de6092a171745ad4ba528&X-Amz-SignedHeaders=host)
 
 Effectively manage your tasks, stay organized, and achieve your goals with Task Manager, a powerful and user-friendly Android application.
 
